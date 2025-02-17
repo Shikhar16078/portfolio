@@ -54,6 +54,8 @@ footer{
     font-family: var(--primary-font);
 }
 
+/* Animations */
+
 /* Global */
 .c-p{
     color: var(--primary-color);
@@ -131,14 +133,6 @@ a{
     padding-bottom: 62px;
 }
 
-.footer-svg{
-    fill: #F7F7F7;
-}
-
-.footer-svg:hover{
-    fill: var(--ternary-color);
-}
-
 .profile-photo{
     border-radius: 50%;
     height: auto;
@@ -155,6 +149,28 @@ a{
     background-color: var(--ternary-color);
 }
 
+/* Footer */
+.footer-svg{
+    fill: #F7F7F7;
+}
+
+footer > div > div > h5{
+    letter-spacing: 1px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+footer > div > div h5:hover{
+    color: var(--ternary-color);
+}
+
+
+.footer-svg:hover{
+    fill: var(--ternary-color);
+    transform: translateY(-3px);
+    transition: transform 0.2s ease;
+}
+
 @media (max-width:576px) {
     #footer-text{
         font-size: 3.5vw;
@@ -166,12 +182,6 @@ a{
         font-size:15px;
     }
 }
-
-/* @media (max-width:990px) {
-    #footer-text{
-        font-size: 3vw;
-    }
-} */
 
 @media screen and (min-width:1024px) {
     .navbar-nav .nav-item{

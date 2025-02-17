@@ -24,7 +24,9 @@
 
 a.nav-link:hover{
     color: var(--ternary-color);
-    text-decoration: underline;
+    text-decoration: none;
+    transform: translateY(-3px);
+    transition: transform 0.2s ease;
 }
 
 

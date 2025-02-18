@@ -40,7 +40,7 @@ body{
 }
 
 section{
-    padding-top: 0px;
+    padding-top: 80px;
 }
 
 /* Keyframes */
@@ -155,19 +155,12 @@ a{
     margin-top: 5px; 
     color: var(--base-color);
 }
-#Home{
-    padding-top: 70px;
-}
 
 .ct{
     color: var(--primary-color);
 }
 
 /* Work Experience */
-#Experience{
-    padding-top: 70px;
-}
-
 .work-img-1 > img{
     border-radius: 10%;
     height: auto;
@@ -192,10 +185,6 @@ a{
 }
 
 /* Skills */
-#Skills{
-    padding-top: 70px;
-}
-
 #Skills .card-header{
     background-color: var(--ternary-color);
 }

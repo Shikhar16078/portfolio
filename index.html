@@ -21,6 +21,8 @@
     rel="stylesheet">
   <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- AOS Scroll -->
+  <link rel="stylesheet" href="node_modules/aos/dist/aos.css">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="CSS/mainmin.css" />
   <!-- Bootstrap Icons -->
@@ -32,7 +34,7 @@
 
 <body>
   <!-- Nav Bar -->
-  <nav class="navbar fixed-top navbar-expand-lg py-0" data-bs-theme="dark">
+  <nav class="navbar fixed-top navbar-expand-lg py-0" data-aos="flip-up" data-bs-theme="dark">
     <div class=" container-lg">
       <a class="navbar-brand py-0">
         <img src="Assets/Images/my-photo.jpeg" style="border-radius: 50%;" alt="Logo" height="40"
@@ -73,35 +75,40 @@
   <section id="Home">
     <div class="home-container text-center mt-5">
       <div class="mb-3">
-        <img class="profile-photo" src="Assets/Images/my-photo.jpeg" alt="Profile Photo">
+        <img class="profile-photo" data-aos="zoom-in" data-aos-delay="400" src="Assets/Images/my-photo.jpeg"
+          alt="Profile Photo">
       </div>
-      <h2 class="display-4 text-base">Hi, I'm</h2>
+      <h2 class="display-4 text-base" data-aos="flip-up" data-aos-delay="700">Hi, I'm</h2>
       <h1 class="display-3 fst-italic fw-bold text-ternary animate-fade-in">Shikhar Kumar</h1>
       <div class="col-sm-12 col-md-10 col-lg-8 px-2 mx-auto">
-        <p class="lead mb-2 text-base">I have almost three years of experience in the IT industry, working with
+        <p class="lead mb-2 text-base" data-aos="flip-up" data-aos-delay="1000">I have almost three years of experience
+          in the IT industry, working with
           technologies such as C#, AWS, .NET Core, Oracle
           18c, Terraform, Splunk, and New Relic.</p>
         <hr id="hero-hr">
         <div class="d-flex flex-wrap gap-3 gy-5 justify-content-center justify-content-sm-center">
-          <a href="#Experience">
+          <a href="#Experience" data-aos="flip-up" data-aos-delay="1300">
             <button type="button" class="btn btn-outline-ternary btn-primary text-base btn-lg px-4 btn-equal">
               Experience
             </button>
           </a>
           <a href="#Education">
-            <button type="button" class="btn btn-outline-ternary btn-primary text-base btn-lg px-4 btn-equal">
+            <button type="button" data-aos="flip-up" data-aos-delay="1300"
+              class="btn btn-outline-ternary btn-primary text-base btn-lg px-4 btn-equal">
               Education
             </button>
           </a>
           <a href="#Skills">
-            <button type="button" class="btn btn-outline-ternary btn-primary text-base btn-lg px-4 btn-equal">
+            <button type="button" data-aos="flip-up" data-aos-delay="1300"
+              class="btn btn-outline-ternary btn-primary text-base btn-lg px-4 btn-equal">
               Skills
             </button>
           </a>
         </div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-3">
           <a href="Assets/Files/Shikhar Kumar - Resume.pdf" target="_blank">
-            <button id="donwload-resume" type="button" class="btn btn-base text-primary btn-lg px-4 btn-equal">
+            <button id="donwload-resume" data-aos="flip-up" data-aos-anchor-placement="bottom-bottom"
+              data-aos-delay="1500" type="button" class="btn btn-base text-primary btn-lg px-4 btn-equal">
               <i class="bi bi-download px-1"></i>Resume
             </button>
           </a>
@@ -171,11 +178,11 @@
   <!-- Experience -->
   <section id="Experience">
     <div class="container">
-      <div class="card mb-4">
+      <div class="card mb-4" data-aos="zoom-in" data-aos-anchor-placement="bottom-bottom">
         <h1 class="h1 ms-3 pt-2 c-p fw-bolder">Work Experience</h1>
       </div>
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6" data-aos="zoom-in" data-aos-anchor-placement="top-center">
           <div class="card">
             <img src="Assets/Images/nagarro.png" alt="Nagarro Logo Image" class="card-img-top">
             <div class="card-body">
@@ -250,12 +257,12 @@
   <!-- Education -->
   <section id="Education">
     <div class="container">
-      <div class="card mb-4">
+      <div class="card mb-4" data-aos="zoom-in" data-aos-anchor-placement="bottom-bottom">
         <h1 class="h1 ms-3 pt-2 c-p fw-bolder">Education</h1>
       </div>
       <div class="row font-primary">
         <!-- University of California Riverside -->
-        <div class="col-xl-6">
+        <div class="col-xl-6" data-aos="fade-right" data-aos-anchor-placement="top-center">
           <div class="card">
             <img src="Assets/Images/ucr.jpg" alt="UCR Image" class="card-img-top">
             <div class="card-body">
@@ -302,7 +309,7 @@
         </div>
 
         <!-- Dr. A.P.J. Abdul Kalam Technical University -->
-        <div class="col-xl-6 gy-5 gy-xl-0">
+        <div class="col-xl-6 gy-5 gy-xl-0" data-aos="fade-left" data-aos-anchor-placement="top-center">
           <div class="card">
             <img src="Assets/Images/aktu.jpg" alt="AKTU Image" class="card-img-top">
             <div class="card-body">
@@ -354,12 +361,12 @@
   <!-- Skills -->
   <section id="Skills">
     <div class="container">
-      <div class="card mb-4">
+      <div class="card mb-4" data-aos="zoom-in" data-aos-anchor-placement="bottom-bottom">
         <h1 class="h1 ms-3 pt-2 c-p fw-bolder">Skills</h1>
       </div>
       <div class="row gy-4">
         <!-- Group 1 -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-anchor-placement="center-bottom">
           <div class="card">
             <div class="card-header">
               <h4 class="c-b text-center">Programming Languages</h4>
@@ -384,7 +391,7 @@
           </div>
         </div>
         <!-- Group 2 -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-anchor-placement="center-bottom">
           <div class="card">
             <div class="card-header">
               <h4 class="c-b text-center">Web Development</h4>
@@ -409,7 +416,7 @@
           </div>
         </div>
         <!-- Group 3 - Cloud & Monitoring Tools -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-anchor-placement="center-bottom">
           <div class="card">
             <div class="card-header">
               <h4 class="c-b text-center">Cloud & Monitoring Tools</h4>
@@ -434,7 +441,7 @@
           </div>
         </div>
         <!-- Group 4 -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-anchor-placement="bottom-bottom">
           <div class="card">
             <div class="card-header">
               <h4 class="c-b text-center">Database</h4>
@@ -460,7 +467,7 @@
         </div>
 
         <!-- Group 5 Development Methodologies -->
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-anchor-placement="bottom-bottom">
           <div class="card">
             <div class="card-header">
               <h4 class="c-b text-center">Development Methodologies</h4>
@@ -535,6 +542,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+  <!-- AOS Script -->
+  <script src="node_modules/aos/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 
 </html>

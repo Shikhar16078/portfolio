@@ -43,6 +43,23 @@ section{
     padding-top: 0px;
 }
 
+/* Keyframes */
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    25%{
+        opacity: 1;
+    }
+    75%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+
 /* Animations */
 #Home button:hover{
     transform: translateY(-5px);
@@ -58,6 +75,11 @@ section{
 .animate-up:hover{
     transform: translateY(-3px);
     transition: transform 0.2s ease;
+}
+
+.animate-fade-in{
+    animation: fadeIn 10s ease-in-out 0.5s infinite;
+    opacity: 0;
 }
 
 /* Global */

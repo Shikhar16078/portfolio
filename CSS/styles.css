@@ -44,17 +44,17 @@ section{
     padding-top: 0px;
 }
 
-footer{
-    background-color: var(--primary-color);
-    color: var(--base-color);
-}
-
-#footer-text{
-    color: var(--base-color);
-    font-family: var(--primary-font);
-}
-
 /* Animations */
+#Home button:hover{
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+#Home img:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition:  transform 0.4s ease;
+}
 
 /* Global */
 .c-p{
@@ -90,6 +90,33 @@ p{
 a{
     font-family: var(--secondary-font);
 }
+
+/* Home */
+#Home{
+    background-image: linear-gradient(var(--secondary-color), var(--primary-color));
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    min-height: 50rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-container{
+    height: 100%;
+}
+
+.profile-photo{
+    border-radius: 50%;
+    width: 20%;
+    box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn-equal{
+    min-width: 150px;
+}
+
 
 /* Home */
 .brand-text{
@@ -133,13 +160,6 @@ a{
     padding-bottom: 62px;
 }
 
-.profile-photo{
-    border-radius: 50%;
-    height: auto;
-    width: 60%;
-    box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.2);
-}
-
 /* Skills */
 #Skills{
     padding-top: 70px;
@@ -150,8 +170,20 @@ a{
 }
 
 /* Footer */
+
+footer{
+    background-color: var(--primary-color);
+    color: var(--base-color);
+    margin-top: 8rem;
+}
+
+#footer-text{
+    color: var(--base-color);
+    font-family: var(--primary-font);
+}
+
 .footer-svg{
-    fill: #F7F7F7;
+    fill: var(--base-color);
 }
 
 footer > div > div > h5{
@@ -171,27 +203,83 @@ footer > div > div h5:hover{
     transition: transform 0.2s ease;
 }
 
-@media (max-width:576px) {
+/* Smallest Possible */
+@media(min-width:0px){
     #footer-text{
-        font-size: 3.5vw;
+        font-size: 1.3vh;
     }
 }
 
-@media (min-width:768px) {
-    #footer-text{
-        font-size:15px;
-    }
-}
-
-@media screen and (min-width:1024px) {
-    .navbar-nav .nav-item{
-        padding: 0 1 rem;
-    }
-}
-
-@media screen and (min-width:768) and (max-width:992) {
+/* Mobile M */
+@media(min-width:375px){
     .profile-photo{
-        width: 500px;
-        height: auto;
+        width: 200px;
+    }
+
+    #footer-text{
+        font-size: 10pt;
+    }
+}
+
+/* Extra Small Devices */
+@media(min-width:475px){
+    .profile-photo{
+        width: 200px;
+    }
+
+    footer{
+        margin-top: 2rem;
+    }
+
+    #footer-text{
+        font-size: 1rem;
+    }
+}
+
+/* Small Devices */
+@media(min-width:576px){
+    .profile-photo{
+        width: 300px;
+    }
+
+    footer{
+        margin-top: 2rem;
+    }
+}
+
+
+/* Medium Devices */
+@media(min-width:768px){
+    .profile-photo{
+        width: 320px;
+    }
+}
+
+/* Large Devices */
+@media(min-width:992px){
+    .profile-photo{
+        width: 300px;
+    }
+
+    footer{
+        margin-top: 4rem;
+    }
+}
+
+/* Extra Large Devices */
+@media(min-width:1200px){
+    .profile-photo{
+        width: 300px;
+    }
+
+    footer{
+        margin-top: 8rem;
+    }
+}
+
+/* Extra Extra Large Devices */
+@media(min-width:1400px){
+    .profile-photo{
+        width: 20%;
     }
 }

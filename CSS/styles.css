@@ -103,6 +103,11 @@ a{
     align-items: center;
 }
 
+#hero-hr{
+    background-color: var(--base-color);
+    height: 2px;
+}
+
 .home-container{
     height: 100%;
 }

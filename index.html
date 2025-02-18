@@ -39,7 +39,9 @@
           class="d-inline-block align-text-top">
       </a>
       <div class="brand-text">
-        <h1>Portfolio.</h1>
+        <a href=""></a>
+        <button class="btn btn-outline-ternary animate-up btn-primary text-base" class="btn btn-primary"
+          data-bs-toggle="modal" data-bs-target="#myModal">Summary</button>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +68,7 @@
       </div>
     </div>
   </nav>
+
   <!-- Home Section -->
   <section id="Home">
     <div class="home-container text-center mt-5">
@@ -106,6 +109,64 @@
       </div>
     </div>
   </section>
+
+  <!-- Popup Summary -->
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="summary" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="summary">Shikhar Kumar - Software Engineer</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <p>
+            I am a Computer Science master’s student at UC Riverside, actively seeking software engineering and machine
+            learning
+            roles.
+          </p>
+          <hr>
+          <h5 class="h5">Work</h5>
+          <p>
+            With a background in software engineering, I previously worked as a Software Engineer at Nagarro,
+            contributing to a
+            large-scale automobile project. My work involved building real-time data publishers, automating
+            infrastructure, and
+            developing monitoring solutions using technologies like .NET Core, AWS, Terraform, Splunk, and New Relic.
+          </p>
+
+          <h5 class="h5">Skills</h5>
+          <p>
+            My skill set includes C#, Java, Python, database systems such as Oracle Database and MySQL, and cloud
+            technologies such as AWS, Splunk, and
+            New Relic.
+          </p>
+          <hr>
+          <p>
+            I
+            am passionate about applying my Computer Science knowledge to solve real-world problems and create
+            efficient, scalable
+            solutions.
+          </p>
+
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <a href="Assets/Files/Shikhar Kumar - Resume.pdf" target="_blank">
+            <button id="donwload-resume" type="button" class="btn btn-ternary text-base px-2 animate-up">
+              <i class="bi bi-download px-1"></i>Resume
+            </button>
+          </a>
+          <button type="button" class="btn btn-danger animate-up" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Experience -->
   <section id="Experience">

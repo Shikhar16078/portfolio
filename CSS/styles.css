@@ -29,7 +29,6 @@ a.nav-link:hover{
     transition: transform 0.2s ease;
 }
 
-
 /* Custom CSS */
 html{
     margin: 0;
@@ -54,6 +53,11 @@ section{
     cursor: pointer;
     transform: scale(1.05);
     transition:  transform 0.4s ease;
+}
+
+.animate-up:hover{
+    transform: translateY(-3px);
+    transition: transform 0.2s ease;
 }
 
 /* Global */

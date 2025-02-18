@@ -3,8 +3,8 @@ const typingAnimationElement = document.getElementById('typing-animation');
 
 // Create an array of typing text
 const typingTexts = [
-'Shikhar Kumar.  ',
-'a Software Developer.  ',
+'Shikhar Kumar  ',
+'a Software Engineer  ',
 ];
 
 // Create a function to display the typing animation for a given text

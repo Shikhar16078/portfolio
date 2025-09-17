@@ -42,7 +42,7 @@ export default function ProjectsSection() {
               return (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <div className="p-1 h-full">
-                    <Card className="flex flex-col h-full bg-background/80">
+                    <Card className="flex flex-col h-full bg-background">
                       <CardHeader>
                         {projectImage && (
                           <Image

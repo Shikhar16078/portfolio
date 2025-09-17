@@ -71,7 +71,7 @@ export default function Header() {
   );
 
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
+    <header className="px-4 lg:px-6 h-14 flex items-center bg-hero/80 backdrop-blur-sm border-b border-hero-foreground/10 sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6 max-w-7xl">
         <Dialog>
           <DialogTrigger asChild>
@@ -108,8 +108,8 @@ export default function Header() {
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="grid gap-4 text-lg font-medium p-6">
+            <SheetContent side="right" className="bg-hero">
+               <nav className="grid gap-4 text-lg font-medium p-6">
                  <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg hover:text-primary">

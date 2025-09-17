@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { skillsData } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from '@/components/ui/button';
+import { Card } from '../ui/card';
 
 export default function SkillsSection() {
   const allSkills = [
@@ -18,7 +19,7 @@ export default function SkillsSection() {
   const skillsToShow = showAll ? allSkills : allSkills.slice(0, initialSkillsCount);
 
   return (
-    <section id="skills" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+    <section id="skills" className="w-full py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
@@ -31,7 +32,7 @@ export default function SkillsSection() {
         <div className="mx-auto max-w-6xl py-12">
           <div className="flex flex-wrap justify-center gap-4">
             {skillsToShow.map((skill, index) => (
-              <Badge key={index} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md">
+              <Badge key={index} variant="default" className="text-base font-medium px-4 py-2 rounded-lg shadow-md">
                 {skill.name}
               </Badge>
             ))}

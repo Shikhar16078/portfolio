@@ -10,7 +10,7 @@ export default function ContactSection() {
           <div className="space-y-3">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline">Let's Connect</h2>
             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Have a project in mind, or just want to say hello? I'd love to hear from you.
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. Whether you have a question or just want to say hi, I'll do my best to get back to you!
             </p>
           </div>
           <div className="flex justify-center">

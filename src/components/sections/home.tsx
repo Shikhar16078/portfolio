@@ -25,7 +25,7 @@ export default function HomeSection() {
             )}
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
-                Hi, I'm {personalData.name}
+                {personalData.name}
               </h1>
               <p className="text-primary text-xl md:text-2xl font-semibold">
                 {personalData.title}

@@ -6,7 +6,6 @@ import EducationSection from '@/components/sections/education';
 import SkillsSection from '@/components/sections/skills';
 import ContactSection from '@/components/sections/contact';
 import Footer from '@/components/footer';
-import SectionDivider from '@/components/section-divider';
 
 export default function Home() {
   return (
@@ -14,15 +13,10 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <HomeSection />
-        <SectionDivider />
         <ExperienceSection />
-        <SectionDivider />
         <ProjectsSection />
-        <SectionDivider />
         <EducationSection />
-        <SectionDivider />
         <SkillsSection />
-        <SectionDivider />
         <ContactSection />
       </main>
       <Footer />

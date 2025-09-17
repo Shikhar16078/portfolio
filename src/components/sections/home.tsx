@@ -16,8 +16,8 @@ export default function HomeSection() {
               <Image
                 src="/assets/images/profile.jpeg"
                 alt={profileImage.description}
-                width={160}
-                height={160}
+                width={192}
+                height={192}
                 data-ai-hint={profileImage.imageHint}
                 className="mx-auto aspect-square overflow-hidden rounded-full object-cover"
                 priority

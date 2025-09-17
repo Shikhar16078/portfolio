@@ -24,8 +24,10 @@
     --input: 240 5.9% 90%;
     --ring: 0 72.2% 50.6%;
     --radius: 0.5rem;
-    --hero: 0 0% 95%;
+    --hero: 0 0% 98%;
     --hero-foreground: 240 10% 3.9%;
+    --navbar: 0 0% 95%;
+    --navbar-foreground: 240 10% 3.9%;
   }
  
   .dark {
@@ -50,6 +52,8 @@
     --ring: 0 72.2% 50.6%;
     --hero: 240 4% 8%;
     --hero-foreground: 0 0% 98%;
+    --navbar: 240 4% 10%;
+    --navbar-foreground: 0 0% 98%;
   }
 }
  

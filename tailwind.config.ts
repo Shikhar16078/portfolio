@@ -21,9 +21,9 @@ export default {
           DEFAULT: 'hsl(var(--hero))',
           foreground: 'hsl(var(--hero-foreground))',
         },
-        navbar: {
-          DEFAULT: 'hsl(var(--navbar))',
-          foreground: 'hsl(var(--navbar-foreground))',
+        chrome: {
+          DEFAULT: 'hsl(var(--chrome))',
+          foreground: 'hsl(var(--chrome-foreground))',
         },
         card: {
           DEFAULT: 'hsl(var(--card))',

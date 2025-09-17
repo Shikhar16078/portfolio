@@ -88,7 +88,7 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => (
             <Button key={link.href} asChild variant="ghost">
-              <Link href={link.href} className="flex items-center gap-2" prefetch={false}>
+              <Link href={link.href} className="flex items-center gap-2 hover:text-white" prefetch={false}>
                 <link.icon className="h-4 w-4" />
                 {link.label}
               </Link>
@@ -124,7 +124,7 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-white"
                     prefetch={false}
                   >
                     <link.icon className="h-5 w-5" />

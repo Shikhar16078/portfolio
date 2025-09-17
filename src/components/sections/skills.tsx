@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { skillsData } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from '@/components/ui/button';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 
 export default function SkillsSection() {
   const allSkills = [
@@ -12,10 +17,11 @@ export default function SkillsSection() {
     ...skillsData.tools,
   ].sort((a, b) => b.proficiency - a.proficiency);
 
-  const [showAll, setShowAll] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const initialSkillsCount = 12;
 
-  const skillsToShow = showAll ? allSkills : allSkills.slice(0, initialSkillsCount);
+  const topSkills = allSkills.slice(0, initialSkillsCount);
+  const additionalSkills = allSkills.slice(initialSkillsCount);
 
   return (
     <section id="skills" className="w-full min-h-screen flex flex-col justify-center py-12 md:py-24 lg:py-32">
@@ -29,20 +35,33 @@ export default function SkillsSection() {
           </div>
         </div>
         <div className="mx-auto max-w-6xl py-12">
-          <div className="flex flex-wrap justify-center gap-4">
-            {skillsToShow.map((skill, index) => (
-              <Badge key={index} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md hover:bg-card transition-colors">
-                {skill.name}
-              </Badge>
-            ))}
-          </div>
-          {allSkills.length > initialSkillsCount && (
-            <div className="text-center mt-8">
-              <Button onClick={() => setShowAll(!showAll)}>
-                {showAll ? 'Show Less' : 'Show More'}
-              </Button>
+           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+            <div className="flex flex-wrap justify-center gap-4">
+              {topSkills.map((skill, index) => (
+                <Badge key={index} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md hover:bg-card transition-colors">
+                  {skill.name}
+                </Badge>
+              ))}
             </div>
-          )}
+            <CollapsibleContent>
+              <div className="flex flex-wrap justify-center gap-4 mt-4">
+                {additionalSkills.map((skill, index) => (
+                  <Badge key={index + initialSkillsCount} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md hover:bg-card transition-colors">
+                    {skill.name}
+                  </Badge>
+                ))}
+              </div>
+            </CollapsibleContent>
+            {allSkills.length > initialSkillsCount && (
+              <div className="text-center mt-8">
+                <CollapsibleTrigger asChild>
+                  <Button>
+                    {isOpen ? 'Show Less' : 'Show More'}
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+            )}
+           </Collapsible>
         </div>
       </div>
     </section>

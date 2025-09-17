@@ -58,7 +58,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --hero: 220 15% 10%; /* Dark hero background */
+    --hero: 220 15% 5%; /* Dark hero background */
     --hero-foreground: 0 0% 98%;
   }
 }

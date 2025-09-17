@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User } from 'lucide-react';
+import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme-toggle';
@@ -10,8 +10,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
+  DialogClose
 } from "@/components/ui/dialog"
 import { personalData } from '@/lib/data';
+import { Separator } from './ui/separator';
 
 export default function Header() {
   const navLinks = [
@@ -21,6 +24,50 @@ export default function Header() {
     { href: '#skills', label: 'Skills', icon: Wrench },
     { href: '#contact', label: 'Contact', icon: Mail },
   ];
+
+  const SummaryContent = () => (
+    <>
+      <DialogHeader>
+        <DialogTitle>{personalData.name} - Software Engineer</DialogTitle>
+      </DialogHeader>
+      <div className="space-y-4 text-sm text-muted-foreground">
+        <p>
+          I am a Computer Science master's student at UC Riverside, actively seeking software engineering and machine learning roles.
+        </p>
+        <Separator />
+        <div>
+          <h3 className="font-semibold text-foreground mb-1">Work</h3>
+          <p>
+            With a background in software engineering, I previously worked as a Software Engineer at Nagarro, contributing to a large-scale automobile project. My work involved building real-time data publishers, automating infrastructure, and developing monitoring solutions using technologies like .NET Core, AWS, Terraform, Splunk, and New Relic.
+          </p>
+        </div>
+        <Separator />
+        <div>
+          <h3 className="font-semibold text-foreground mb-1">Skills</h3>
+          <p>
+            My skill set includes C#, Java, Python, database systems such as Oracle Database and MySQL, and cloud technologies such as AWS, Splunk, and New Relic.
+          </p>
+        </div>
+        <Separator />
+        <p>
+          I am passionate about applying my Computer Science knowledge to solve real-world problems and create efficient, scalable solutions.
+        </p>
+      </div>
+      <DialogFooter className="sm:justify-start pt-4">
+        <Button asChild>
+          <a href="/resume.pdf" download>
+            <Download className="mr-2" />
+            Resume
+          </a>
+        </Button>
+        <DialogClose asChild>
+          <Button type="button" variant="secondary">
+            Close
+          </Button>
+        </DialogClose>
+      </DialogFooter>
+    </>
+  );
 
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center bg-background border-b sticky top-0 z-50">
@@ -33,11 +80,7 @@ export default function Header() {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{personalData.name}</DialogTitle>
-              <DialogDescription>{personalData.title}</DialogDescription>
-            </DialogHeader>
-            <p className="text-muted-foreground">{personalData.bio}</p>
+            <SummaryContent />
           </DialogContent>
         </Dialog>
 
@@ -74,11 +117,7 @@ export default function Header() {
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>{personalData.name}</DialogTitle>
-                      <DialogDescription>{personalData.title}</DialogDescription>
-                    </DialogHeader>
-                    <p className="text-muted-foreground">{personalData.bio}</p>
+                    <SummaryContent />
                   </DialogContent>
                 </Dialog>
                 {navLinks.map((link) => (

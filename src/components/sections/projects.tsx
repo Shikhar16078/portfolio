@@ -28,7 +28,8 @@ export default function ProjectsSection() {
             </p>
           </div>
         </div>
-        <Carousel className="w-full max-w-5xl mx-auto mt-12"
+        <Carousel 
+          className="w-full max-w-5xl mx-auto mt-12"
           opts={{
             align: "start",
             loop: true,
@@ -73,8 +74,8 @@ export default function ProjectsSection() {
               );
             })}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="absolute -bottom-12 left-1/2 -translate-x-1/2 -translate-y-1/2 transform -ml-8" />
+          <CarouselNext className="absolute -bottom-12 right-1/2 -translate-y-1/2 transform translate-x-1/2 mr-8" />
         </Carousel>
       </div>
     </section>

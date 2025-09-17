@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download } from 'lucide-react';
+import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme-toggle';
@@ -20,6 +20,7 @@ export default function Header() {
   const navLinks = [
     { href: '#home', label: 'Home', icon: Home },
     { href: '#experience', label: 'Experience', icon: Briefcase },
+    { href: '#projects', label: 'Projects', icon: FolderGit2 },
     { href: '#education', label: 'Education', icon: GraduationCap },
     { href: '#skills', label: 'Skills', icon: Wrench },
     { href: '#contact', label: 'Contact', icon: Mail },

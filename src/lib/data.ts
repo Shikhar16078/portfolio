@@ -14,6 +14,30 @@ export const socialLinks = [
   { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github }
 ];
 
+export const projectsData = [
+  {
+    title: 'AI-Powered Course Scheduler',
+    description: 'A web application that helps students schedule their courses using an AI-powered chatbot. Features a dynamic calendar view for easy schedule management.',
+    technologies: ['React', 'FastAPI', 'Google ADK', 'Dialogflow'],
+    image: 'project-scheduler',
+    link: '#',
+  },
+  {
+    title: 'Microservice Data Publisher',
+    description: 'A real-time data publisher using .NET Core and AWS Lambda to ensure data synchronization across various microservices in a large-scale automobile project.',
+    technologies: ['.NET Core', 'AWS Lambda', 'Oracle 18c', 'Terraform'],
+    image: 'project-microservice',
+    link: '#',
+  },
+  {
+    title: 'Automated VM Setup',
+    description: 'A PowerShell script that automates the setup of development virtual machines, reducing setup time from two days to approximately one hour.',
+    technologies: ['PowerShell', 'VMware', 'Windows Server'],
+    image: 'project-vm',
+    link: '#',
+  },
+];
+
 export const educationData = [
   {
     degree: 'M.S. in Computer Science',

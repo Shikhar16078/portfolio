@@ -39,8 +39,8 @@ export default function ProjectsSection() {
               const projectImage = placeholderImages.find(p => p.id === project.image);
               return (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card className="h-full bg-secondary">
+                  <div className="p-1 h-full">
+                    <Card className="flex flex-col h-full bg-background/80">
                       <CardHeader>
                         {projectImage && (
                           <Image
@@ -54,14 +54,12 @@ export default function ProjectsSection() {
                         )}
                         <CardTitle className="pt-4">{project.title}</CardTitle>
                       </CardHeader>
-                      <CardContent className="flex flex-col h-full justify-between">
-                        <div>
-                          <p className="text-muted-foreground mb-4">{project.description}</p>
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.technologies.map((tech) => (
-                              <Badge key={tech} variant="secondary">{tech}</Badge>
-                            ))}
-                          </div>
+                      <CardContent className="flex flex-col flex-grow">
+                        <p className="text-muted-foreground mb-4 flex-grow">{project.description}</p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.technologies.map((tech) => (
+                            <Badge key={tech} variant="secondary">{tech}</Badge>
+                          ))}
                         </div>
                         <Button asChild variant="outline" className="mt-auto w-fit">
                           <Link href={project.link} target="_blank" rel="noopener noreferrer">

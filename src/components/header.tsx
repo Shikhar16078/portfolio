@@ -72,7 +72,7 @@ export default function Header() {
 
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center bg-hero/80 backdrop-blur-sm border-b border-hero-foreground/10 sticky top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between px-4 md:px-6 max-w-7xl">
+      <div className="container mx-auto flex items-center justify-between px-4 md:px-6 max-w-7xl text-hero-foreground">
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="ghost" className="font-bold hover:text-primary">
@@ -88,8 +88,8 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => (
-            <Button key={link.href} asChild variant="ghost">
-              <Link href={link.href} className="flex items-center gap-2 hover:text-primary" prefetch={false}>
+            <Button key={link.href} asChild variant="ghost" className="hover:bg-primary/20 hover:text-hero-foreground">
+              <Link href={link.href} className="flex items-center gap-2" prefetch={false}>
                 <link.icon className="h-4 w-4" />
                 {link.label}
               </Link>

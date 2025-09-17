@@ -10,10 +10,10 @@ export default function HomeSection() {
 
   return (
     <section id="home" className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
-      <div className="container flex flex-col items-center justify-center space-y-6 text-center px-4 md:px-6">
+      <div className="container flex flex-col items-center justify-center space-y-6 text-center px-4 md:px-6 mx-auto">
         {profileImage && (
           <Image
-            src={profileImage.imageUrl}
+            src="/assets/profile.jpeg"
             alt={profileImage.description}
             width={160}
             height={160}
@@ -42,7 +42,7 @@ export default function HomeSection() {
           <Button asChild variant="secondary" size="lg">
             <a href="/resume.pdf" download>
               <Download className="mr-2" />
-              Download Resume
+              Resume
             </a>
           </Button>
         </div>

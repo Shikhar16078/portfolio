@@ -1,16 +1,15 @@
 import { Github, Linkedin, Twitter } from 'lucide-react';
 
 export const personalData = {
-  name: 'Alex Doe',
+  name: 'Shikhar Kumar',
   title: 'Software Engineer',
   bio: 'A passionate Software Engineer with a knack for building beautiful and functional web applications. I turn ideas into reality with code.',
-  email: 'hello@alexdoe.com',
+  email: 'shikharkumar@ymail.com',
 };
 
 export const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com', icon: Github },
-  { name: 'LinkedIn', url: 'https://linkedin.com', icon: Linkedin },
-  { name: 'Twitter', url: 'https://twitter.com', icon: Twitter },
+  { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shikhar1999/', icon: Linkedin },
 ];
 
 export const educationData = [

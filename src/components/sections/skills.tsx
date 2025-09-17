@@ -1,22 +1,20 @@
 import { skillsData } from "@/lib/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+import { Badge } from "@/components/ui/badge"
 
-const SkillCategory = ({ title, skills }: { title: string, skills: { name: string; proficiency: number }[] }) => (
+const SkillCategory = ({ title, skills }: { title: string, skills: { name: string }[] }) => (
   <Card>
     <CardHeader>
       <CardTitle>{title}</CardTitle>
     </CardHeader>
-    <CardContent className="space-y-6">
-      {skills.map((skill, index) => (
-        <div key={index} className="space-y-2">
-          <div className="flex justify-between items-center">
-            <p className="font-medium">{skill.name}</p>
-            <p className="text-sm text-muted-foreground">{skill.proficiency}%</p>
-          </div>
-          <Progress value={skill.proficiency} aria-label={`${skill.name} proficiency`} />
-        </div>
-      ))}
+    <CardContent>
+      <div className="flex flex-wrap gap-2">
+        {skills.map((skill, index) => (
+          <Badge key={index} variant="secondary" className="text-base font-medium">
+            {skill.name}
+          </Badge>
+        ))}
+      </div>
     </CardContent>
   </Card>
 )
@@ -33,7 +31,7 @@ export default function SkillsSection() {
             </p>
           </div>
         </div>
-        <div className="mx-auto grid max-w-6xl gap-6 py-12 md:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl gap-8 py-12 md:grid-cols-1 lg:grid-cols-3">
           <SkillCategory title="Languages" skills={skillsData.languages} />
           <SkillCategory title="Frameworks & Libraries" skills={skillsData.frameworks} />
           <SkillCategory title="Tools & Platforms" skills={skillsData.tools} />

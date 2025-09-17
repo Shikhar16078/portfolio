@@ -1,25 +1,22 @@
-import { skillsData } from "@/lib/data"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+"use client";
 
-const SkillCategory = ({ title, skills }: { title: string, skills: { name: string, proficiency: number }[] }) => (
-  <Card>
-    <CardHeader>
-      <CardTitle>{title}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="flex flex-wrap gap-2">
-        {skills.map((skill, index) => (
-          <Badge key={index} variant="secondary" className="text-base font-medium">
-            {skill.name}
-          </Badge>
-        ))}
-      </div>
-    </CardContent>
-  </Card>
-)
+import { useState } from 'react';
+import { skillsData } from "@/lib/data";
+import { Badge } from "@/components/ui/badge";
+import { Button } from '@/components/ui/button';
 
 export default function SkillsSection() {
+  const allSkills = [
+    ...skillsData.languages,
+    ...skillsData.frameworks,
+    ...skillsData.tools,
+  ].sort((a, b) => b.proficiency - a.proficiency);
+
+  const [showAll, setShowAll] = useState(false);
+  const initialSkillsCount = 12;
+
+  const skillsToShow = showAll ? allSkills : allSkills.slice(0, initialSkillsCount);
+
   return (
     <section id="skills" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
@@ -31,10 +28,19 @@ export default function SkillsSection() {
             </p>
           </div>
         </div>
-        <div className="mx-auto grid max-w-6xl gap-8 py-12 md:grid-cols-1 lg:grid-cols-3">
-          <SkillCategory title="Languages" skills={skillsData.languages} />
-          <SkillCategory title="Frameworks & Libraries" skills={skillsData.frameworks} />
-          <SkillCategory title="Tools & Platforms" skills={skillsData.tools} />
+        <div className="mx-auto max-w-6xl py-12">
+          <div className="flex flex-wrap justify-center gap-4">
+            {skillsToShow.map((skill, index) => (
+              <Badge key={index} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-sm">
+                {skill.name}
+              </Badge>
+            ))}
+          </div>
+          {!showAll && allSkills.length > initialSkillsCount && (
+            <div className="text-center mt-8">
+              <Button onClick={() => setShowAll(true)}>Show More</Button>
+            </div>
+          )}
         </div>
       </div>
     </section>

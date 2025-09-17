@@ -74,7 +74,7 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6 max-w-7xl">
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="ghost" className="font-bold hover:text-white">
+            <Button variant="ghost" className="font-bold hover:text-primary">
               <User className="mr-2 h-5 w-5" />
               Summary
             </Button>
@@ -88,7 +88,7 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => (
             <Button key={link.href} asChild variant="ghost">
-              <Link href={link.href} className="flex items-center gap-2 hover:text-white" prefetch={false}>
+              <Link href={link.href} className="flex items-center gap-2 hover:text-primary" prefetch={false}>
                 <link.icon className="h-4 w-4" />
                 {link.label}
               </Link>
@@ -111,7 +111,7 @@ export default function Header() {
               <nav className="grid gap-4 text-lg font-medium p-6">
                  <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg hover:text-white">
+                    <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg hover:text-primary">
                       <User className="mr-3 h-5 w-5" />
                       Summary
                     </Button>
@@ -124,7 +124,7 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-white"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                     prefetch={false}
                   >
                     <link.icon className="h-5 w-5" />

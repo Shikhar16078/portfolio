@@ -4,7 +4,7 @@ import { Github, Linkedin, Globe } from 'lucide-react';
 
 export const personalData = {
   name: 'Shikhar Kumar',
-  title: "MS CS @ UC Riverside • Software Engineer",
+  title: "Software Engineer",
   bio: "Master’s student in Computer Science at UC Riverside (GPA 3.96) with 3 years of industry experience at Nagarro. Skilled in backend development, cloud infrastructure, and applied machine learning.",
   email: 'skuma154@ucr.edu',
 };

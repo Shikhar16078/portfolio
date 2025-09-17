@@ -3,6 +3,7 @@ import HomeSection from '@/components/sections/home';
 import ExperienceSection from '@/components/sections/experience';
 import ProjectsSection from '@/components/sections/projects';
 import EducationSection from '@/components/sections/education';
+import AwardsSection from '@/components/sections/awards';
 import SkillsSection from '@/components/sections/skills';
 import ContactSection from '@/components/sections/contact';
 import Footer from '@/components/footer';
@@ -16,6 +17,7 @@ export default function Home() {
         <ExperienceSection />
         <ProjectsSection />
         <EducationSection />
+        <AwardsSection />
         <SkillsSection />
         <ContactSection />
       </main>

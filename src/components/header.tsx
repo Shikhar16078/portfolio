@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2 } from 'lucide-react';
+import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme-toggle';
@@ -13,6 +13,12 @@ import {
   DialogFooter,
   DialogClose
 } from "@/components/ui/dialog"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { personalData } from '@/lib/data';
 import { Separator } from './ui/separator';
 
@@ -22,6 +28,7 @@ export default function Header() {
     { href: '#experience', label: 'Experience', icon: Briefcase },
     { href: '#projects', label: 'Projects', icon: FolderGit2 },
     { href: '#education', label: 'Education', icon: GraduationCap },
+    { href: '#awards', label: 'Awards', icon: Award },
     { href: '#skills', label: 'Skills', icon: Wrench },
     { href: '#contact', label: 'Contact', icon: Mail },
   ];
@@ -87,14 +94,23 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-2">
-          {navLinks.map((link) => (
-            <Button key={link.href} asChild variant="ghost" className="hover:bg-primary hover:text-primary-foreground">
-              <Link href={link.href} className="flex items-center gap-2" prefetch={false}>
-                <link.icon className="h-4 w-4" />
-                {link.label}
-              </Link>
-            </Button>
-          ))}
+          <TooltipProvider>
+            {navLinks.map((link) => (
+              <Tooltip key={link.href}>
+                <TooltipTrigger asChild>
+                  <Button asChild variant="ghost" size="icon" className="hover:bg-primary hover:text-primary-foreground">
+                    <Link href={link.href} prefetch={false}>
+                      <link.icon className="h-5 w-5" />
+                      <span className="sr-only">{link.label}</span>
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{link.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </TooltipProvider>
         </nav>
 
         <div className="flex items-center gap-4">

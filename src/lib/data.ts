@@ -1,6 +1,6 @@
 // data.ts
 
-import { Github, Linkedin, Globe } from 'lucide-react';
+import { Github, Linkedin, Globe, Award } from 'lucide-react';
 
 export const personalData = {
   name: 'Shikhar Kumar',
@@ -53,6 +53,33 @@ export const educationData = [
     description: 'CGPA: 7.47/10.00.',
   },
 ];
+
+export const awardsData = [
+    {
+      title: 'Top Performer Award',
+      issuer: 'Nagarro',
+      date: '2021',
+      description: 'Recognized as a top performer for outstanding contributions to the project and exceptional performance.',
+    },
+    {
+      title: 'Spot Award for Innovation',
+      issuer: 'Nagarro',
+      date: '2020',
+      description: 'Awarded for developing an innovative PowerShell script that significantly reduced VM setup time.',
+    },
+    {
+      title: 'Dean\'s Honor List',
+      issuer: 'University of California, Riverside',
+      date: '2024',
+      description: 'Achieved a GPA of 3.96, placing me on the Dean\'s Honor List for academic excellence.',
+    },
+    {
+      title: 'Graduate Fellowship',
+      issuer: 'University of California, Riverside',
+      date: '2024',
+      description: 'Awarded a fellowship for strong academic background and potential for research in computer science.',
+    },
+  ];
 
 export const experienceData = [
   {

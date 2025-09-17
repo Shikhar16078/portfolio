@@ -1,8 +1,17 @@
 import Link from 'next/link';
-import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu } from 'lucide-react';
+import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme-toggle';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { personalData } from '@/lib/data';
 
 export default function Header() {
   const navLinks = [
@@ -16,9 +25,21 @@ export default function Header() {
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center bg-background border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6 max-w-7xl">
-        <Link href="/" className="flex items-center justify-center font-bold" prefetch={false}>
-          RedShift Portfolio
-        </Link>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="ghost" className="font-bold">
+              <User className="mr-2 h-5 w-5" />
+              Summary
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{personalData.name}</DialogTitle>
+              <DialogDescription>{personalData.title}</DialogDescription>
+            </DialogHeader>
+            <p className="text-muted-foreground">{personalData.bio}</p>
+          </DialogContent>
+        </Dialog>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-2">
@@ -45,9 +66,21 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <nav className="grid gap-4 text-lg font-medium p-6">
-                <Link href="/" className="flex items-center gap-2 text-lg font-semibold mb-4" prefetch={false}>
-                  RedShift Portfolio
-                </Link>
+                 <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg">
+                      <User className="mr-3 h-5 w-5" />
+                      Summary
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>{personalData.name}</DialogTitle>
+                      <DialogDescription>{personalData.title}</DialogDescription>
+                    </DialogHeader>
+                    <p className="text-muted-foreground">{personalData.bio}</p>
+                  </DialogContent>
+                </Dialog>
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}

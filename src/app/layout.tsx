@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
+import { personalData } from '@/lib/data';
 
 export const metadata: Metadata = {
-  title: 'RedShift Portfolio',
-  description: 'A modern portfolio for a software engineer.',
+  title: `${personalData.name}'s Portfolio`,
+  description: personalData.bio,
 };
 
 export default function RootLayout({

@@ -13,7 +13,7 @@ export default function HomeSection() {
       <div className="container flex flex-col items-center justify-center space-y-6 text-center px-4 md:px-6 mx-auto">
         {profileImage && (
           <Image
-            src="/assets/profile.jpeg"
+            src={profileImage.imageUrl}
             alt={profileImage.description}
             width={160}
             height={160}

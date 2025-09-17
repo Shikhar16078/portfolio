@@ -2,7 +2,7 @@ import { skillsData } from "@/lib/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
-const SkillCategory = ({ title, skills }: { title: string, skills: { name: string }[] }) => (
+const SkillCategory = ({ title, skills }: { title: string, skills: { name: string, proficiency: number }[] }) => (
   <Card>
     <CardHeader>
       <CardTitle>{title}</CardTitle>

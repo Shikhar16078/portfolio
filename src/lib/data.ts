@@ -1,73 +1,85 @@
-import { Github, Linkedin, Twitter } from 'lucide-react';
+// data.ts
+
+import { Github, Linkedin, Globe } from 'lucide-react';
 
 export const personalData = {
   name: 'Shikhar Kumar',
-  title: 'Software Engineer',
-  bio: 'A passionate Software Engineer with a knack for building beautiful and functional web applications. I turn ideas into reality with code.',
-  email: 'shikharkumar@ymail.com',
+  title: "MS CS @ UC Riverside • Software Engineer",
+  bio: "Master’s student in Computer Science at UC Riverside (GPA 3.96) with 3 years of industry experience at Nagarro. Skilled in backend development, cloud infrastructure, and applied machine learning.",
+  email: 'skuma154@ucr.edu',
 };
 
 export const socialLinks = [
   { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github },
   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shikhar1999/', icon: Linkedin },
+  { name: 'Portfolio', url: 'https://shikhar16078.github.io/portfolio/', icon: Globe }
 ];
 
 export const educationData = [
   {
     degree: 'M.S. in Computer Science',
-    institution: 'University of Technology',
-    period: '2018 - 2020',
-    description: 'Focused on advanced algorithms, machine learning, and distributed systems.'
+    institution: 'University of California, Riverside',
+    period: 'Sept 2024 – Dec 2025',
+    description:
+      'GPA: 3.96/4.00. Relevant coursework: Algorithms, Artificial Intelligence, Machine Learning, Distributed Systems.',
   },
   {
-    degree: 'B.S. in Software Engineering',
-    institution: 'State University',
-    period: '2014 - 2018',
-    description: 'Graduated with honors. Active member of the coding club and participated in several hackathons.'
-  }
+    degree: 'B.Tech. in Information Technology',
+    institution: 'Dr. A.P.J. Abdul Kalam Technical University, India',
+    period: 'Aug 2016 – Sept 2020',
+    description: 'CGPA: 7.47/10.00.',
+  },
 ];
 
 export const experienceData = [
   {
-    role: 'Senior Software Engineer',
-    company: 'Tech Solutions Inc.',
-    period: '2020 - Present',
+    role: 'Data Science Fellow',
+    company: 'University of California, Riverside',
+    period: 'June 2025 – Aug 2025',
     responsibilities: [
-      'Led the development of a new client-facing dashboard using React and TypeScript.',
-      'Architected and implemented a scalable microservices backend with Node.js and Docker.',
-      'Mentored junior engineers and conducted code reviews to maintain code quality.',
-      'Improved application performance by 30% through code optimization and database tuning.'
-    ]
+      'Built a course scheduling application with chatbot logic in Google ADK, exposed via FastAPI.',
+      'Integrated the chatbot into a React web application with a dynamic calendar view for schedule management.',
+    ],
   },
   {
-    role: 'Software Engineer Intern',
-    company: 'Innovate Co.',
-    period: 'Summer 2017',
+    role: 'Software Engineer',
+    company: 'Nagarro',
+    period: 'Jan 2020 – Sept 2022',
     responsibilities: [
-      'Assisted in developing new features for a legacy web application.',
-      'Wrote unit and integration tests to improve code coverage.',
-      'Collaborated with the design team to implement UI mockups.'
-    ]
-  }
+      'Developed and maintained real-time data publishers in .NET Core with AWS Lambda for microservice synchronization.',
+      'Designed Oracle 18c database components (tables, stored procedures, triggers) to improve performance and meet SLOs.',
+      'Built AWS CI/CD pipelines with Terraform, cutting deployment time by ~20% and streamlining workflows.',
+      'Implemented monitoring and alerting with AWS CloudWatch, New Relic, and Splunk, enabling ~50% faster fault detection.',
+      'Led rollout of an automated VM setup in PowerShell, reducing setup time from 2 days to ~1 hour.',
+    ],
+  },
 ];
 
 export const skillsData = {
   languages: [
-    { name: 'JavaScript', proficiency: 95 },
-    { name: 'TypeScript', proficiency: 90 },
-    { name: 'Python', proficiency: 80 },
-    { name: 'HTML/CSS', proficiency: 98 },
+    { name: 'Python', proficiency: 90 },
+    { name: 'C#', proficiency: 85 },
+    { name: 'Java', proficiency: 75 },
+    { name: 'JavaScript', proficiency: 70 },
   ],
   frameworks: [
-    { name: 'React', proficiency: 95 },
-    { name: 'Next.js', proficiency: 90 },
-    { name: 'Node.js', proficiency: 88 },
-    { name: 'Express', proficiency: 85 },
+    { name: '.NET Core', proficiency: 85 },
+    { name: 'Flask', proficiency: 80 },
+    { name: 'FastAPI', proficiency: 75 },
+    { name: 'Apache Spark', proficiency: 70 },
+    { name: 'React', proficiency: 70 },
+    { name: 'PyLucene', proficiency: 60 },
   ],
   tools: [
-    { name: 'Git & GitHub', proficiency: 95 },
+    { name: 'AWS', proficiency: 85 },
+    { name: 'Terraform', proficiency: 80 },
     { name: 'Docker', proficiency: 80 },
-    { name: 'Figma', proficiency: 70 },
-    { name: 'Jira', proficiency: 90 },
-  ]
+    { name: 'PostgreSQL', proficiency: 75 },
+    { name: 'Oracle 18c', proficiency: 75 },
+    { name: 'MySQL', proficiency: 70 },
+    { name: 'Git & GitHub', proficiency: 90 },
+    { name: 'Splunk', proficiency: 70 },
+    { name: 'New Relic', proficiency: 65 },
+    { name: 'PowerShell', proficiency: 65 },
+  ],
 };

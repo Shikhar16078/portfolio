@@ -10,7 +10,7 @@ export default function ExperienceSection() {
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Professional Experience</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              My journey in software engineering, from intern to senior developer.
+              My journey in software engineering.
             </p>
           </div>
         </div>

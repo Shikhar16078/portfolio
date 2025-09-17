@@ -14,12 +14,12 @@ const navLinks = [
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 max-w-7xl items-center">
-        <Link href="/" className="flex items-center space-x-2 mr-4">
+      <div className="container flex h-16 max-w-7xl items-center justify-between">
+        <Link href="/" className="flex items-center space-x-2">
           <Code2 className="h-6 w-6 text-primary" />
           <span className="font-bold hidden sm:inline-block">RedShift Portfolio</span>
         </Link>
-        <nav className="hidden flex-1 items-center justify-center space-x-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center justify-center space-x-6 text-sm font-medium md:flex">
           {navLinks.map(link => (
             <Link
               key={link.href}
@@ -30,7 +30,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex items-center justify-end space-x-4">
           <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>

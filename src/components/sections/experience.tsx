@@ -21,7 +21,7 @@ export default function ExperienceSection() {
                 <div className="h-3 w-3 rounded-full bg-primary-foreground" />
               </div>
               <div className="absolute left-[17px] sm:left-[29px] h-full w-px bg-border" />
-              <Card>
+              <Card className="bg-background/80">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle>{item.role}</CardTitle>

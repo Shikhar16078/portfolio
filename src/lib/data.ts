@@ -10,9 +10,8 @@ export const personalData = {
 };
 
 export const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github },
   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shikhar1999/', icon: Linkedin },
-  { name: 'Portfolio', url: 'https://shikhar16078.github.io/portfolio/', icon: Globe }
+  { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github }
 ];
 
 export const educationData = [

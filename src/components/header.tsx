@@ -88,7 +88,7 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => (
-            <Button key={link.href} asChild variant="ghost" className="hover:bg-primary/20 hover:text-hero-foreground">
+            <Button key={link.href} asChild variant="ghost" className="hover:bg-primary hover:text-primary-foreground">
               <Link href={link.href} className="flex items-center gap-2" prefetch={false}>
                 <link.icon className="h-4 w-4" />
                 {link.label}

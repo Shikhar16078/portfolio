@@ -10,7 +10,7 @@
     --card-foreground: 220 15% 20%;
     --popover: 220 10% 100%;
     --popover-foreground: 220 15% 20%;
-    --primary: 0 85% 60%;
+    --primary: 0 85% 52%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 10% 90%;
     --secondary-foreground: 220 15% 9%;
@@ -34,13 +34,13 @@
   }
  
   .dark {
-    --background: 220 10% 10%; /* Lighter background for all sections */
+    --background: 220 10% 8%; /* Lighter background for all sections */
     --foreground: 0 0% 98%;
     --card: 220 10% 15%;
     --card-foreground: 0 0% 98%;
     --popover: 220 10% 15%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 85% 60%;
+    --primary: 0 85% 52%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 10% 18%;
     --secondary-foreground: 0 0% 98%;

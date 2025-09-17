@@ -31,7 +31,7 @@ export default function SkillsSection() {
         <div className="mx-auto max-w-6xl py-12">
           <div className="flex flex-wrap justify-center gap-4">
             {skillsToShow.map((skill, index) => (
-              <Badge key={index} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md">
+              <Badge key={index} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md hover:bg-card transition-colors">
                 {skill.name}
               </Badge>
             ))}

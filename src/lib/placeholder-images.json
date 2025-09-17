@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "profile-picture",
+      "description": "A portrait of a software engineer.",
+      "imageUrl": "https://picsum.photos/seed/profile/400/400",
+      "imageHint": "portrait person"
+    }
+  ]
 }

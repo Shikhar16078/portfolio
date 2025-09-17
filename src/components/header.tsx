@@ -75,7 +75,7 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6 max-w-7xl text-hero-foreground">
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="ghost" className="font-bold hover:text-primary">
+            <Button variant="ghost" className="font-bold hover:bg-primary hover:text-primary-foreground">
               <User className="mr-2 h-5 w-5" />
               Summary
             </Button>
@@ -112,7 +112,7 @@ export default function Header() {
                <nav className="grid gap-4 text-lg font-medium p-6">
                  <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg hover:text-primary">
+                    <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg hover:bg-primary hover:text-primary-foreground">
                       <User className="mr-3 h-5 w-5" />
                       Summary
                     </Button>

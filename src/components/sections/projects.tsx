@@ -18,7 +18,7 @@ export default function ProjectsSection() {
   const { placeholderImages } = placeholderData;
 
   return (
-    <section id="projects" className="w-full py-12 md:py-24 lg:py-32">
+    <section id="projects" className="w-full min-h-screen flex flex-col justify-center py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">

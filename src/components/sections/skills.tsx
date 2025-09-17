@@ -18,7 +18,7 @@ export default function SkillsSection() {
   const skillsToShow = showAll ? allSkills : allSkills.slice(0, initialSkillsCount);
 
   return (
-    <section id="skills" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+    <section id="skills" className="w-full min-h-screen flex flex-col justify-center bg-secondary py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">

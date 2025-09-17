@@ -36,9 +36,11 @@ export default function SkillsSection() {
               </Badge>
             ))}
           </div>
-          {!showAll && allSkills.length > initialSkillsCount && (
+          {allSkills.length > initialSkillsCount && (
             <div className="text-center mt-8">
-              <Button onClick={() => setShowAll(true)}>Show More</Button>
+              <Button onClick={() => setShowAll(!showAll)}>
+                {showAll ? 'Show Less' : 'Show More'}
+              </Button>
             </div>
           )}
         </div>

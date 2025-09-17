@@ -16,7 +16,7 @@ export default function EducationSection() {
         </div>
         <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2">
           {educationData.map((item, index) => (
-            <Card key={index}>
+            <Card key={index} className="bg-background/80">
               <CardHeader className="gap-2">
                 <Badge variant="secondary" className="w-fit">{item.period}</Badge>
                 <CardTitle>{item.degree}</CardTitle>

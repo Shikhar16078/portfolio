@@ -15,12 +15,7 @@ export default function AnimatedContent({ children, className }: AnimatedContent
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
-        }
+        setIsVisible(entry.isIntersecting);
       },
       {
         rootMargin: '0px',

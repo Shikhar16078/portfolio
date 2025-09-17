@@ -9,7 +9,7 @@ export default function HomeSection() {
   const profileImage = placeholderData.placeholderImages.find(p => p.id === 'profile-picture');
 
   return (
-    <section id="home" className="w-full min-h-screen flex items-center justify-center bg-hero py-12 md:py-24 lg:py-32 xl:py-16">
+    <section id="home" className="w-full min-h-screen flex items-center justify-center bg-hero text-hero-foreground py-12 md:py-24 lg:py-32 xl:py-16">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center space-y-6 text-center">
             {profileImage && (

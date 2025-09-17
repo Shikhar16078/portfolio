@@ -42,7 +42,7 @@ export default function ProjectsSection() {
               return (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <div className="p-1 h-full">
-                    <Card className="flex flex-col h-full bg-secondary">
+                    <Card className="flex flex-col h-full">
                       <CardHeader>
                         {projectImage && (
                           <Image
@@ -60,7 +60,7 @@ export default function ProjectsSection() {
                         <p className="text-muted-foreground mb-4 flex-grow">{project.description}</p>
                         <div className="flex flex-wrap gap-2 mb-4">
                           {project.technologies.map((tech) => (
-                            <Badge key={tech} variant="background">{tech}</Badge>
+                            <Badge key={tech} variant="secondary">{tech}</Badge>
                           ))}
                         </div>
                         <Button asChild variant="outline" className="mt-auto w-fit">

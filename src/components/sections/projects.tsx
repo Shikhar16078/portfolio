@@ -9,6 +9,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CarouselPagination,
 } from '@/components/ui/carousel';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -74,8 +75,11 @@ export default function ProjectsSection() {
               );
             })}
           </CarouselContent>
-          <CarouselPrevious className="absolute -bottom-12 left-1/2 -translate-x-1/2 -translate-y-1/2 transform -ml-8" />
-          <CarouselNext className="absolute -bottom-12 right-1/2 -translate-y-1/2 transform translate-x-1/2 mr-8" />
+          <div className="flex justify-center items-center mt-8">
+            <CarouselPrevious className="relative translate-x-[-150%] -translate-y-0" />
+            <CarouselPagination />
+            <CarouselNext className="relative translate-x-[150%] -translate-y-0" />
+          </div>
         </Carousel>
       </div>
     </section>

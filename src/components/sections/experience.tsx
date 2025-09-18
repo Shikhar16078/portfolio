@@ -70,7 +70,7 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
           <CardFooter>
             <CollapsibleTrigger asChild>
               <Button variant="outline" className="w-full">
-                {isOpen ? "Show Less" : "Show Details"}
+                {isOpen ? "Hide" : "Show More"}
                 <ChevronsUpDown className="ml-2 h-4 w-4" />
               </Button>
             </CollapsibleTrigger>

@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/carousel';
 import { Badge } from '@/components/ui/badge';
 import AnimatedContent from '../animated-content';
+import { FolderGit2 } from 'lucide-react';
 
 export default function ProjectsSection() {
   return (
@@ -40,11 +41,16 @@ export default function ProjectsSection() {
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1 h-full">
                       <Card className="flex flex-col h-full">
-                        <CardHeader>
-                          <CardTitle className="pt-4">{project.title}</CardTitle>
+                        <CardHeader className="flex-row items-start gap-4 space-y-0">
+                            <div className="p-3 rounded-full bg-primary/10 text-primary shrink-0">
+                                <FolderGit2 className="h-6 w-6" />
+                            </div>
+                            <div className='flex-grow'>
+                                <CardTitle>{project.title}</CardTitle>
+                            </div>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow">
-                          <p className="text-muted-foreground mb-4 flex-grow">{project.description}</p>
+                          <p className="text-muted-foreground mb-4 flex-grow text-justify">{project.description}</p>
                           <div className="flex flex-wrap gap-2 mb-4">
                             {project.technologies.map((tech) => (
                               <Badge key={tech} variant="secondary">{tech}</Badge>

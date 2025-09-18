@@ -106,7 +106,7 @@ export default function EducationSection() {
         </AnimatedContent>
 
         <AnimatedContent>
-          <div className="mx-auto grid max-w-3xl gap-8 py-12">
+          <div className="mx-auto grid max-w-5xl grid-cols-1 md:grid-cols-2 gap-8 py-12">
             {educationData.map((item) => (
               <EducationCard
                 key={`${item.institution}-${item.degree}`}

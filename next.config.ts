@@ -6,7 +6,6 @@ const repo = '/portfolio'; // your repo name with a leading slash
 const nextConfig: NextConfig = {
   output: 'export',
   basePath: isProd ? repo : '',
-  assetPrefix: isProd ? `${repo}/` : undefined, // <-- add this
   images: {
     unoptimized: true,
     remotePatterns: [

@@ -101,7 +101,7 @@ export const awardsData = [
 
 export const experienceData = [
   {
-    role: 'Data Science Fellowship 2025',
+    role: 'Data Science Fellowship - 2025',
     company: 'University of California, Riverside',
     period: 'June 2025 – Aug 2025',
     responsibilities: [

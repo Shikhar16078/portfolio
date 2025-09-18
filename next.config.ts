@@ -1,11 +1,11 @@
 import type { NextConfig } from 'next';
 
 const isProd = process.env.NODE_ENV === 'production';
-const repo = '/portfolio'; // your repo name with a leading slash
+const repo = '/portfolio';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  assetPrefix: isProd ? repo : '',
+  basePath: isProd ? repo : '',
   images: {
     unoptimized: true,
     remotePatterns: [

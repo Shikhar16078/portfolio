@@ -12,51 +12,50 @@ import Link from "next/link"
 import AnimatedContent from "../animated-content";
 import Image from 'next/image';
 
+const EducationCard = ({ item }: { item: typeof educationData[0] }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} asChild>
+      <Card className="flex flex-col h-full">
+        <CardHeader className="gap-2">
+          <CardTitle>{item.degree}</CardTitle>
+          <div className="flex items-center gap-3">
+            {item.icon && <Image src={item.icon} alt={`${item.institution} logo`} width={24} height={24} className="rounded-sm"/>}
+            <CardDescription>{item.institution}</CardDescription>
+          </div>
+          <div className="flex items-center justify-between">
+            <Badge variant="secondary" className="w-fit">{item.period}</Badge>
+            <Badge variant="default" className="w-fit">{item.gpa}</Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="flex-grow">
+          <p className="text-muted-foreground text-justify">{item.description}</p>
+        </CardContent>
+        <CardFooter className="flex-col items-start gap-4">
+            <CollapsibleTrigger asChild>
+              <Button variant="outline" className="w-full">
+                Relevant Courses <ChevronsUpDown className="ml-2 h-4 w-4"/>
+              </Button>
+            </CollapsibleTrigger>
+          <CollapsibleContent className="w-full">
+            <ul className="list-disc list-inside bg-muted/50 rounded-md p-4 mt-2 text-muted-foreground">
+              {item.courses.map((course) => (
+                <li key={course}>{course}</li>
+              ))}
+            </ul>
+          </CollapsibleContent>
+          <Button asChild className="w-full">
+            <Link href={item.website} target="_blank" rel="noopener noreferrer">
+              Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </CardFooter>
+      </Card>
+    </Collapsible>
+  )
+}
+
 export default function EducationSection() {
-
-  const EducationCard = ({ item }: { item: typeof educationData[0] }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <Collapsible open={isOpen} onOpenChange={setIsOpen} asChild>
-        <Card className="flex flex-col h-full">
-          <CardHeader className="gap-2">
-            <CardTitle>{item.degree}</CardTitle>
-            <div className="flex items-center gap-3">
-              {item.icon && <Image src={item.icon} alt={`${item.institution} logo`} width={24} height={24} className="rounded-sm"/>}
-              <CardDescription>{item.institution}</CardDescription>
-            </div>
-            <div className="flex items-center justify-between">
-              <Badge variant="secondary" className="w-fit">{item.period}</Badge>
-              <Badge variant="default" className="w-fit">{item.gpa}</Badge>
-            </div>
-          </CardHeader>
-          <CardContent className="flex-grow">
-            <p className="text-muted-foreground text-justify">{item.description}</p>
-          </CardContent>
-          <CardFooter className="flex-col items-start gap-4">
-              <CollapsibleTrigger asChild>
-                <Button variant="outline" className="w-full">
-                  Relevant Courses <ChevronsUpDown className="ml-2 h-4 w-4"/>
-                </Button>
-              </CollapsibleTrigger>
-            <CollapsibleContent className="w-full">
-              <ul className="list-disc list-inside bg-muted/50 rounded-md p-4 mt-2 text-muted-foreground">
-                {item.courses.map((course) => (
-                  <li key={course}>{course}</li>
-                ))}
-              </ul>
-            </CollapsibleContent>
-            <Button asChild className="w-full">
-              <Link href={item.website} target="_blank" rel="noopener noreferrer">
-                Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </CardFooter>
-        </Card>
-      </Collapsible>
-    )
-  }
-
   return (
     <section id="education" className="w-full min-h-screen flex flex-col justify-center py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">

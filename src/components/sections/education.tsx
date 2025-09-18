@@ -12,59 +12,59 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import { ArrowUpRight, ChevronsUpDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import AnimatedContent from "../animated-content";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [showCourses, setShowCourses] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleToggle = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setShowCourses(!showCourses);
+      setIsAnimating(false);
+    }, 300);
+  };
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <Card className="flex flex-col h-full">
-        <CardHeader className="gap-2">
-          <CardTitle>{item.degree}</CardTitle>
-          <div className="flex items-center gap-3">
-            {item.icon && (
-              <Image
-                src={item.icon}
-                alt={`${item.institution} logo`}
-                width={24}
-                height={24}
-                className="rounded-sm"
-              />
-            )}
-            <CardDescription>{item.institution}</CardDescription>
-          </div>
-          <div className="flex items-center justify-between">
-            <Badge variant="secondary" className="w-fit">
-              {item.period}
-            </Badge>
-            <Badge variant="default" className="w-fit">
-              {item.gpa}
-            </Badge>
-          </div>
-        </CardHeader>
+    <Card className="flex flex-col h-full">
+      <CardHeader className="gap-2">
+        <CardTitle>{item.degree}</CardTitle>
+        <div className="flex items-center gap-3">
+          {item.icon && (
+            <Image
+              src={item.icon}
+              alt={`${item.institution} logo`}
+              width={24}
+              height={24}
+              className="rounded-sm"
+            />
+          )}
+          <CardDescription>{item.institution}</CardDescription>
+        </div>
+        <div className="flex items-center justify-between">
+          <Badge variant="secondary" className="w-fit">
+            {item.period}
+          </Badge>
+          <Badge variant="default" className="w-fit">
+            {item.gpa}
+          </Badge>
+        </div>
+      </CardHeader>
 
-        <CardContent className="flex-grow">
-          <p className="text-muted-foreground text-justify">{item.description}</p>
-        </CardContent>
-
-        <CardFooter className="flex-col items-start gap-4 mt-auto">
-          <CollapsibleTrigger asChild>
-            <Button variant="outline" className="w-full">
-              Relevant Courses <ChevronsUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="w-full data-[state=closed]:hidden">
-            <ul className="space-y-2 bg-muted/50 rounded-md p-4 mt-2 text-muted-foreground">
+      <CardContent className="flex-grow flex flex-col">
+        <div 
+          className={cn(
+            "transition-all duration-300 ease-in-out",
+            isAnimating ? "opacity-0 transform -translate-y-2" : "opacity-100 transform translate-y-0"
+          )}
+        >
+          {showCourses ? (
+            <ul className="space-y-2 text-muted-foreground bg-muted/50 rounded-md p-4">
               {item.courses.map((course) => (
                 <li key={course} className="flex items-center gap-2">
                   <ChevronRight className="h-4 w-4 text-primary" />
@@ -72,16 +72,23 @@ const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
                 </li>
               ))}
             </ul>
-          </CollapsibleContent>
+          ) : (
+            <p className="text-muted-foreground text-justify">{item.description}</p>
+          )}
+        </div>
+      </CardContent>
 
-          <Button asChild className="w-full">
-            <Link href={item.website} target="_blank" rel="noopener noreferrer">
-              Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </CardFooter>
-      </Card>
-    </Collapsible>
+      <CardFooter className="flex-col items-start gap-4 mt-auto">
+        <Button variant="outline" className="w-full" onClick={handleToggle}>
+          {showCourses ? 'Show Description' : 'Relevant Courses'} <ChevronsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+        <Button asChild className="w-full">
+          <Link href={item.website} target="_blank" rel="noopener noreferrer">
+            Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
+          </Link>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };
 

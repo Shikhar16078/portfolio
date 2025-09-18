@@ -1,0 +1,1 @@
+This directory is for your static assets. Please place your favicon.ico file here.

@@ -42,19 +42,23 @@ export default function ProjectsSection() {
                   <CarouselItem key={index} className="md:basis-1/2 2xl:basis-1/3">
                     <div className="p-1 h-full">
                       <Card className="flex flex-col h-full">
-                        <CardHeader className="flex-row items-center gap-4 space-y-0">
-                            {project.icon && (
-                                <Image
-                                    src={project.icon.startsWith('/') ? project.icon.substring(1) : project.icon}
-                                    alt={`${project.title} logo`}
-                                    width={40}
-                                    height={40}
-                                    className="rounded-full object-contain"
-                                />
-                            )}
-                            <div className='flex-grow'>
+                        <CardHeader className="gap-2">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-1">
                                 <CardTitle>{project.title}</CardTitle>
+                                <Badge variant="outline" className="flex-shrink-0">{project.date}</Badge>
                             </div>
+                            {project.icon && (
+                                <div className='flex items-center gap-4'>
+                                    <Image
+                                        src={project.icon.startsWith('/') ? project.icon.substring(1) : project.icon}
+                                        alt={`${project.title} logo`}
+                                        width={24}
+                                        height={24}
+                                        className="rounded-full object-contain"
+                                    />
+                                    <span className="text-sm text-muted-foreground">Project</span>
+                                </div>
+                            )}
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow">
                           <ul className="space-y-2 text-muted-foreground mb-4 flex-grow text-justify">

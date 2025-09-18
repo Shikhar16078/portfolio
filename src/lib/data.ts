@@ -17,6 +17,7 @@ export const socialLinks = [
 export const projectsData = [
   {
     title: 'Reddit Search Engine',
+    date: 'Fall 2024',
     description: [
         'Built a search engine over 100K+ Reddit posts by crawling data with PRAW API and indexing with PyLucene.',
         'Designed a Flask web app for querying and displaying results with sub-second response times.'
@@ -26,6 +27,7 @@ export const projectsData = [
   },
   {
     title: 'IMDB Reviews Analysis',
+    date: 'Winter 2025',
     description: [
         'Conducted sentiment analysis on 50K+ IMDB reviews using Apache Spark.',
         'Built a Flask web application with real-time querying and visualization, backed by a PostgreSQL database in Docker.'
@@ -35,6 +37,7 @@ export const projectsData = [
   },
   {
     title: 'UCR Course Scheduler',
+    date: 'Spring 2025',
     description: [
         'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI.',
         'Integrated into a React frontend with a dynamic calendar view for interactive schedule management.'

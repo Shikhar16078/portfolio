@@ -80,7 +80,7 @@ const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
 
       <CardFooter className="flex-col items-start gap-4 mt-auto">
         <Button variant="outline" className="w-full" onClick={handleToggle}>
-          {showCourses ? 'Background' : 'Relevant Courses'} <ChevronsUpDown className="ml-2 h-4 w-4" />
+          {showCourses ? 'Background' : 'Top Courses'} <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
         <Button asChild className="w-full">
           <Link href={item.website} target="_blank" rel="noopener noreferrer">

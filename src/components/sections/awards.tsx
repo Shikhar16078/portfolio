@@ -1,30 +1,17 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import Autoplay from "embla-carousel-autoplay";
+import { useState } from "react";
 import { awardsData } from "@/lib/data";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import AnimatedContent from "../animated-content";
 import { Award, ChevronsUpDown } from "lucide-react";
 import { Button } from "../ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import { cn } from "@/lib/utils";
 
 export default function AwardsSection() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [api, setApi] = useState<CarouselApi>()
-  const autoplayPlugin = useRef(Autoplay({ delay: 10000, stopOnInteraction: true, stopOnMouseEnter: true }));
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-    // Stop autoplay when expanded, and restart when collapsed
-    if (isExpanded) {
-      autoplayPlugin.current.stop();
-    } else {
-      autoplayPlugin.current.play(api);
-    }
-  }, [api, isExpanded]);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <section id="awards" className="w-full min-h-screen flex items-center py-12 md:py-16 lg:py-20">
@@ -41,64 +28,69 @@ export default function AwardsSection() {
         </AnimatedContent>
         <AnimatedContent>
           <div className="mx-auto max-w-5xl py-12">
-            {!isExpanded ? (
-              <div className="relative">
-                <Carousel
-                  setApi={setApi}
-                  plugins={[autoplayPlugin.current]}
-                  className="w-full"
-                  opts={{ loop: true, align: "start" }}
-                >
-                  <CarouselContent>
-                    {awardsData.map((item, index) => (
-                      <CarouselItem key={index} className="md:basis-1/2">
-                        <div className="p-1 h-full">
-                          <Card className="h-full">
-                            <CardHeader className="flex-row items-center gap-4">
-                              <div className="p-3 rounded-full bg-primary/10 text-primary">
-                                <Award className="h-6 w-6" />
-                              </div>
-                              <div className="flex-grow">
-                                <CardTitle>{item.title}</CardTitle>
-                                <CardDescription>{item.issuer} - {item.date}</CardDescription>
-                              </div>
-                            </CardHeader>
-                            <CardContent>
-                              <p className="text-muted-foreground">{item.description}</p>
-                            </CardContent>
-                          </Card>
+            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+              <div className={cn("transition-opacity duration-300", isOpen ? "opacity-0 h-0" : "opacity-100")}>
+                {!isOpen && (
+                  <Carousel
+                    className="w-full"
+                    opts={{ loop: true, align: "start" }}
+                  >
+                    <CarouselContent>
+                      {awardsData.map((item, index) => (
+                        <CarouselItem key={index} className="md:basis-1/2">
+                          <div className="p-1 h-full">
+                            <Card className="h-full">
+                              <CardHeader className="flex-row items-center gap-4">
+                                <div className="p-3 rounded-full bg-primary/10 text-primary">
+                                  <Award className="h-6 w-6" />
+                                </div>
+                                <div className="flex-grow">
+                                  <CardTitle>{item.title}</CardTitle>
+                                  <CardDescription>{item.issuer} - {item.date}</CardDescription>
+                                </div>
+                              </CardHeader>
+                              <CardContent>
+                                <p className="text-muted-foreground">{item.description}</p>
+                              </CardContent>
+                            </Card>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                  </Carousel>
+                )}
+              </div>
+              
+              <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                <div className="grid gap-8 sm:grid-cols-2">
+                  {awardsData.map((item, index) => (
+                    <Card key={index} className="h-full">
+                      <CardHeader className="flex-row items-center gap-4">
+                        <div className="p-3 rounded-full bg-primary/10 text-primary">
+                          <Award className="h-6 w-6" />
                         </div>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                </Carousel>
+                        <div className="flex-grow">
+                          <CardTitle>{item.title}</CardTitle>
+                          <CardDescription>{item.issuer} - {item.date}</CardDescription>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground">{item.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CollapsibleContent>
+
+              <div className="flex justify-center mt-8">
+                <CollapsibleTrigger asChild>
+                  <Button variant="outline">
+                    {isOpen ? "Show Less" : "Show All"}
+                    <ChevronsUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </CollapsibleTrigger>
               </div>
-            ) : (
-              <div className="grid gap-8 sm:grid-cols-2">
-                {awardsData.map((item, index) => (
-                  <Card key={index} className="h-full">
-                    <CardHeader className="flex-row items-center gap-4">
-                      <div className="p-3 rounded-full bg-primary/10 text-primary">
-                        <Award className="h-6 w-6" />
-                      </div>
-                      <div className="flex-grow">
-                        <CardTitle>{item.title}</CardTitle>
-                        <CardDescription>{item.issuer} - {item.date}</CardDescription>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-            <div className="flex justify-center mt-8">
-              <Button variant="outline" onClick={() => setIsExpanded(!isExpanded)}>
-                {isExpanded ? "Show Less" : "Show All"}
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
+            </Collapsible>
           </div>
         </AnimatedContent>
       </div>

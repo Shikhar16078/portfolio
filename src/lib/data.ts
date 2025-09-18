@@ -77,32 +77,32 @@ export const awardsData = [
     title: 'Star of the Month',
     issuer: 'Nagarro',
     date: '2020 – 2022',
-    description: 'Awarded each quarter for being the most impactful software engineer on the team.',
+    description: 'Recognized quarterly as the most impactful software engineer on the team.',
   },
   {
     title: 'Graduate Fellowship',
     issuer: 'University of California, Riverside',
     date: '2024',
-    description: 'Awarded a fellowship for strong academic background and potential for research in computer science.',
+    description: 'Awarded a fellowship for strong academic performance and potential in computer science.',
   },
   {
     title: 'Dean\'s Honor List',
     issuer: 'University of California, Riverside',
     date: '2024',
-    description: 'Achieved a GPA of 3.96, placing me on the Dean\'s Honor List for academic excellence.',
+    description: 'Maintained a 3.96 GPA, earning placement on the Dean’s Honor List for academic excellence.',
   },
   {
     title: 'Mentorship Recognition',
     issuer: 'Nagarro',
     date: '2021 – 2022',
-    description: 'Conducted monthly mentorship sessions for junior engineers, guiding them in best practices and project work.',
+    description: 'Conducted monthly mentorship sessions to guide junior engineers in best practices and project work.',
   },
   {
     title: 'Grader',
     issuer: 'University of California, Riverside',
-    date: 'Spring 2025',
-    description: 'Served as a grader for the undergraduate course – Intermediate Data Structures and Algorithms, evaluating assignments, quizez, exams and supporting student learning.',
-  },
+    date: 'Spring 2025 – Fall 2025',
+    description: 'Hired twice for effectively grading "CS141: Intermediate Data Structures and Algorithms", ensuring precise evaluation of assignments, quizzes, and exams.',
+  },  
 ];
 
 

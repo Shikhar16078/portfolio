@@ -84,7 +84,7 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="w-full flex items-center py-12 md:py-24 lg:py-32">
+    <section id="experience" className="w-full flex items-center py-12 md:py-16 lg:py-20">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <AnimatedContent>
           <div className="flex flex-col items-center justify-center space-y-4 text-center">

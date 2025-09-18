@@ -12,14 +12,16 @@ import { Button } from "../ui/button";
 export default function AwardsSection() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
-  const autoplayPlugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const autoplayPlugin = useRef(Autoplay({ delay: 10000, stopOnInteraction: false, stopOnMouseEnter: true }));
 
   const handleTogglePlay = () => {
-    const player = autoplayPlugin.current.options().player;
+    const autoplay = autoplayPlugin.current;
+    if (!autoplay) return;
+
     if (isPlaying) {
-      player.stop();
+      autoplay.stop();
     } else {
-      player.play();
+      autoplay.play();
     }
     setIsPlaying(!isPlaying);
   };

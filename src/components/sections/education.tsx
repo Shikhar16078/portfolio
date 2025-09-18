@@ -1,3 +1,7 @@
+
+"use client";
+
+import { useState } from 'react';
 import { educationData } from "@/lib/data"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "../ui/badge"
@@ -8,6 +12,12 @@ import Link from "next/link"
 import AnimatedContent from "../animated-content";
 
 export default function EducationSection() {
+  const [openCollapsible, setOpenCollapsible] = useState<number | null>(null);
+
+  const toggleCollapsible = (index: number) => {
+    setOpenCollapsible(openCollapsible === index ? null : index);
+  };
+
   return (
     <section id="education" className="w-full min-h-screen flex flex-col justify-center py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
@@ -24,37 +34,40 @@ export default function EducationSection() {
         <AnimatedContent>
           <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 md:grid-cols-2">
             {educationData.map((item, index) => (
-              <Card key={index} className="flex flex-col h-full">
-                <CardHeader className="gap-2">
-                  <Badge variant="secondary" className="w-fit">{item.period}</Badge>
-                  <CardTitle>{item.degree}</CardTitle>
-                  <CardDescription>{item.institution}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-muted-foreground">{item.description}</p>
-                </CardContent>
-                <CardFooter className="flex-col items-start gap-4">
-                  <Collapsible className="w-full">
-                    <CollapsibleTrigger asChild>
-                      <Button variant="outline" className="w-full">
-                        Relevant Courses <ChevronsUpDown className="ml-2 h-4 w-4"/>
-                      </Button>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
+              <Collapsible key={index} open={openCollapsible === index} onOpenChange={() => toggleCollapsible(index)} asChild>
+                <Card className="flex flex-col h-full">
+                  <CardHeader className="gap-2">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="secondary" className="w-fit">{item.period}</Badge>
+                      <Badge variant="default" className="w-fit">{item.gpa}</Badge>
+                    </div>
+                    <CardTitle>{item.degree}</CardTitle>
+                    <CardDescription>{item.institution}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="text-muted-foreground">{item.description}</p>
+                  </CardContent>
+                  <CardFooter className="flex-col items-start gap-4">
+                      <CollapsibleTrigger asChild>
+                        <Button variant="outline" className="w-full">
+                          Relevant Courses <ChevronsUpDown className="ml-2 h-4 w-4"/>
+                        </Button>
+                      </CollapsibleTrigger>
+                    <CollapsibleContent className="w-full">
                       <ul className="list-disc list-inside bg-muted/50 rounded-md p-4 mt-2 text-muted-foreground">
                         {item.courses.map((course) => (
                           <li key={course}>{course}</li>
                         ))}
                       </ul>
                     </CollapsibleContent>
-                  </Collapsible>
-                  <Button asChild className="w-full">
-                    <Link href={item.website} target="_blank" rel="noopener noreferrer">
-                      Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardFooter>
-              </Card>
+                    <Button asChild className="w-full">
+                      <Link href={item.website} target="_blank" rel="noopener noreferrer">
+                        Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </Collapsible>
             ))}
           </div>
         </AnimatedContent>

@@ -95,7 +95,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-2">
-          <TooltipProvider>
+          <TooltipProvider delayDuration={0}>
             {navLinks.map((link) => (
               <Tooltip key={link.href}>
                 <TooltipTrigger asChild>

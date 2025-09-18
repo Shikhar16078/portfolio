@@ -42,17 +42,15 @@ export default function AwardsSection() {
                         <CarouselItem key={index} className="md:basis-1/2">
                           <div className="p-1 h-full">
                             <Card className="h-full">
-                              <CardHeader>
-                                <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-1">
-                                    <CardTitle>{item.title}</CardTitle>
-                                    <Badge variant="secondary" className="flex-shrink-0">{item.date}</Badge>
-                                </div>
+                              <CardHeader className="gap-2">
+                                <CardTitle>{item.title}</CardTitle>
                                 <div className='flex items-center gap-4'>
-                                    <div className="p-3 rounded-full bg-primary/10 text-primary mt-1">
+                                    <div className="p-3 rounded-full bg-primary/10 text-primary">
                                         <Award className="h-5 w-5" />
                                     </div>
                                     <CardDescription>{item.issuer}</CardDescription>
                                 </div>
+                                <Badge variant="secondary" className="w-fit">{item.date}</Badge>
                               </CardHeader>
                               <CardContent>
                                 <p className="text-muted-foreground">{item.description}</p>
@@ -75,17 +73,15 @@ export default function AwardsSection() {
                 <div className="grid gap-8 sm:grid-cols-2">
                   {awardsData.map((item, index) => (
                     <Card key={index} className="h-full">
-                       <CardHeader>
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-1">
-                                <CardTitle>{item.title}</CardTitle>
-                                <Badge variant="secondary" className="flex-shrink-0">{item.date}</Badge>
-                            </div>
+                        <CardHeader className="gap-2">
+                            <CardTitle>{item.title}</CardTitle>
                             <div className='flex items-center gap-4'>
-                                <div className="p-3 rounded-full bg-primary/10 text-primary mt-1">
+                                <div className="p-3 rounded-full bg-primary/10 text-primary">
                                     <Award className="h-5 w-5" />
                                 </div>
                                 <CardDescription>{item.issuer}</CardDescription>
                             </div>
+                            <Badge variant="secondary" className="w-fit">{item.date}</Badge>
                         </CardHeader>
                       <CardContent>
                         <p className="text-muted-foreground">{item.description}</p>

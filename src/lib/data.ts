@@ -5,7 +5,7 @@ import { Github, Linkedin, Server } from 'lucide-react';
 export const personalData = {
   name: 'Shikhar Kumar',
   title: "Software Engineer",
-  bio: "Master’s student in Computer Science at UC Riverside (GPA 3.96) with 3 years of industry experience at Nagarro. Skilled in backend development, cloud infrastructure, and applied machine learning.",
+  bio: "Computer Science graduate student at UC Riverside with a strong interest in algorithms, cloud computing, and machine learning. I enjoy designing systems that are both intelligent and scalable.",
   email: 'skuma154@ucr.edu',
 };
 
@@ -17,7 +17,7 @@ export const socialLinks = [
 export const projectsData = [
   {
     title: 'Reddit Search Engine',
-    date: 'Fall 2024',
+    date: 'Winter 2025',
     description: [
         'Built a search engine over 100K+ Reddit posts by crawling data with PRAW API and indexing with PyLucene.',
         'Designed a Flask web app for querying and displaying results with sub-second response times.'
@@ -27,7 +27,7 @@ export const projectsData = [
   },
   {
     title: 'IMDB Reviews Analysis',
-    date: 'Winter 2025',
+    date: 'Spring 2025',
     description: [
         'Conducted sentiment analysis on 50K+ IMDB reviews using Apache Spark.',
         'Built a Flask web application with real-time querying and visualization, backed by a PostgreSQL database in Docker.'
@@ -37,7 +37,7 @@ export const projectsData = [
   },
   {
     title: 'UCR Course Scheduler',
-    date: 'Spring 2025',
+    date: 'Summer 2025',
     description: [
         'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI.',
         'Integrated into a React frontend with a dynamic calendar view for interactive schedule management.'

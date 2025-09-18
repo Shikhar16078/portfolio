@@ -6,42 +6,25 @@ import { awardsData } from "@/lib/data";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import AnimatedContent from "../animated-content";
-import { Award, ChevronsUpDown, Pause, Play } from "lucide-react";
+import { Award, ChevronsUpDown } from "lucide-react";
 import { Button } from "../ui/button";
 
 export default function AwardsSection() {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [api, setApi] = useState<CarouselApi>()
-  const autoplayPlugin = useRef(Autoplay({ delay: 10000, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const autoplayPlugin = useRef(Autoplay({ delay: 10000, stopOnInteraction: true, stopOnMouseEnter: true }));
 
-  const handleTogglePlay = () => {
-    const autoplay = autoplayPlugin.current;
-    if (!api) return;
-
-    if (isPlaying) {
-      autoplay.stop();
-    } else {
-      autoplay.play(api);
-    }
-    setIsPlaying(!isPlaying);
-  };
-  
   useEffect(() => {
     if (!api) {
       return;
     }
-    // Reset autoplay when view is toggled
+    // Stop autoplay when expanded, and restart when collapsed
     if (isExpanded) {
-      if(isPlaying) {
-        autoplayPlugin.current.stop();
-      }
+      autoplayPlugin.current.stop();
     } else {
-      if(isPlaying) {
-        autoplayPlugin.current.play(api);
-      }
+      autoplayPlugin.current.play(api);
     }
-  }, [api, isExpanded, isPlaying]);
+  }, [api, isExpanded]);
 
   return (
     <section id="awards" className="w-full min-h-screen flex items-center py-12 md:py-16 lg:py-20">
@@ -89,12 +72,6 @@ export default function AwardsSection() {
                     ))}
                   </CarouselContent>
                 </Carousel>
-                <div className="absolute top-4 right-4 z-10">
-                  <Button variant="ghost" size="icon" onClick={handleTogglePlay} className="rounded-full">
-                    {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                    <span className="sr-only">{isPlaying ? "Pause" : "Play"}</span>
-                  </Button>
-                </div>
               </div>
             ) : (
               <div className="grid gap-8 sm:grid-cols-2">

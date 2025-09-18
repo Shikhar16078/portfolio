@@ -17,7 +17,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ArrowUpRight, ChevronsUpDown } from "lucide-react";
+import { ArrowUpRight, ChevronsUpDown, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import AnimatedContent from "../animated-content";
 import Image from "next/image";
@@ -64,9 +64,12 @@ const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
           </CollapsibleTrigger>
 
           <CollapsibleContent className="w-full data-[state=closed]:hidden">
-            <ul className="list-disc list-inside bg-muted/50 rounded-md p-4 mt-2 text-muted-foreground">
+            <ul className="space-y-2 bg-muted/50 rounded-md p-4 mt-2 text-muted-foreground">
               {item.courses.map((course) => (
-                <li key={course}>{course}</li>
+                <li key={course} className="flex items-center gap-2">
+                  <ChevronRight className="h-4 w-4 text-primary" />
+                  <span>{course}</span>
+                </li>
               ))}
             </ul>
           </CollapsibleContent>

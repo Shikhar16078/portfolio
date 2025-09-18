@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { awardsData } from "@/lib/data";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPagination, CarouselPrevious } from "@/components/ui/carousel";
 import AnimatedContent from "../animated-content";
 import { Award, ChevronsUpDown } from "lucide-react";
 import { Button } from "../ui/button";
@@ -59,6 +59,11 @@ export default function AwardsSection() {
                         </CarouselItem>
                       ))}
                     </CarouselContent>
+                    <div className="flex justify-center items-center mt-8">
+                      <CarouselPrevious className="relative translate-x-[-150%] -translate-y-0" />
+                      <CarouselPagination />
+                      <CarouselNext className="relative translate-x-[150%] -translate-y-0" />
+                    </div>
                   </Carousel>
                 )}
               </div>

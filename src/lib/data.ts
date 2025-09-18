@@ -94,14 +94,8 @@ export const awardsData = [
   {
     title: 'Graduate Fellowship',
     issuer: 'University of California, Riverside',
-    date: '2024',
+    date: 'Summer 2025',
     description: 'Awarded a fellowship for strong academic performance and potential in computer science.',
-  },
-  {
-    title: 'Dean\'s Honor List',
-    issuer: 'University of California, Riverside',
-    date: '2024',
-    description: 'Maintained a 3.96 GPA, earning placement on the Dean’s Honor List for academic excellence.',
   },
   {
     title: 'Mentorship Recognition',

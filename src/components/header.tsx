@@ -94,8 +94,8 @@ export default function Header({ activeSection }: { activeSection: string }) {
         </Dialog>
 
         {/* Desktop Navigation */}
-        <TooltipProvider delayDuration={0}>
-          <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden md:flex items-center gap-2">
+          <TooltipProvider delayDuration={0}>
             {navLinks.map((link) => (
               <Tooltip key={link.href}>
                 <TooltipTrigger asChild>
@@ -118,8 +118,8 @@ export default function Header({ activeSection }: { activeSection: string }) {
                 </TooltipContent>
               </Tooltip>
             ))}
-          </nav>
-        </TooltipProvider>
+          </TooltipProvider>
+        </nav>
 
         <div className="flex items-center gap-4">
           <ThemeToggle />

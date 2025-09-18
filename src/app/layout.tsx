@@ -5,7 +5,7 @@ import './globals.css';
 import { personalData } from '@/lib/data';
 
 export const metadata: Metadata = {
-  title: `${personalData.name} | Portfolio`,
+  title: `${personalData.name}`,
   description: personalData.bio,
 };
 

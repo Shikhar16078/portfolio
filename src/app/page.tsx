@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
 import Header from '@/components/header';
 import HomeSection from '@/components/sections/home';
 import ExperienceSection from '@/components/sections/experience';
@@ -10,46 +9,46 @@ import AwardsSection from '@/components/sections/awards';
 import SkillsSection from '@/components/sections/skills';
 import ContactSection from '@/components/sections/contact';
 import Footer from '@/components/footer';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
-  const sectionRefs = useRef<Record<string, IntersectionObserverEntry>>({});
 
   useEffect(() => {
+    const sections = [
+      'home', 
+      'experience', 
+      'projects', 
+      'education', 
+      'skills', 
+      'awards', 
+      'contact'
+    ];
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          sectionRefs.current[entry.target.id] = entry;
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
         });
-
-        const visibleSections = Object.values(sectionRefs.current).filter(
-          (entry) => entry.isIntersecting
-        );
-
-        if (visibleSections.length > 0) {
-          // Find the section that is most visible
-          const mostVisibleSection = visibleSections.reduce(
-            (max, entry) =>
-              (entry.intersectionRatio > max.intersectionRatio ? entry : max),
-            visibleSections[0]
-          );
-          setActiveSection(mostVisibleSection.target.id);
-        }
       },
-      {
-        rootMargin: '-50% 0px -50% 0px', // Trigger when the section is in the middle of the viewport
-        threshold: 0,
-      }
+      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
     );
 
-    const sections = document.querySelectorAll('main > section');
-    sections.forEach((section) => {
-      observer.observe(section);
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
     });
 
     return () => {
-      sections.forEach((section) => {
-        observer.unobserve(section);
+      sections.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          observer.unobserve(element);
+        }
       });
     };
   }, []);

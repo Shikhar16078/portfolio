@@ -43,7 +43,7 @@ export const educationData = [
     period: 'Sept 2024 – Dec 2025',
     gpa: 'GPA: 3.96/4.00',
     description:
-      'Deepened expertise in advanced algorithms, AI, and distributed systems.',
+      'Even though I was a highly appreciated member of my team at Nagarro, I felt the need to further enhance my skills and deepen my understanding of advanced Computer Science concepts. This led me to pursue a Master of Science in Computer Science at the University of California, Riverside after nearly three years of industry experience. At UCR, I have explored Artificial Intelligence, Algorithms, Distributed Systems, and other fascinating areas of Computer Science. Yet, my journey of learning continues here at UCR as I strive to further hone my expertise in this ever-evolving field.',
     website: 'https://www.ucr.edu/',
     courses: [
       'Advanced Algorithms',
@@ -52,13 +52,14 @@ export const educationData = [
       'Distributed Systems',
       'Database Management Systems',
     ],
+    icon: '/assets/images/ucr.png',
   },
   {
     degree: 'B.Tech. in Information Technology',
     institution: 'Dr. A.P.J. Abdul Kalam Technical University, India',
     period: 'Aug 2016 – Sept 2020',
     gpa: 'CGPA: 7.47/10.00',
-    description: 'Built a strong foundation in core computer science principles.',
+    description: 'With a passion for engineering after completing my 12 th grade, I joined Inderprastha Engineering College, affiliated with Dr. A.P.J. Abdul Kalam Technical University. During my time there, I developed a strong foundation in Computer Science fundamentals, which enabled me to secure three job offers by the end of my bachelor’s degree, ultimately leading me to join Nagarro as an Associate Software Engineer. I am grateful to my professors and mentors for their guidance in shaping my journey as a Computer Science student.',
     website: 'https://aktu.ac.in/',
     courses: [
       'Data Structures & Algorithms',
@@ -67,6 +68,7 @@ export const educationData = [
       'Computer Networks',
       'Software Engineering',
     ],
+    icon: '/assets/images/aktu.png',
   },
 ];
 

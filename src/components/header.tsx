@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme-toggle';
 import {
   Dialog,
@@ -125,6 +125,9 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="bg-chrome">
+               <SheetHeader>
+                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+               </SheetHeader>
                <nav className="grid gap-4 text-lg font-medium p-6">
                  <Dialog>
                   <DialogTrigger asChild>

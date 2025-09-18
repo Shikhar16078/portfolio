@@ -16,15 +16,6 @@ export const socialLinks = [
 
 export const projectsData = [
   {
-    title: 'UCR Course Scheduler',
-    description: [
-        'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI.',
-        'Integrated into a React frontend with a dynamic calendar view for interactive schedule management.'
-    ],
-    technologies: ['React', 'FastAPI', 'Google ADK'],
-    icon: '/assets/images/ucr.png',
-  },
-  {
     title: 'Reddit Search Engine',
     description: [
         'Built a search engine over 100K+ Reddit posts by crawling data with PRAW API and indexing with PyLucene.',
@@ -41,6 +32,15 @@ export const projectsData = [
     ],
     technologies: ['Apache Spark', 'PostgreSQL', 'Docker', 'Flask'],
     icon: '/assets/images/imdb.png',
+  },
+  {
+    title: 'UCR Course Scheduler',
+    description: [
+        'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI.',
+        'Integrated into a React frontend with a dynamic calendar view for interactive schedule management.'
+    ],
+    technologies: ['React', 'FastAPI', 'Google ADK'],
+    icon: '/assets/images/ucr.png',
   },
 ];
 

@@ -29,9 +29,9 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-1">
             <CardTitle>{item.role}</CardTitle>
-            <Badge variant="outline">{item.period}</Badge>
+            <Badge variant="outline" className="flex-shrink-0">{item.period}</Badge>
           </div>
           <div className="flex items-center gap-3">
             {item.icon && (

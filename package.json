@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "predeploy": "npm run build && node scripts/predeploy.js",
-    "deploy": "gh-pages -d out -b gh-pages"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d out --dotfiles"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

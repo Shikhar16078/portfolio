@@ -94,10 +94,10 @@ export default function Header({ activeSection }: { activeSection: string }) {
         </Dialog>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-2">
-          {navLinks.map((link) => (
-            <TooltipProvider key={link.href} delayDuration={0}>
-              <Tooltip>
+        <TooltipProvider delayDuration={0}>
+          <nav className="hidden md:flex items-center gap-2">
+            {navLinks.map((link) => (
+              <Tooltip key={link.href}>
                 <TooltipTrigger asChild>
                   <Button
                     asChild
@@ -117,9 +117,9 @@ export default function Header({ activeSection }: { activeSection: string }) {
                   <p>{link.label}</p>
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider>
-          ))}
-        </nav>
+            ))}
+          </nav>
+        </TooltipProvider>
 
         <div className="flex items-center gap-4">
           <ThemeToggle />

@@ -9,6 +9,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { CheckCircle2, ChevronsUpDown } from "lucide-react";
 import AnimatedContent from "../animated-content";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
               </li>
             ))}
           </ul>
-          <CollapsibleContent>
+          <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
             <ul className="space-y-3 text-muted-foreground mt-3">
               {additionalResponsibilities.map((resp, i) => (
                 <li key={i} className="flex items-start gap-3">

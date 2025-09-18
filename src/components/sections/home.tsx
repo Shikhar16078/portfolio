@@ -19,7 +19,7 @@ export default function HomeSection() {
                 width={192}
                 height={192}
                 data-ai-hint={profileImage.imageHint}
-                className="mx-auto aspect-square overflow-hidden rounded-full object-cover"
+                className="mx-auto aspect-square overflow-hidden rounded-full object-cover ring-2 ring-primary ring-offset-4 ring-offset-hero transition-transform duration-300 ease-in-out hover:scale-105"
                 priority
               />
             )}

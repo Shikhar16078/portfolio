@@ -25,7 +25,7 @@ export default function SkillsSection() {
   const additionalSkills = allSkills.slice(initialSkillsCount);
 
   return (
-    <section id="skills" className="w-full flex flex-col justify-center py-12 md:py-16 lg:py-20">
+    <section id="skills" className="w-full min-h-screen flex flex-col justify-center py-12 md:py-16 lg:py-20">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <AnimatedContent>
           <div className="flex flex-col items-center justify-center space-y-4 text-center">

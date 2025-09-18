@@ -55,7 +55,7 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
               </li>
             ))}
           </ul>
-          <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+          <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
             <ul className="space-y-3 text-muted-foreground mt-3">
               {additionalResponsibilities.map((resp, i) => (
                 <li key={i} className="flex items-start gap-3">
@@ -70,7 +70,7 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
           <CardFooter>
             <CollapsibleTrigger asChild>
               <Button variant="outline" className="w-full">
-                {isOpen ? "Hide" : "Show More"}
+                {isOpen ? "Show Less" : "Show More"}
                 <ChevronsUpDown className="ml-2 h-4 w-4" />
               </Button>
             </CollapsibleTrigger>

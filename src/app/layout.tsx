@@ -7,9 +7,6 @@ import { personalData } from '@/lib/data';
 export const metadata: Metadata = {
   title: `${personalData.name} | Portfolio`,
   description: personalData.bio,
-  icons: {
-    icon: '/icon.png',
-  },
 };
 
 export default function RootLayout({
@@ -20,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/portfolio/icon.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />

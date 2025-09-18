@@ -12,6 +12,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import AnimatedContent from '../animated-content';
 import Image from 'next/image';
+import { ChevronRight } from 'lucide-react';
 
 export default function ProjectsSection() {
   return (
@@ -56,7 +57,14 @@ export default function ProjectsSection() {
                             </div>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow">
-                          <p className="text-muted-foreground mb-4 flex-grow text-justify">{project.description}</p>
+                          <ul className="space-y-2 text-muted-foreground mb-4 flex-grow text-justify">
+                            {project.description.map((point, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <ChevronRight className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
+                                <span>{point}</span>
+                              </li>
+                            ))}
+                          </ul>
                           <div className="flex flex-wrap gap-2">
                             {project.technologies.map((tech) => (
                               <Badge key={tech} variant="secondary">{tech}</Badge>

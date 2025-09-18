@@ -88,7 +88,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
               Summary
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-xl">
+          <DialogContent>
             <SummaryContent />
           </DialogContent>
         </Dialog>

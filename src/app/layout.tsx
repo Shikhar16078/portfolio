@@ -7,6 +7,9 @@ import { personalData } from '@/lib/data';
 export const metadata: Metadata = {
   title: `${personalData.name} | Portfolio`,
   description: personalData.bio,
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 export default function RootLayout({

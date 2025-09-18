@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { awardsData } from "@/lib/data";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import AnimatedContent from "../animated-content";
 import { Award, ChevronsUpDown, Pause, Play } from "lucide-react";
 import { Button } from "../ui/button";
@@ -12,16 +12,17 @@ import { Button } from "../ui/button";
 export default function AwardsSection() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [api, setApi] = useState<CarouselApi>()
   const autoplayPlugin = useRef(Autoplay({ delay: 10000, stopOnInteraction: false, stopOnMouseEnter: true }));
 
   const handleTogglePlay = () => {
     const autoplay = autoplayPlugin.current;
-    if (!autoplay) return;
+    if (!autoplay || !api) return;
 
     if (isPlaying) {
       autoplay.stop();
     } else {
-      autoplay.play();
+      autoplay.play(api);
     }
     setIsPlaying(!isPlaying);
   };
@@ -44,6 +45,7 @@ export default function AwardsSection() {
             {!isExpanded ? (
               <div className="relative">
                 <Carousel
+                  setApi={setApi}
                   plugins={[autoplayPlugin.current]}
                   className="w-full"
                   opts={{ loop: true, align: "start" }}

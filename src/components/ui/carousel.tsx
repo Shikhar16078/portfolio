@@ -109,16 +109,12 @@ const Carousel = React.forwardRef<
     )
 
     React.useEffect(() => {
-      if (!api || !setApi) {
+      if (!api) {
         return
       }
 
-      setApi(api)
-    }, [api, setApi])
-
-    React.useEffect(() => {
-      if (!api) {
-        return
+      if (setApi) {
+        setApi(api)
       }
       
       setScrollSnaps(api.scrollSnapList())
@@ -133,7 +129,7 @@ const Carousel = React.forwardRef<
       return () => {
         api?.off("select", onSelect)
       }
-    }, [api, onSelect])
+    }, [api, onSelect, setApi])
 
     return (
       <CarouselContext.Provider

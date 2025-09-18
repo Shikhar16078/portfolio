@@ -1,22 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import Autoplay from "embla-carousel-autoplay";
 import { awardsData } from "@/lib/data";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import AnimatedContent from "../animated-content";
-import { Award, ChevronsUpDown } from "lucide-react";
+import { Award, ChevronsUpDown, Pause, Play } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 
 export default function AwardsSection() {
-  const [isOpen, setIsOpen] = useState(false);
-  const topAwards = awardsData.slice(0, 2);
-  const additionalAwards = awardsData.slice(2);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const autoplayPlugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true }));
 
+  const handleTogglePlay = () => {
+    const player = autoplayPlugin.current.options().player;
+    if (isPlaying) {
+      player.stop();
+    } else {
+      player.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+  
   return (
     <section id="awards" className="w-full flex flex-col justify-center py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
@@ -32,9 +39,46 @@ export default function AwardsSection() {
         </AnimatedContent>
         <AnimatedContent>
           <div className="mx-auto max-w-5xl py-12">
-            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+            {!isExpanded ? (
+              <div className="relative">
+                <Carousel
+                  plugins={[autoplayPlugin.current]}
+                  className="w-full"
+                  opts={{ loop: true, align: "start" }}
+                >
+                  <CarouselContent>
+                    {awardsData.map((item, index) => (
+                      <CarouselItem key={index} className="md:basis-1/2">
+                        <div className="p-1">
+                          <Card className="h-full">
+                            <CardHeader className="flex-row items-center gap-4">
+                              <div className="p-3 rounded-full bg-primary/10 text-primary">
+                                <Award className="h-6 w-6" />
+                              </div>
+                              <div className="flex-grow">
+                                <CardTitle>{item.title}</CardTitle>
+                                <CardDescription>{item.issuer} - {item.date}</CardDescription>
+                              </div>
+                            </CardHeader>
+                            <CardContent>
+                              <p className="text-muted-foreground">{item.description}</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+                <div className="absolute top-4 right-4 z-10">
+                  <Button variant="ghost" size="icon" onClick={handleTogglePlay} className="rounded-full">
+                    {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                    <span className="sr-only">{isPlaying ? "Pause" : "Play"}</span>
+                  </Button>
+                </div>
+              </div>
+            ) : (
               <div className="grid gap-8 sm:grid-cols-2">
-                {topAwards.map((item, index) => (
+                {awardsData.map((item, index) => (
                   <Card key={index}>
                     <CardHeader className="flex-row items-center gap-4">
                       <div className="p-3 rounded-full bg-primary/10 text-primary">
@@ -51,37 +95,13 @@ export default function AwardsSection() {
                   </Card>
                 ))}
               </div>
-              <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                <div className="grid gap-8 sm:grid-cols-2 mt-8">
-                  {additionalAwards.map((item, index) => (
-                    <Card key={index}>
-                      <CardHeader className="flex-row items-center gap-4">
-                        <div className="p-3 rounded-full bg-primary/10 text-primary">
-                          <Award className="h-6 w-6" />
-                        </div>
-                        <div className="flex-grow">
-                          <CardTitle>{item.title}</CardTitle>
-                          <CardDescription>{item.issuer} - {item.date}</CardDescription>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-muted-foreground">{item.description}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </CollapsibleContent>
-              {awardsData.length > 2 && (
-                <div className="flex justify-center mt-8">
-                  <CollapsibleTrigger asChild>
-                    <Button variant="outline">
-                      {isOpen ? "Show Less" : "Show More"}
-                      <ChevronsUpDown className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CollapsibleTrigger>
-                </div>
-              )}
-            </Collapsible>
+            )}
+            <div className="flex justify-center mt-8">
+              <Button variant="outline" onClick={() => setIsExpanded(!isExpanded)}>
+                {isExpanded ? "Show Less" : "Show All"}
+                <ChevronsUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </AnimatedContent>
       </div>

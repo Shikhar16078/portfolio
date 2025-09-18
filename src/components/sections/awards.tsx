@@ -43,13 +43,13 @@ export default function AwardsSection() {
                           <div className="p-1 h-full">
                             <Card className="h-full">
                               <CardHeader className="gap-2">
-                                <CardTitle>{item.title}</CardTitle>
-                                <div className='flex items-center gap-4'>
+                                <div className="flex items-center gap-4">
                                     <div className="p-3 rounded-full bg-primary/10 text-primary">
                                         <Award className="h-5 w-5" />
                                     </div>
-                                    <CardDescription>{item.issuer}</CardDescription>
+                                    <CardTitle>{item.title}</CardTitle>
                                 </div>
+                                <CardDescription>{item.issuer}</CardDescription>
                                 <Badge variant="secondary" className="w-fit">{item.date}</Badge>
                               </CardHeader>
                               <CardContent>
@@ -74,13 +74,13 @@ export default function AwardsSection() {
                   {awardsData.map((item, index) => (
                     <Card key={index} className="h-full">
                         <CardHeader className="gap-2">
-                            <CardTitle>{item.title}</CardTitle>
-                            <div className='flex items-center gap-4'>
+                            <div className="flex items-center gap-4">
                                 <div className="p-3 rounded-full bg-primary/10 text-primary">
                                     <Award className="h-5 w-5" />
                                 </div>
-                                <CardDescription>{item.issuer}</CardDescription>
+                                <CardTitle>{item.title}</CardTitle>
                             </div>
+                            <CardDescription>{item.issuer}</CardDescription>
                             <Badge variant="secondary" className="w-fit">{item.date}</Badge>
                         </CardHeader>
                       <CardContent>

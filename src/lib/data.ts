@@ -19,21 +19,18 @@ export const projectsData = [
     title: 'UCR Course Scheduler',
     description: 'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI. Integrated into a React frontend with a dynamic calendar view for interactive schedule management.',
     technologies: ['React', 'FastAPI', 'Google ADK'],
-    image: 'project-scheduler',
     link: '#',
   },
   {
     title: 'Reddit Search Engine',
     description: 'Built a search engine over 100K+ Reddit posts by crawling data with PRAW API and indexing with PyLucene. Designed a Flask web app for querying and displaying results with sub-second response times.',
     technologies: ['Python', 'PRAW', 'PyLucene', 'Flask'],
-    image: 'project-reddit',
     link: '#',
   },
   {
     title: 'IMDB Reviews Analysis',
     description: 'Conducted sentiment analysis on 50K+ IMDB reviews using Apache Spark. Built a Flask web application with real-time querying and visualization, backed by a PostgreSQL database in Docker.',
     technologies: ['Apache Spark', 'PostgreSQL', 'Docker', 'Flask'],
-    image: 'project-imdb',
     link: '#',
   },
 ];

@@ -1,7 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { projectsData } from '@/lib/data';
-import placeholderData from '@/lib/placeholder-images.json';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Carousel,
@@ -17,8 +15,6 @@ import { ArrowUpRight } from 'lucide-react';
 import AnimatedContent from '../animated-content';
 
 export default function ProjectsSection() {
-  const { placeholderImages } = placeholderData;
-
   return (
     <section id="projects" className="w-full min-h-screen flex flex-col justify-center py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
@@ -42,22 +38,11 @@ export default function ProjectsSection() {
           >
             <CarouselContent>
               {projectsData.map((project, index) => {
-                const projectImage = placeholderImages.find(p => p.id === project.image);
                 return (
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1 h-full">
                       <Card className="flex flex-col h-full">
                         <CardHeader>
-                          {projectImage && (
-                            <Image
-                              src={projectImage.imageUrl}
-                              alt={project.title}
-                              width={600}
-                              height={400}
-                              data-ai-hint={projectImage.imageHint}
-                              className="aspect-video w-full overflow-hidden rounded-t-lg object-cover"
-                            />
-                          )}
                           <CardTitle className="pt-4">{project.title}</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow">

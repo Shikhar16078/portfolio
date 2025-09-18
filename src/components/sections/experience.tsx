@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { CheckCircle2, ChevronsUpDown } from "lucide-react";
+import { CheckCircle2, ChevronsUpDown, Briefcase } from "lucide-react";
 import AnimatedContent from "../animated-content";
 
 const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
@@ -24,10 +24,10 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
 
   return (
     <div className="relative pl-8 sm:pl-12">
-      <div className="absolute left-3 sm:left-5 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary">
-        <div className="h-3 w-3 rounded-full bg-primary-foreground" />
+      <div className="absolute left-3 sm:left-5 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground">
+        <Briefcase className="h-4 w-4" />
       </div>
-      <div className="absolute left-[17px] sm:left-[29px] h-full w-px bg-border" />
+      <div className="absolute left-[17px] sm:left-[29px] top-7 h-[calc(100%-1.75rem)] w-px bg-border" />
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <Card>
           <CardHeader>

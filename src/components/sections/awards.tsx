@@ -61,7 +61,7 @@ export default function AwardsSection() {
                 )}
               </div>
               
-              <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+              <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up-slow data-[state=open]:animate-collapsible-down-slow">
                 <div className="grid gap-8 sm:grid-cols-2">
                   {awardsData.map((item, index) => (
                     <Card key={index} className="h-full">

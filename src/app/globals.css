@@ -137,4 +137,22 @@
   .animate-rotate-out {
     animation: rotate-out 0.3s ease-in;
   }
+
+  @keyframes collapsible-down-slow {
+    from { height: 0 }
+    to { height: var(--radix-collapsible-content-height) }
+  }
+
+  @keyframes collapsible-up-slow {
+    from { height: var(--radix-collapsible-content-height) }
+    to { height: 0 }
+  }
+
+  .animate-collapsible-down-slow {
+    animation: collapsible-down-slow 0.5s ease-out;
+  }
+  
+  .animate-collapsible-up-slow {
+    animation: collapsible-up-slow 0.5s ease-out;
+  }
 }

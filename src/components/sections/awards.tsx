@@ -41,13 +41,14 @@ export default function AwardsSection() {
                         <CarouselItem key={index} className="md:basis-1/2">
                           <div className="p-1 h-full">
                             <Card className="h-full">
-                              <CardHeader className="flex-row items-center gap-4">
-                                <div className="p-3 rounded-full bg-primary/10 text-primary">
+                              <CardHeader className="flex-row items-start gap-4">
+                                <div className="p-3 rounded-full bg-primary/10 text-primary mt-1">
                                   <Award className="h-6 w-6" />
                                 </div>
                                 <div className="flex-grow">
                                   <CardTitle>{item.title}</CardTitle>
-                                  <CardDescription>{item.issuer} - {item.date}</CardDescription>
+                                  <CardDescription>{item.issuer}</CardDescription>
+                                  <CardDescription>{item.date}</CardDescription>
                                 </div>
                               </CardHeader>
                               <CardContent>
@@ -66,13 +67,14 @@ export default function AwardsSection() {
                 <div className="grid gap-8 sm:grid-cols-2">
                   {awardsData.map((item, index) => (
                     <Card key={index} className="h-full">
-                      <CardHeader className="flex-row items-center gap-4">
-                        <div className="p-3 rounded-full bg-primary/10 text-primary">
+                      <CardHeader className="flex-row items-start gap-4">
+                        <div className="p-3 rounded-full bg-primary/10 text-primary mt-1">
                           <Award className="h-6 w-6" />
                         </div>
                         <div className="flex-grow">
                           <CardTitle>{item.title}</CardTitle>
-                          <CardDescription>{item.issuer} - {item.date}</CardDescription>
+                          <CardDescription>{item.issuer}</CardDescription>
+                          <CardDescription>{item.date}</CardDescription>
                         </div>
                       </CardHeader>
                       <CardContent>

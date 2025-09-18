@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { projectsData } from '@/lib/data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -12,6 +12,8 @@ import {
 import { Badge } from '@/components/ui/badge';
 import AnimatedContent from '../animated-content';
 import Image from 'next/image';
+import { Button } from '../ui/button';
+import { Github } from 'lucide-react';
 
 export default function ProjectsSection() {
   return (
@@ -63,6 +65,13 @@ export default function ProjectsSection() {
                             ))}
                           </div>
                         </CardContent>
+                        <CardFooter>
+                          <Button asChild className="w-full">
+                            <Link href={project.github} target="_blank" rel="noopener noreferrer">
+                              <Github className="mr-2" /> View on GitHub
+                            </Link>
+                          </Button>
+                        </CardFooter>
                       </Card>
                     </div>
                   </CarouselItem>

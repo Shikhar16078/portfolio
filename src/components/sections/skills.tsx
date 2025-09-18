@@ -47,13 +47,15 @@ export default function SkillsSection() {
                   </Badge>
                 ))}
               </div>
-              <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-                <div className="flex flex-wrap justify-center gap-4 mt-4">
-                  {additionalSkills.map((skill, index) => (
-                    <Badge key={index + initialSkillsCount} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md hover:bg-card transition-colors">
-                      {skill.name}
-                    </Badge>
-                  ))}
+              <CollapsibleContent>
+                <div className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+                  <div className="flex flex-wrap justify-center gap-4 mt-4 pb-2">
+                    {additionalSkills.map((skill, index) => (
+                      <Badge key={index + initialSkillsCount} variant="secondary" className="text-base font-medium px-4 py-2 rounded-lg shadow-md hover:bg-card transition-colors">
+                        {skill.name}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </CollapsibleContent>
               {allSkills.length > initialSkillsCount && (

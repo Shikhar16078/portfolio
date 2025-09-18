@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   output: 'export',
   basePath: isProd ? repo : '',
   assetPrefix: isProd ? `${repo}/` : undefined, // <-- add this
-  trailingSlash: true,                           // <-- and this
   typescript: { ignoreBuildErrors: true },
   eslint: { ignoreDuringBuilds: true },
   images: {

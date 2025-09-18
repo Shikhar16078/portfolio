@@ -21,8 +21,9 @@ import {
 } from "@/components/ui/tooltip"
 import { personalData } from '@/lib/data';
 import { Separator } from './ui/separator';
+import { cn } from '@/lib/utils';
 
-export default function Header() {
+export default function Header({ activeSection }: { activeSection: string }) {
   const navLinks = [
     { href: '#home', label: 'Home', icon: Home },
     { href: '#experience', label: 'Experience', icon: Briefcase },
@@ -102,7 +103,9 @@ export default function Header() {
                     asChild
                     variant='ghost'
                     size="icon"
-                    className='hover:bg-primary hover:text-primary-foreground'
+                    className={cn('hover:bg-primary hover:text-primary-foreground', {
+                      'bg-primary text-primary-foreground': link.href === `#${activeSection}`,
+                    })}
                   >
                     <Link href={link.href} prefetch={false}>
                       <link.icon className="h-5 w-5" />
@@ -149,7 +152,10 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                    className={cn(
+                      'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                      { 'text-primary bg-primary/10': link.href === `#${activeSection}` }
+                    )}
                     prefetch={false}
                   >
                     <link.icon className="h-5 w-5" />

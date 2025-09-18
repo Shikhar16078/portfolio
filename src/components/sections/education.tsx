@@ -1,6 +1,10 @@
 import { educationData } from "@/lib/data"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "../ui/badge"
+import { Button } from "../ui/button"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { ArrowUpRight, ChevronsUpDown } from "lucide-react"
+import Link from "next/link"
 import AnimatedContent from "../animated-content";
 
 export default function EducationSection() {
@@ -18,17 +22,38 @@ export default function EducationSection() {
           </div>
         </AnimatedContent>
         <AnimatedContent>
-          <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2">
+          <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 md:grid-cols-2">
             {educationData.map((item, index) => (
-              <Card key={index}>
+              <Card key={index} className="flex flex-col h-full">
                 <CardHeader className="gap-2">
                   <Badge variant="secondary" className="w-fit">{item.period}</Badge>
                   <CardTitle>{item.degree}</CardTitle>
                   <CardDescription>{item.institution}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-grow">
                   <p className="text-muted-foreground">{item.description}</p>
                 </CardContent>
+                <CardFooter className="flex-col items-start gap-4">
+                  <Collapsible className="w-full">
+                    <CollapsibleTrigger asChild>
+                      <Button variant="outline" className="w-full">
+                        Relevant Courses <ChevronsUpDown className="ml-2 h-4 w-4"/>
+                      </Button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <ul className="list-disc list-inside bg-muted/50 rounded-md p-4 mt-2 text-muted-foreground">
+                        {item.courses.map((course) => (
+                          <li key={course}>{course}</li>
+                        ))}
+                      </ul>
+                    </CollapsibleContent>
+                  </Collapsible>
+                  <Button asChild className="w-full">
+                    <Link href={item.website} target="_blank" rel="noopener noreferrer">
+                      Visit Website <ArrowUpRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </CardFooter>
               </Card>
             ))}
           </div>

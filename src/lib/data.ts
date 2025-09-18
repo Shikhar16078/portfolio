@@ -16,27 +16,28 @@ export const socialLinks = [
 
 export const projectsData = [
   {
-    title: 'AI-Powered Course Scheduler',
-    description: 'A web application that helps students schedule their courses using an AI-powered chatbot. Features a dynamic calendar view for easy schedule management.',
-    technologies: ['React', 'FastAPI', 'Google ADK', 'Dialogflow'],
+    title: 'UCR Course Scheduler',
+    description: 'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI. Integrated into a React frontend with a dynamic calendar view for interactive schedule management.',
+    technologies: ['React', 'FastAPI', 'Google ADK'],
     image: 'project-scheduler',
     link: '#',
   },
   {
-    title: 'Microservice Data Publisher',
-    description: 'A real-time data publisher using .NET Core and AWS Lambda to ensure data synchronization across various microservices in a large-scale automobile project.',
-    technologies: ['.NET Core', 'AWS Lambda', 'Oracle 18c', 'Terraform'],
-    image: 'project-microservice',
+    title: 'Reddit Search Engine',
+    description: 'Built a search engine over 100K+ Reddit posts by crawling data with PRAW API and indexing with PyLucene. Designed a Flask web app for querying and displaying results with sub-second response times.',
+    technologies: ['Python', 'PRAW', 'PyLucene', 'Flask'],
+    image: 'project-reddit',
     link: '#',
   },
   {
-    title: 'Automated VM Setup',
-    description: 'A PowerShell script that automates the setup of development virtual machines, reducing setup time from two days to approximately one hour.',
-    technologies: ['PowerShell', 'VMware', 'Windows Server'],
-    image: 'project-vm',
+    title: 'IMDB Reviews Analysis',
+    description: 'Conducted sentiment analysis on 50K+ IMDB reviews using Apache Spark. Built a Flask web application with real-time querying and visualization, backed by a PostgreSQL database in Docker.',
+    technologies: ['Apache Spark', 'PostgreSQL', 'Docker', 'Flask'],
+    image: 'project-imdb',
     link: '#',
   },
 ];
+
 
 export const educationData = [
   {
@@ -44,13 +45,29 @@ export const educationData = [
     institution: 'University of California, Riverside',
     period: 'Sept 2024 – Dec 2025',
     description:
-      'GPA: 3.96/4.00. Relevant coursework: Algorithms, Artificial Intelligence, Machine Learning, Distributed Systems.',
+      'GPA: 3.96/4.00. Deepened expertise in advanced algorithms, AI, and distributed systems.',
+    website: 'https://www.ucr.edu/',
+    courses: [
+      'Advanced Algorithms',
+      'Artificial Intelligence',
+      'Machine Learning',
+      'Distributed Systems',
+      'Database Management Systems',
+    ],
   },
   {
     degree: 'B.Tech. in Information Technology',
     institution: 'Dr. A.P.J. Abdul Kalam Technical University, India',
     period: 'Aug 2016 – Sept 2020',
-    description: 'CGPA: 7.47/10.00.',
+    description: 'CGPA: 7.47/10.00. Built a strong foundation in core computer science principles.',
+    website: 'https://aktu.ac.in/',
+    courses: [
+      'Data Structures & Algorithms',
+      'Object-Oriented Programming',
+      'Operating Systems',
+      'Computer Networks',
+      'Software Engineering',
+    ],
   },
 ];
 
@@ -107,29 +124,29 @@ export const experienceData = [
 
 export const skillsData = {
   languages: [
-    { name: 'Python', proficiency: 90 },
-    { name: 'C#', proficiency: 85 },
-    { name: 'Java', proficiency: 75 },
-    { name: 'JavaScript', proficiency: 70 },
+    { name: 'Python' },
+    { name: 'C#' },
+    { name: 'Java' },
+    { name: 'JavaScript' },
   ],
   frameworks: [
-    { name: '.NET Core', proficiency: 85 },
-    { name: 'Flask', proficiency: 80 },
-    { name: 'FastAPI', proficiency: 75 },
-    { name: 'Apache Spark', proficiency: 70 },
-    { name: 'React', proficiency: 70 },
-    { name: 'PyLucene', proficiency: 60 },
+    { name: '.NET Core' },
+    { name: 'Flask' },
+    { name: 'FastAPI' },
+    { name: 'Apache Spark' },
+    { name: 'React' },
+    { name: 'PyLucene' },
   ],
   tools: [
-    { name: 'AWS', proficiency: 85 },
-    { name: 'Terraform', proficiency: 80 },
-    { name: 'Docker', proficiency: 80 },
-    { name: 'PostgreSQL', proficiency: 75 },
-    { name: 'Oracle 18c', proficiency: 75 },
-    { name: 'MySQL', proficiency: 70 },
-    { name: 'Git & GitHub', proficiency: 90 },
-    { name: 'Splunk', proficiency: 70 },
-    { name: 'New Relic', proficiency: 65 },
-    { name: 'PowerShell', proficiency: 65 },
+    { name: 'AWS' },
+    { name: 'Terraform' },
+    { name: 'Docker' },
+    { name: 'PostgreSQL' },
+    { name: 'Oracle 18c' },
+    { name: 'MySQL' },
+    { name: 'Git & GitHub' },
+    { name: 'Splunk' },
+    { name: 'New Relic' },
+    { name: 'PowerShell' },
   ],
 };

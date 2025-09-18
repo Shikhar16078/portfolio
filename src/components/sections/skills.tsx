@@ -16,7 +16,7 @@ export default function SkillsSection() {
     ...skillsData.languages,
     ...skillsData.frameworks,
     ...skillsData.tools,
-  ].sort((a, b) => b.proficiency - a.proficiency);
+  ].sort((a, b) => a.name.localeCompare(b.name));
 
   const [isOpen, setIsOpen] = useState(false);
   const initialSkillsCount = 12;

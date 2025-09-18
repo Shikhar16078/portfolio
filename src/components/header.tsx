@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils';
 
 export default function Header({ activeSection }: { activeSection: string }) {
   const navLinks = [
-    { href: '#home', label: 'Home', icon: Home },
+    { href: '#', label: 'Home', icon: Home },
     { href: '#experience', label: 'Experience', icon: Briefcase },
     { href: '#projects', label: 'Projects', icon: FolderGit2 },
     { href: '#education', label: 'Education', icon: GraduationCap },
@@ -88,7 +88,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
               Summary
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="sm:max-w-xl">
             <SummaryContent />
           </DialogContent>
         </Dialog>
@@ -104,7 +104,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
                     variant='ghost'
                     size="icon"
                     className={cn('hover:bg-primary hover:text-primary-foreground', {
-                      'bg-primary text-primary-foreground': link.href === `#${activeSection}`,
+                      'bg-primary text-primary-foreground': (link.href === `#${activeSection}`) || (link.href === '#' && activeSection === 'home'),
                     })}
                   >
                     <Link href={link.href} prefetch={false}>
@@ -154,7 +154,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
                     href={link.href}
                     className={cn(
                       'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-                      { 'text-primary bg-primary/10': link.href === `#${activeSection}` }
+                      { 'text-primary bg-primary/10': (link.href === `#${activeSection}`) || (link.href === '#' && activeSection === 'home') }
                     )}
                     prefetch={false}
                   >

@@ -98,10 +98,10 @@ export const awardsData = [
     description: 'Conducted monthly mentorship sessions for junior engineers, guiding them in best practices and project work.',
   },
   {
-    title: 'Grader – Intermediate Data Structures and Algorithms',
+    title: 'Grader',
     issuer: 'University of California, Riverside',
     date: 'Spring 2025',
-    description: 'Served as a grader for the undergraduate course, evaluating assignments and supporting student learning.',
+    description: 'Served as a grader for the undergraduate course – Intermediate Data Structures and Algorithms, evaluating assignments, quizez, exams and supporting student learning.',
   },
 ];
 

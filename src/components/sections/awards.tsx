@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { awardsData } from "@/lib/data";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -27,6 +27,22 @@ export default function AwardsSection() {
     setIsPlaying(!isPlaying);
   };
   
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    // Reset autoplay when view is toggled
+    if (isExpanded) {
+      if(isPlaying) {
+        autoplayPlugin.current.stop();
+      }
+    } else {
+      if(isPlaying) {
+        autoplayPlugin.current.play(api);
+      }
+    }
+  }, [api, isExpanded, isPlaying]);
+
   return (
     <section id="awards" className="w-full flex flex-col justify-center py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
@@ -53,7 +69,7 @@ export default function AwardsSection() {
                   <CarouselContent>
                     {awardsData.map((item, index) => (
                       <CarouselItem key={index} className="md:basis-1/2">
-                        <div className="p-1">
+                        <div className="p-1 h-full">
                           <Card className="h-full">
                             <CardHeader className="flex-row items-center gap-4">
                               <div className="p-3 rounded-full bg-primary/10 text-primary">
@@ -83,7 +99,7 @@ export default function AwardsSection() {
             ) : (
               <div className="grid gap-8 sm:grid-cols-2">
                 {awardsData.map((item, index) => (
-                  <Card key={index}>
+                  <Card key={index} className="h-full">
                     <CardHeader className="flex-row items-center gap-4">
                       <div className="p-3 rounded-full bg-primary/10 text-primary">
                         <Award className="h-6 w-6" />

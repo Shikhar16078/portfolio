@@ -10,8 +10,6 @@ import {
   CarouselPagination,
 } from '@/components/ui/carousel';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ArrowUpRight } from 'lucide-react';
 import AnimatedContent from '../animated-content';
 
 export default function ProjectsSection() {
@@ -52,11 +50,6 @@ export default function ProjectsSection() {
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                             ))}
                           </div>
-                          <Button asChild variant="outline" className="mt-auto w-fit">
-                            <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                              View Project <ArrowUpRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </Button>
                         </CardContent>
                       </Card>
                     </div>

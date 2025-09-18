@@ -28,8 +28,8 @@ export default function Header() {
     { href: '#experience', label: 'Experience', icon: Briefcase },
     { href: '#projects', label: 'Projects', icon: FolderGit2 },
     { href: '#education', label: 'Education', icon: GraduationCap },
-    { href: '#awards', label: 'Awards', icon: Award },
     { href: '#skills', label: 'Skills', icon: Wrench },
+    { href: '#awards', label: 'Awards', icon: Award },
     { href: '#contact', label: 'Contact', icon: Mail },
   ];
 

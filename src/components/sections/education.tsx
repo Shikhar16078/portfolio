@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { ArrowUpRight, ChevronsUpDown, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ArrowRightLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import AnimatedContent from "../animated-content";
 import Image from "next/image";
@@ -80,7 +80,7 @@ const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
 
       <CardFooter className="flex-col items-start gap-4 mt-auto">
         <Button variant="outline" className="w-full" onClick={handleToggle}>
-          {showCourses ? 'Background' : 'Top Courses'} <ChevronsUpDown className="ml-2 h-4 w-4" />
+          {showCourses ? 'Background' : 'Top Courses'} <ArrowRightLeft className="ml-2 h-4 w-4" />
         </Button>
         <Button asChild className="w-full">
           <Link href={item.website} target="_blank" rel="noopener noreferrer">

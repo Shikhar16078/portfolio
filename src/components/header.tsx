@@ -63,7 +63,7 @@ export default function Header() {
       </div>
       <DialogFooter className="sm:justify-start pt-4">
         <Button asChild>
-          <a href="/resume.pdf" download>
+          <a href="https://drive.google.com/file/d/1501D5LMF1nKlSaEdqiZAyJysep-V2r31/view?usp=sharing" target="_blank" rel="noopener noreferrer">
             <Download className="mr-2" />
             Resume
           </a>

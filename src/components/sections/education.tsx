@@ -37,7 +37,7 @@ const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
         <div className="flex items-center gap-3">
           {item.icon && (
             <Image
-              src={item.icon}
+              src={item.icon.startsWith('/') ? item.icon.substring(1) : item.icon}
               alt={`${item.institution} logo`}
               width={24}
               height={24}

@@ -44,7 +44,7 @@ export default function ProjectsSection() {
                         <CardHeader className="flex-row items-center gap-4 space-y-0">
                             {project.icon && (
                                 <Image
-                                    src={project.icon}
+                                    src={project.icon.startsWith('/') ? project.icon.substring(1) : project.icon}
                                     alt={`${project.title} logo`}
                                     width={40}
                                     height={40}

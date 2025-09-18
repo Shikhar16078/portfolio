@@ -14,7 +14,7 @@ export default function HomeSection() {
         <div className="flex flex-col items-center space-y-6 text-center">
             {profileImage && (
               <Image
-                src="/assets/images/profile.jpeg"
+                src="assets/images/profile.jpeg"
                 alt={profileImage.description}
                 width={192}
                 height={192}

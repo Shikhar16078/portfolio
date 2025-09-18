@@ -104,6 +104,7 @@ export const experienceData = [
     role: 'Data Science Fellowship - 2025',
     company: 'University of California, Riverside',
     period: 'June 2025 – Aug 2025',
+    icon: '/assets/images/ucr.png',
     responsibilities: [
       'Built a course scheduling application with chatbot logic in Google ADK, exposed via FastAPI.',
       'Integrated the chatbot into a React web application with a dynamic calendar view for schedule management.',
@@ -113,6 +114,7 @@ export const experienceData = [
     role: 'Software Engineer',
     company: 'Nagarro',
     period: 'Jan 2020 – Sept 2022',
+    icon: '/assets/images/nagarro.jpg',
     responsibilities: [
       'Developed and maintained real-time data publishers in .NET Core with AWS Lambda for microservice synchronization.',
       'Designed Oracle 18c database components (tables, stored procedures, triggers) to improve performance and meet SLOs.',

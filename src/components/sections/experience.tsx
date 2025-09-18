@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { CheckCircle2, ChevronsUpDown } from "lucide-react";
 import AnimatedContent from "../animated-content";
+import Image from "next/image";
 
 const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +31,18 @@ const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
             <CardTitle>{item.role}</CardTitle>
             <Badge variant="outline">{item.period}</Badge>
           </div>
-          <CardDescription>{item.company}</CardDescription>
+          <div className="flex items-center gap-3">
+            {item.icon && (
+              <Image
+                src={item.icon}
+                alt={`${item.company} logo`}
+                width={24}
+                height={24}
+                className="rounded-sm object-contain"
+              />
+            )}
+            <CardDescription>{item.company}</CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
           <ul className="space-y-3 text-muted-foreground">

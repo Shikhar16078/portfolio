@@ -1,6 +1,6 @@
 // data.ts
 
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Server } from 'lucide-react';
 
 export const personalData = {
   name: 'Shikhar Kumar',
@@ -76,31 +76,38 @@ export const educationData = [
 ];
 
 export const awardsData = [
-    {
-      title: 'Top Performer Award',
-      issuer: 'Nagarro',
-      date: '2021',
-      description: 'Recognized as a top performer for outstanding contributions to the project and exceptional performance.',
-    },
-    {
-      title: 'Spot Award for Innovation',
-      issuer: 'Nagarro',
-      date: '2020',
-      description: 'Awarded for developing an innovative PowerShell script that significantly reduced VM setup time.',
-    },
-    {
-      title: 'Dean\'s Honor List',
-      issuer: 'University of California, Riverside',
-      date: '2024',
-      description: 'Achieved a GPA of 3.96, placing me on the Dean\'s Honor List for academic excellence.',
-    },
-    {
-      title: 'Graduate Fellowship',
-      issuer: 'University of California, Riverside',
-      date: '2024',
-      description: 'Awarded a fellowship for strong academic background and potential for research in computer science.',
-    },
-  ];
+  {
+    title: 'Star of the Month',
+    issuer: 'Nagarro',
+    date: '2020 – 2022',
+    description: 'Awarded each quarter for being the most impactful software engineer on the team.',
+  },
+  {
+    title: 'Graduate Fellowship',
+    issuer: 'University of California, Riverside',
+    date: '2024',
+    description: 'Awarded a fellowship for strong academic background and potential for research in computer science.',
+  },
+  {
+    title: 'Dean\'s Honor List',
+    issuer: 'University of California, Riverside',
+    date: '2024',
+    description: 'Achieved a GPA of 3.96, placing me on the Dean\'s Honor List for academic excellence.',
+  },
+  {
+    title: 'Mentorship Recognition',
+    issuer: 'Nagarro',
+    date: '2021 – 2022',
+    description: 'Conducted monthly mentorship sessions for junior engineers, guiding them in best practices and project work.',
+  },
+  {
+    title: 'Grader – Intermediate Data Structures and Algorithms',
+    issuer: 'University of California, Riverside',
+    date: 'Spring 2025',
+    description: 'Served as a grader for the undergraduate course, evaluating assignments and supporting student learning.',
+  },
+];
+
 
 export const experienceData = [
   {
@@ -109,8 +116,10 @@ export const experienceData = [
     period: 'June 2025 – Aug 2025',
     icon: '/assets/images/ucr.png',
     responsibilities: [
-      'Built a course scheduling application with chatbot logic in Google ADK, exposed via FastAPI.',
-      'Integrated the chatbot into a React web application with a dynamic calendar view for schedule management.',
+      'Designed an AI-powered course scheduling system that enabled UCR students to automatically select courses based on graduation requirements and personal preferences through an intelligent chatbot.',
+      'Engineered the backend using Google Agent Development Kit (ADK), leveraging multiple agents for specialized tasks and exposing services via a FastAPI server to ensure scalability and modularity.',
+      'Developed a modern frontend with Firebase Studio AI, featuring a split interface with an interactive calendar view on the left for course visualization and a responsive chatbot panel on the right for real-time interaction.',
+      'Integrated the frontend and backend through RESTful API calls, enabling seamless communication between the chatbot and scheduling interface for a smooth user experience.',
     ],
   },
   {

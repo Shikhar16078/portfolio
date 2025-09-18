@@ -12,8 +12,6 @@ import {
 import { Badge } from '@/components/ui/badge';
 import AnimatedContent from '../animated-content';
 import Image from 'next/image';
-import { Button } from '../ui/button';
-import { Github } from 'lucide-react';
 
 export default function ProjectsSection() {
   return (
@@ -59,19 +57,12 @@ export default function ProjectsSection() {
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow">
                           <p className="text-muted-foreground mb-4 flex-grow text-justify">{project.description}</p>
-                          <div className="flex flex-wrap gap-2 mb-4">
+                          <div className="flex flex-wrap gap-2">
                             {project.technologies.map((tech) => (
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                             ))}
                           </div>
                         </CardContent>
-                        <CardFooter>
-                          <Button asChild className="w-full">
-                            <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                              <Github className="mr-2" /> View on GitHub
-                            </Link>
-                          </Button>
-                        </CardFooter>
                       </Card>
                     </div>
                   </CarouselItem>

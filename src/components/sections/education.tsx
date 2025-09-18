@@ -19,7 +19,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
-  const [showCourses, setShowCourses] = useState(false);
+  const [showCourses, setShowCourses] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleToggle = () => {
@@ -80,7 +80,7 @@ const EducationCard = ({ item }: { item: (typeof educationData)[0] }) => {
 
       <CardFooter className="flex-col items-start gap-4 mt-auto">
         <Button variant="outline" className="w-full" onClick={handleToggle}>
-          {showCourses ? 'Show Description' : 'Relevant Courses'} <ChevronsUpDown className="ml-2 h-4 w-4" />
+          {showCourses ? 'Background' : 'Relevant Courses'} <ChevronsUpDown className="ml-2 h-4 w-4" />
         </Button>
         <Button asChild className="w-full">
           <Link href={item.website} target="_blank" rel="noopener noreferrer">

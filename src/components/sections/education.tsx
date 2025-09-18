@@ -31,7 +31,7 @@ export default function EducationSection() {
             </div>
           </CardHeader>
           <CardContent className="flex-grow">
-            <p className="text-muted-foreground">{item.description}</p>
+            <p className="text-muted-foreground text-justify">{item.description}</p>
           </CardContent>
           <CardFooter className="flex-col items-start gap-4">
               <CollapsibleTrigger asChild>

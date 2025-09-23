@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 99%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 0 72.2% 50.6%;
+    --primary-foreground: 0 85.7% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 0 72.2% 50.6%;
+    --radius: 0.5rem;
+    --hero: 0 0% 100%;
+    --hero-foreground: 240 10% 3.9%;
+    --chrome: 0 0% 90%;
+    --chrome-foreground: 240 10% 3.9%;
+  }
+ 
+  .dark {
+    --background: 240 10% 7%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 5.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 72.2% 50.6%;
+    --primary-foreground: 0 85.7% 97.3%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 0 72.2% 50.6%;
+    --hero: 240 4% 2%;
+    --hero-foreground: 0 0% 98%;
+    --chrome: 240 4% 2%;
+    --chrome-foreground: 0 0% 98%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  main > section, header, footer {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .animate-fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes scale-in {
+    from {
+      transform: scale(0);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-out {
+    from {
+      transform: scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes rotate-in {
+    from {
+      transform: rotate(-90deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes rotate-out {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(90deg);
+    }
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+  .animate-scale-out {
+    animation: scale-out 0.3s ease-in;
+  }
+  .animate-rotate-in {
+    animation: rotate-in 0.3s ease-out;
+  }
+  .animate-rotate-out {
+    animation: rotate-out 0.3s ease-in;
+  }
+
+  @keyframes collapsible-down-slow {
+    from { height: 0 }
+    to { height: var(--radix-collapsible-content-height) }
+  }
+
+  @keyframes collapsible-up-slow {
+    from { height: var(--radix-collapsible-content-height) }
+    to { height: 0 }
+  }
+
+  .animate-collapsible-down-slow {
+    animation: collapsible-down-slow 0.5s ease-out;
+  }
+  
+  .animate-collapsible-up-slow {
+    animation: collapsible-up-slow 0.5s ease-out;
+  }
+}

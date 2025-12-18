@@ -45,7 +45,7 @@ export const projectsData = [
       'Configured GitHub Pages for deployment and automated the hosting process.',
     ],
     technologies: ['React.js', 'Next.js', 'Tailwind CSS', 'Github'],
-    icon: '/assets/images/portfolio.png',
+    icon: '/assets/images/website.png',
     type: 'Personal',
   },
   {
@@ -67,16 +67,18 @@ export const educationData = [
     degree: 'M.S. in Computer Science',
     institution: 'University of California, Riverside',
     period: 'Sept 2024 – Dec 2025',
-    gpa: 'GPA: 3.96/4.00',
+    gpa: 'GPA: 3.95/4.00',
     description:
-      'Even though I was a highly appreciated member of my team at Nagarro, I felt the need to further enhance my skills and deepen my understanding of advanced Computer Science concepts. This led me to pursue a Master of Science in Computer Science at the University of California, Riverside after nearly three years of industry experience. At UCR, I have explored Artificial Intelligence, Algorithms, Distributed Systems, and other fascinating areas of Computer Science. Yet, my journey of learning continues here at UCR as I strive to further hone my expertise in this ever-evolving field.',
+      'Even though I was a highly appreciated member of my team at Nagarro, I felt the need to further enhance my skills and deepen my understanding of advanced Computer Science concepts. This led me to pursue a Master of Science in Computer Science at the University of California, Riverside after nearly three years of industry experience. At UCR, I have explored Artificial Intelligence, Machine Learning, Natural Language Processing, Design and Analysis of Algorithms, Distributed Systems, Databases and other fascinating areas of Computer Science. This degree has strengthened my foundations in Computer Science and continues to support my growth as I move forward in my career.',
     website: 'https://www.ucr.edu/',
     courses: [
       'Design and Analysis of Algorithms',
       'Artificial Intelligence',
       'Machine Learning',
+      'Introduction to Natural Language Processing',
       'Distributed Systems',
       'Advanced Database Management Systems',
+      'Advanced Computer Networks'
     ],
     icon: '/assets/images/ucr.png',
   },
@@ -192,18 +194,18 @@ export const recommendationsData = [
     quote: "I highly recommend Shikhar for any technical role due to his strong technical, collaborative, and communication skills. His dedication is evident as he frequently works outside regular hours to enhance his knowledge and apply it effectively during work hours. Shikhar is an excellent team player.",
     author: "Meenal Goyal",
     title: "Technology Lead, Nagarro",
-    image: "https://media.licdn.com/dms/image/v2/D5603AQEXfLmockCIsA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1729225115202?e=1761177600&v=beta&t=rtzZLr-SImZaoC685E9cF-WNRZ7cJr2dBESu6hyDw18",
+    profile: "https://www.linkedin.com/in/meenal-goyal-32271147/",
   },
   {
     quote: "I highly recommend Shikhar for any development role. He possesses extensive project knowledge and was instrumental in helping QAs understand the actual testing requirements. Shikhar is very approachable and open to any sort of discussion, a testament to his excellent teamwork skills.",
     author: "Jagjeet Singh",
     title: "QA Principal Engineer, Nagarro",
-    image: "https://media.licdn.com/dms/image/v2/C4D03AQEGCcXnRmbIFw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1626535729295?e=1761177600&v=beta&t=sJ24-DiNQJ8AE_5z9k9d2LNSUgjlnXUGE402zLetLqQ",
+    profile: "https://www.linkedin.com/in/jagjeet-singh-72292a6b/",
   },
   {
     quote: "One standout quality I observed in Shikhar is his relentless drive for improvement and his openness to constructive feedback—an invaluable trait in software engineering. He consistently introduced new ideas and strategies that enhanced our team's performance. Shikhar went above and beyond to support his teammates.",
     author: "Aman Singh Parihar",
     title: "Staff Engineer, Nagarro",
-    image: "https://media.licdn.com/dms/image/v2/D4D03AQHmqNauV-dUEA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1671250711407?e=1761177600&v=beta&t=FlAg56xypaz9q04dHjKFuEmdefn6CWi6ArhMxMC_0RA",
+    profile: "https://www.linkedin.com/in/aman-singh-parihar-0b1630107/",
   }
 ];

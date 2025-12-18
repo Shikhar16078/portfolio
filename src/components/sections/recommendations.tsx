@@ -5,10 +5,9 @@ import { recommendationsData } from "@/lib/data";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPagination, CarouselPrevious } from "@/components/ui/carousel";
 import AnimatedContent from "../animated-content";
-import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Linkedin } from "lucide-react";
+import { Linkedin, User } from "lucide-react";
 
 export default function RecommendationsSection() {
   return (
@@ -42,19 +41,17 @@ export default function RecommendationsSection() {
                           "{rec.quote}"
                         </blockquote>
                       </CardContent>
-                      <CardHeader className="flex-row items-center gap-4 pt-0">
-                        <Image
-                          src={rec.image}
-                          alt={rec.author}
-                          width={48}
-                          height={48}
-                          className="rounded-full"
-                          data-ai-hint="person"
-                        />
+                      <CardHeader className="flex-row items-center justify-between gap-4 pt-0">
                         <div className="flex flex-col">
                           <p className="font-semibold">{rec.author}</p>
                           <p className="text-sm text-muted-foreground">{rec.title}</p>
                         </div>
+                        <Button asChild variant="outline" size="sm">
+                          <Link href={rec.profile} target="_blank" rel="noopener noreferrer">
+                            <User className="mr-2 h-4 w-4" />
+                            View Profile
+                          </Link>
+                        </Button>
                       </CardHeader>
                     </Card>
                   </div>

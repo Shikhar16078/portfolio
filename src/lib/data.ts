@@ -5,8 +5,9 @@ import { Github, Linkedin, Server, Star } from 'lucide-react';
 export const personalData = {
   name: 'Shikhar Kumar',
   title: "Software Engineer",
-  bio: "Computer Science graduate student at UC Riverside with a strong interest in algorithms, cloud computing, and machine learning. I enjoy designing systems that are both intelligent and scalable.",
+  bio: "Software engineer with a Master’s degree in Computer Science from UC Riverside and 3 years of experience at Nagarro, building scalable systems and data-driven solutions.",
   email: 'skuma154@ucr.edu',
+  phone: '+1 (951) 377-2505',
 };
 
 export const socialLinks = [

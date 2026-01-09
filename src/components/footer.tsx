@@ -21,7 +21,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground">
-        Designed by {personalData.name} ©{new Date().getFullYear()} . All Rights Reserved.
+        Designed by {personalData.name} ©{new Date().getFullYear()}. All Rights Reserved.
         </p>
         <Badge variant="secondary">Developed using Firebase Studio AI</Badge>
       </div>

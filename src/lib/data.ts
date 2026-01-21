@@ -17,6 +17,17 @@ export const socialLinks = [
 
 export const projectsData = [
   {
+    title: 'UCR Course Scheduler',
+    date: 'Summer 2025',
+    description: [
+        'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI.',
+        'Integrated into a React frontend with a dynamic calendar view for interactive schedule management.'
+    ],
+    technologies: ['React', 'FastAPI', 'Google ADK'],
+    icon: '/assets/images/ucr.png',
+    type: 'Academic',
+  },
+  {
     title: 'Reddit Search Engine',
     date: 'Winter 2025',
     description: [
@@ -39,6 +50,21 @@ export const projectsData = [
     type: 'Academic',
   },
   {
+    title: 'Dailymotion ABR Analysis',
+    date: 'Fall 2025',
+    description: [
+      'Conducted experiments to study how Adaptive Bitrate (ABR) streaming works on Dailymotion under varying network conditions.',
+      'Traced and analyzed network logs across controlled bandwidth profiles such as 1.5 Mbps, 5 Mbps, and 20 Mbps to observe bitrate adaptation behavior.'
+    ],
+    technologies: [
+      'MITM Proxy',
+      'Apple\'s NLC',
+      'Python'
+    ],
+    icon: '/assets/images/abr.png',
+    type: 'Academic',
+  },
+  {
     title: 'Portfolio Website',
     date: 'Summer 2025',
     description: [
@@ -48,17 +74,6 @@ export const projectsData = [
     technologies: ['React.js', 'Next.js', 'Tailwind CSS', 'Github'],
     icon: '/assets/images/website.png',
     type: 'Personal',
-  },
-  {
-    title: 'UCR Course Scheduler',
-    date: 'Summer 2025',
-    description: [
-        'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI.',
-        'Integrated into a React frontend with a dynamic calendar view for interactive schedule management.'
-    ],
-    technologies: ['React', 'FastAPI', 'Google ADK'],
-    icon: '/assets/images/ucr.png',
-    type: 'Academic',
   },
 ];
 
@@ -110,7 +125,7 @@ export const awardsData = [
     icon: '/assets/images/nagarro.jpg',
   },
   {
-    title: 'Graduate Fellowship',
+    title: 'UCR Data Science Fellowship',
     issuer: 'University of California, Riverside',
     date: 'Summer 2025',
     description: 'Awarded a fellowship for strong academic performance and potential in computer science.',
@@ -164,9 +179,9 @@ export const experienceData = [
 export const skillsData = {
   languages: [
     { name: 'Python' },
-    { name: 'JavaScript' },
-    { name: 'Java' },
     { name: 'C#' },
+    { name: 'Java' },
+    { name: 'JavaScript' },
   ],
   frameworks: [
     { name: 'React' },
@@ -180,6 +195,7 @@ export const skillsData = {
     { name: 'AWS' },
     { name: 'Docker' },
     { name: 'Git & GitHub' },
+    { name: 'MITM Proxy' },
     { name: 'Terraform' },
     { name: 'PostgreSQL' },
     { name: 'MySQL' },

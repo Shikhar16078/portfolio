@@ -44,7 +44,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
       <ScrollArea className="h-[60vh] sm:h-auto">
         <div className="space-y-4 text-sm text-muted-foreground pr-6">
           <p>
-            I am a Computer Science master's student at UC Riverside, actively seeking software engineering and machine learning roles.
+            I am a Computer Science graduate from UC Riverside seeking roles in software engineering and machine learning.
           </p>
           <Separator />
           <div>

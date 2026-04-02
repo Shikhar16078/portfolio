@@ -182,26 +182,52 @@ export const skillsData = {
     { name: 'Java' },
     { name: 'JavaScript' },
   ],
-  frameworks: [
-    { name: 'React' },
+
+  backend: [
+    { name: '.NET Core' },
     { name: 'FastAPI' },
     { name: 'Flask' },
-    { name: '.NET Core' },
     { name: 'Apache Spark' },
     { name: 'PyLucene' },
+
+    { name: 'Microservices' },
+    { name: 'Distributed Systems' },
+    { name: 'Event-Driven Architecture' },
+    { name: 'REST APIs' },
   ],
-  tools: [
+
+  frontend: [
+    { name: 'React' },
+    { name: 'Tailwind CSS' },
+    { name: 'HTML' },
+    { name: 'CSS' },
+    { name: 'Bootstrap' },
+  ],
+
+  cloud: [
     { name: 'AWS' },
+    { name: 'Lambda' },
+    { name: 'SQS' },
+    { name: 'EC2' },
+    { name: 'CloudWatch' },
     { name: 'Docker' },
-    { name: 'Git & GitHub' },
-    { name: 'MITM Proxy' },
     { name: 'Terraform' },
+  ],
+
+  databases: [
     { name: 'PostgreSQL' },
     { name: 'MySQL' },
     { name: 'Oracle 18c' },
+  ],
+
+  tools: [
+    { name: 'Git' },
+    { name: 'GitHub' },
     { name: 'Splunk' },
     { name: 'New Relic' },
+    { name: 'PagerDuty' },
     { name: 'PowerShell' },
+    { name: 'MITM Proxy' },
   ],
 };
 

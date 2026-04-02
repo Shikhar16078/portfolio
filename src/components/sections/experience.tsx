@@ -6,78 +6,72 @@ import { experienceData } from "@/lib/data";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { CheckCircle2, ChevronsUpDown } from "lucide-react";
+import { CheckCircle2, ArrowRightLeft } from "lucide-react";
 import AnimatedContent from "../animated-content";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const ExperienceCard = ({ item }: { item: (typeof experienceData)[0] }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const responsibilitiesToShow = 3;
-  const hasMoreResponsibilities = item.responsibilities.length > responsibilitiesToShow;
+  const [showResponsibilities, setShowResponsibilities] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const initialResponsibilities = hasMoreResponsibilities
-    ? item.responsibilities.slice(0, responsibilitiesToShow)
-    : item.responsibilities;
-
-  const additionalResponsibilities = hasMoreResponsibilities
-    ? item.responsibilities.slice(responsibilitiesToShow)
-    : [];
+  const handleToggle = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setShowResponsibilities(!showResponsibilities);
+      setIsAnimating(false);
+    }, 300);
+  };
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <Card>
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-1">
-            <CardTitle>{item.role}</CardTitle>
-            <Badge variant="outline" className="flex-shrink-0">{item.period}</Badge>
-          </div>
-          <div className="flex items-center gap-3">
-            {item.icon && (
-              <Image
-                src={item.icon}
-                alt={`${item.company} logo`}
-                width={24}
-                height={24}
-                className="rounded-sm object-contain"
-              />
-            )}
-            <CardDescription>{item.company}</CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-3 text-muted-foreground">
-            {initialResponsibilities.map((resp, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <CheckCircle2 className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
-                <span>{resp}</span>
-              </li>
-            ))}
-          </ul>
-          <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-            <ul className="space-y-3 text-muted-foreground mt-3">
-              {additionalResponsibilities.map((resp, i) => (
+    <Card className="flex flex-col h-full">
+      <CardHeader className="gap-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-1">
+          <CardTitle>{item.role}</CardTitle>
+          <Badge variant="outline" className="flex-shrink-0">{item.period}</Badge>
+        </div>
+        <div className="flex items-center gap-3">
+          {item.icon && (
+            <Image
+              src={item.icon}
+              alt={`${item.company} logo`}
+              width={24}
+              height={24}
+              className="rounded-sm object-contain"
+            />
+          )}
+          <CardDescription>{item.company}</CardDescription>
+        </div>
+      </CardHeader>
+
+      <CardContent className="flex-grow flex flex-col">
+        <div 
+          className={cn(
+            "transition-all duration-300 ease-in-out",
+            isAnimating ? "opacity-0 transform -translate-y-2" : "opacity-100 transform translate-y-0"
+          )}
+        >
+          {showResponsibilities ? (
+            <ul className="space-y-3 text-muted-foreground">
+              {item.responsibilities.map((resp, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                   <span>{resp}</span>
                 </li>
               ))}
             </ul>
-          </CollapsibleContent>
-        </CardContent>
-        {hasMoreResponsibilities && (
-          <CardFooter>
-            <CollapsibleTrigger asChild>
-              <Button variant="outline" className="w-full">
-                {isOpen ? "Show Less" : "Show More"}
-                <ChevronsUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </CollapsibleTrigger>
-          </CardFooter>
-        )}
-      </Card>
-    </Collapsible>
+          ) : (
+            <p className="text-muted-foreground text-justify whitespace-pre-line">{item.description}</p>
+          )}
+        </div>
+      </CardContent>
+
+      <CardFooter className="flex-col items-start gap-4 mt-auto">
+        <Button variant="outline" className="w-full" onClick={handleToggle}>
+          {showResponsibilities ? 'Background' : 'Responsibilities'} <ArrowRightLeft className="ml-2 h-4 w-4" />
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };
 

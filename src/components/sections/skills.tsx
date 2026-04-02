@@ -15,18 +15,25 @@ interface SkillCategory {
   skills: Skill[];
 }
 
-export default function SkillsSection() {
-  const allSkills = [
-    ...skillsData.languages,
-    ...skillsData.frameworks,
-    ...skillsData.tools,
-  ];
+const categoryLabels: Record<string, string> = {
+  languages: 'Languages',
+  backend: 'Backend',
+  frontend: 'Frontend',
+  cloud: 'Cloud',
+  databases: 'Databases',
+  tools: 'Tools',
+};
 
+export default function SkillsSection() {
   const skillCategories: SkillCategory[] = [
-    { title: 'All', skills: allSkills },
-    { title: 'Languages', skills: skillsData.languages },
-    { title: 'Frameworks', skills: skillsData.frameworks },
-    { title: 'Tools', skills: skillsData.tools },
+    {
+      title: 'All',
+      skills: Object.values(skillsData).flat(),
+    },
+    ...Object.entries(skillsData).map(([key, skills]) => ({
+      title: categoryLabels[key] ?? key,
+      skills,
+    })),
   ];
 
   return (
@@ -45,9 +52,15 @@ export default function SkillsSection() {
         <AnimatedContent>
           <div className="mx-auto max-w-4xl py-12">
             <Tabs defaultValue="All" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList
+                className="grid h-auto w-full grid-cols-3 gap-2 rounded-md bg-muted/70 p-1.5 md:flex md:flex-wrap md:justify-center"
+              >
                 {skillCategories.map((category) => (
-                  <TabsTrigger key={category.title} value={category.title}>
+                  <TabsTrigger
+                    key={category.title}
+                    value={category.title}
+                    className="w-full px-2 py-2.5 text-xs sm:px-4 sm:text-sm md:min-w-[112px] md:flex-1 md:px-4 md:text-base last:col-start-2 md:last:col-start-auto"
+                  >
                     {category.title}
                   </TabsTrigger>
                 ))}
@@ -59,12 +72,12 @@ export default function SkillsSection() {
                   className="data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:zoom-in-95"
                 >
                   <AnimatedContent>
-                    <div className="flex flex-wrap justify-center gap-4 py-8">
+                      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 py-8">
                       {category.skills.map((skill, index) => (
                         <Badge 
                           key={index} 
                           variant="secondary" 
-                          className="text-base font-medium px-4 py-2 rounded-lg shadow-md hover:bg-primary/80 transition-colors"
+                            className="text-sm sm:text-base font-medium px-3 sm:px-4 py-2 rounded-lg shadow-md hover:bg-primary/80 transition-colors"
                         >
                           {skill.name}
                         </Badge>

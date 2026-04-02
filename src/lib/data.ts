@@ -17,17 +17,6 @@ export const socialLinks = [
 
 export const projectsData = [
   {
-    title: 'UCR Course Scheduler',
-    date: 'Summer 2025',
-    description: [
-        'Developed a course scheduling application for UCR students with chatbot logic in Google ADK, exposed via FastAPI.',
-        'Integrated into a React frontend with a dynamic calendar view for interactive schedule management.'
-    ],
-    technologies: ['React', 'FastAPI', 'Google ADK'],
-    icon: '/assets/images/ucr.png',
-    type: 'Academic',
-  },
-  {
     title: 'Reddit Search Engine',
     date: 'Winter 2025',
     description: [
@@ -37,6 +26,7 @@ export const projectsData = [
     technologies: ['Python', 'PRAW', 'PyLucene', 'Flask'],
     icon: '/assets/images/reddit.png',
     type: 'Academic',
+    github: 'https://github.com/Shikhar16078/reddit-search-engine',
   },
   {
     title: 'IMDB Reviews Analysis',
@@ -74,6 +64,7 @@ export const projectsData = [
     technologies: ['React.js', 'Next.js', 'Tailwind CSS', 'Github'],
     icon: '/assets/images/website.png',
     type: 'Personal',
+    github: 'https://github.com/Shikhar16078/portfolio',
   },
 ];
 
@@ -150,15 +141,19 @@ export const awardsData = [
 
 export const experienceData = [
   {
-    role: 'Data Science Fellowship',
-    company: 'University of California, Riverside',
-    period: 'June 2025 – Aug 2025',
-    icon: '/assets/images/ucr.png',
+  role: 'Data Science Fellowship',
+  company: 'University of California, Riverside',
+  period: 'June 2025 – Aug 2025',
+  icon: '/assets/images/ucr.png',
+  description: `During my Data Science Fellowship at UCR, I worked on solving a major friction point students face every quarter when planning their courses. The process was highly fragmented and manual — students had to check course offerings, track completed courses, refer to recommended degree plans, and verify eligibility across multiple university systems, making planning time-consuming and often confusing.
+
+  I led the design and development of a one-stop AI-powered solution to streamline this experience. The system intelligently combines student history, degree requirements, and real-time course availability to generate personalized schedules. As the project evolved, I expanded the system by integrating structured university data, enabling it to handle academic policies, constraints, and FAQs, making it a more comprehensive and practical tool for students.`,
     responsibilities: [
-      'Designed an AI-powered course scheduling system that enabled UCR students to automatically select courses based on graduation requirements and personal preferences through an intelligent chatbot.',
-      'Engineered the backend using Google Agent Development Kit (ADK), leveraging multiple agents for specialized tasks and exposing services via a FastAPI server to ensure scalability and modularity.',
-      'Developed a modern frontend with Firebase Studio AI, featuring a split interface with an interactive calendar view on the left for a responsive chatbot panel on the right for real-time interaction.',
-      'Integrated the frontend and backend through RESTful API calls, enabling seamless communication between the chatbot and scheduling interface for a smooth user experience.',
+      'Built an AI-powered course scheduling platform that reduced planning time from hours to ~30 minutes by automating course discovery, prerequisite validation, and personalized schedule generation.',
+      'Designed and led the system architecture in collaboration with Google, implementing an agentic workflow using Google ADK with multi-agent orchestration for context-aware recommendations.',
+      'Developed backend services and exposed them via APIs, enabling seamless integration between the AI system and frontend interface.',
+      'Built a React-based frontend with a chatbot interface for real-time interaction and an interactive calendar for schedule visualization, improving usability and decision-making.',
+      'Extended the system by integrating structured university data into the workflow, enabling intelligent handling of academic policies, constraints, and broader student queries to move toward a true one-stop solution.',
     ],
   },
   {
@@ -166,12 +161,16 @@ export const experienceData = [
     company: 'Nagarro',
     period: 'Jan 2020 – Sept 2022',
     icon: '/assets/images/nagarro.jpg',
+    description: `At Nagarro, our team worked on a distributed system responsible for maintaining data consistency across multiple services for a large-scale automobile client. These systems needed to stay synchronized in near real-time, with changes flowing in both directions. This introduced challenges around handling continuous streams of events, ensuring reliability, and maintaining consistency across services even in the presence of failures.\n
+    To address this, we built a robust event-driven synchronization system that processed incoming change events, propagated updates across services, and ensured data integrity. The system was designed to handle failures gracefully and maintain consistency at scale, while supporting reliable operation in a production environment.`,
     responsibilities: [
-      'Developed and maintained real-time data publishers in .NET Core, deployed as AWS Lambda functions, to synchronize microservices and ensure consistency across different systems.',
-      'Designed and optimized Oracle 18c database components (tables, stored procedures, triggers), enhancing query performance, maintaining data integrity, and meeting defined system SLOs.',
-      'Built and configured AWS CI/CD pipelines using Terraform, automating deployments, reducing release times by ~20%, and streamlining development workflows.',
-      'Implemented monitoring and alerting by integrating AWS CloudWatch, New Relic, and Splunk, enabling proactive fault detection and achieving ~50% faster incident resolution.',
-      'Led the rollout of automated VM setup with PowerShell scripts, reducing provisioning time from 2 days to ~1 hour; the solution was later adopted company-wide by other teams for its efficiency and time savings.',
+      'Built high-throughput event-driven data pipelines processing ~1,000 events/sec using .NET Core, AWS Lambda, and Amazon SQS, enabling reliable real-time synchronization across microservices.',
+      'Improved system reliability to ~99% data accuracy by developing a reconciliation pipeline on AWS EC2 across multiple regions, reducing manual intervention to ~1–2% of failed events.',
+      'Optimized Oracle 18c database performance by designing tables, views, triggers, and stored procedures aligned with system SLOs.',
+      'Reduced deployment time by ~15% by building AWS-based CI/CD pipelines using Terraform, streamlining release workflows.',
+      'Implemented monitoring and alerting using CloudWatch, New Relic, Splunk, and PagerDuty, achieving ~50% faster incident detection and resolution.',
+      'Led development of an automated VM provisioning system using PowerShell and Chocolatey, reducing setup time from 2 days to ~1 hour and driving adoption across teams.',
+      'Enabled safe feature rollouts using LaunchDarkly feature flags, reducing deployment risk in production systems.',
     ],
   },
 ];
@@ -183,26 +182,52 @@ export const skillsData = {
     { name: 'Java' },
     { name: 'JavaScript' },
   ],
-  frameworks: [
-    { name: 'React' },
+
+  backend: [
+    { name: '.NET Core' },
     { name: 'FastAPI' },
     { name: 'Flask' },
-    { name: '.NET Core' },
     { name: 'Apache Spark' },
     { name: 'PyLucene' },
+
+    { name: 'Microservices' },
+    { name: 'Distributed Systems' },
+    { name: 'Event-Driven Architecture' },
+    { name: 'REST APIs' },
   ],
-  tools: [
+
+  frontend: [
+    { name: 'React' },
+    { name: 'Tailwind CSS' },
+    { name: 'HTML' },
+    { name: 'CSS' },
+    { name: 'Bootstrap' },
+  ],
+
+  cloud: [
     { name: 'AWS' },
+    { name: 'Lambda' },
+    { name: 'SQS' },
+    { name: 'EC2' },
+    { name: 'CloudWatch' },
     { name: 'Docker' },
-    { name: 'Git & GitHub' },
-    { name: 'MITM Proxy' },
     { name: 'Terraform' },
+  ],
+
+  databases: [
     { name: 'PostgreSQL' },
     { name: 'MySQL' },
     { name: 'Oracle 18c' },
+  ],
+
+  tools: [
+    { name: 'Git' },
+    { name: 'GitHub' },
     { name: 'Splunk' },
     { name: 'New Relic' },
+    { name: 'PagerDuty' },
     { name: 'PowerShell' },
+    { name: 'MITM Proxy' },
   ],
 };
 

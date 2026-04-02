@@ -11,9 +11,10 @@ import {
   CarouselPagination,
 } from '@/components/ui/carousel';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import AnimatedContent from '../animated-content';
 import Image from 'next/image';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Github } from 'lucide-react';
 
 export default function ProjectsSection() {
   return (
@@ -70,11 +71,19 @@ export default function ProjectsSection() {
                               </li>
                             ))}
                           </ul>
-                          <div className="flex flex-wrap gap-2 justify-center">
+                          <div className="flex flex-wrap gap-2 justify-center mb-4">
                             {project.technologies.map((tech) => (
                               <Badge key={tech} variant="secondary">{tech}</Badge>
                             ))}
                           </div>
+                          {project.github && (
+                            <Button asChild variant="outline" className="w-fit mx-auto">
+                              <Link href={project.github} target="_blank" rel="noopener noreferrer">
+                                <Github className="mr-2 h-4 w-4" />
+                                View on GitHub
+                              </Link>
+                            </Button>
+                          )}
                         </CardContent>
                       </Card>
                     </div>

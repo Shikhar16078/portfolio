@@ -66,6 +66,18 @@ export const projectsData = [
     type: 'Personal',
     github: 'https://github.com/Shikhar16078/portfolio',
   },
+  {
+    title: 'Snipper',
+    date: 'Spring 2026',
+    description: [
+      'Built a cross-platform desktop snippet manager in Electron and React for one-click clipboard copy of saved text.',
+      'Supports folder organization, instant search, drag-and-drop, multi-select, 11 themes, and fully local JSON storage.',
+    ],
+    technologies: ['Electron', 'React', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    icon: '/assets/images/snipper.png',
+    type: 'Personal',
+    github: 'https://github.com/Shikhar16078/Snipper',
+  }
 ];
 
 
@@ -164,7 +176,7 @@ export const experienceData = [
     description: `At Nagarro, our team worked on a distributed system responsible for maintaining data consistency across multiple services for a large-scale automobile client. These systems needed to stay synchronized in near real-time, with changes flowing in both directions. This introduced challenges around handling continuous streams of events, ensuring reliability, and maintaining consistency across services even in the presence of failures.\n
     To address this, we built a robust event-driven synchronization system that processed incoming change events, propagated updates across services, and ensured data integrity. The system was designed to handle failures gracefully and maintain consistency at scale, while supporting reliable operation in a production environment.`,
     responsibilities: [
-      'Built high-throughput event-driven data pipelines processing ~1,000 events/sec using .NET Core, AWS Lambda, and Amazon SQS, enabling reliable real-time synchronization across microservices.',
+      'Built high-throughput event-driven data pipelines processing ~10,000 events/sec using .NET Core, AWS Lambda, and Amazon SQS, enabling reliable real-time synchronization across microservices.',
       'Improved system reliability to ~99% data accuracy by developing a reconciliation pipeline on AWS EC2 across multiple regions, reducing manual intervention to ~1–2% of failed events.',
       'Optimized Oracle 18c database performance by designing tables, views, triggers, and stored procedures aligned with system SLOs.',
       'Reduced deployment time by ~15% by building AWS-based CI/CD pipelines using Terraform, streamlining release workflows.',

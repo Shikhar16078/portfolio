@@ -148,6 +148,41 @@
     to { height: 0 }
   }
 
+  @keyframes profile-ring-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .profile-ring {
+    position: relative;
+    padding: 3px;
+    border-radius: 9999px;
+    box-shadow: 0 0 18px 4px hsl(var(--primary) / 0.28), 0 0 40px 12px hsl(var(--primary) / 0.12);
+    transition: transform 0.3s ease;
+  }
+
+  .profile-ring-spinner {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: conic-gradient(
+      from 0deg,
+      hsl(var(--primary) / 0) 0deg,
+      hsl(var(--primary)) 100deg,
+      hsl(var(--primary)) 200deg,
+      hsl(var(--primary) / 0) 300deg
+    );
+    animation: profile-ring-spin 4s linear infinite;
+  }
+
+  .profile-ring-inner {
+    position: relative;
+    z-index: 10;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: hsl(var(--hero));
+    padding: 3px;
+  }
+
   .animate-collapsible-down-slow {
     animation: collapsible-down-slow 0.5s ease-out;
   }

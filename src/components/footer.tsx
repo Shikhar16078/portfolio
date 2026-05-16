@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { personalData, socialLinks } from "@/lib/data";
-import { Badge } from "./ui/badge";
 
 export default function Footer() {
   return (
@@ -23,7 +22,6 @@ export default function Footer() {
         <p className="text-sm text-muted-foreground">
         Designed by {personalData.name} ©{new Date().getFullYear()}. All Rights Reserved.
         </p>
-        <Badge variant="secondary">Developed using Firebase Studio AI</Badge>
       </div>
     </footer>
   );

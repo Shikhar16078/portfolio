@@ -9,14 +9,19 @@ export default function HomeSection() {
     <section id="home" className="w-full min-h-screen flex items-center justify-center bg-hero text-hero-foreground py-12 md:py-20">
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center space-y-6 text-center">
-            <Image
-              src="/assets/images/profile.jpeg"
-              alt="Profile Picture"
-              width={192}
-              height={192}
-              className="mx-auto aspect-square overflow-hidden rounded-full object-cover ring-2 ring-primary ring-offset-4 ring-offset-hero transition-transform duration-300 ease-in-out hover:scale-105"
-              priority
-            />
+            <div className="profile-ring hover:scale-105 hover:cursor-none">
+              <div className="profile-ring-spinner" />
+              <div className="profile-ring-inner">
+                <Image
+                  src="/assets/images/profile.jpeg"
+                  alt="Profile Picture"
+                  width={192}
+                  height={192}
+                  className="rounded-full object-cover aspect-square block"
+                  priority
+                />
+              </div>
+            </div>
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
                 {personalData.name}

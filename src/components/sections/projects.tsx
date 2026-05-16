@@ -59,7 +59,7 @@ export default function ProjectsSection() {
                             </div>
                             <div className="flex justify-between gap-2">
                                 <Badge variant="outline" className="flex-shrink-0">{project.date}</Badge>
-                                <span className="text-sm text-muted-foreground">{project.type} Project</span>
+                                <Badge variant="outline" className="flex-shrink-0">{project.type} Project</Badge>
                             </div>
                         </CardHeader>
                         <CardContent className="flex flex-col flex-grow">

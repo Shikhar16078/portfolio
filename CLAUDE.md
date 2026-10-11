@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 npm run dev       # Start dev server on http://localhost:9002
 npm run build     # Production build
-npm run lint      # ESLint via Next.js
+npm run lint      # ESLint (flat config in eslint.config.mjs)
 npm run typecheck # TypeScript type check (tsc --noEmit)
 ```
 
@@ -15,7 +15,7 @@ There are no tests in this project.
 
 ## Architecture
 
-This is a Next.js 14 App Router single-page portfolio. The key architectural pattern is **data-driven rendering**: all portfolio content lives exclusively in `src/lib/data.ts` and is imported by section components. Updating content means editing only that file — never the components.
+This is a Next.js 16 (React 19) App Router single-page portfolio. Next 16 has breaking changes from older versions; the docs matching the installed version are in `node_modules/next/dist/docs/`. The key architectural pattern is **data-driven rendering**: all portfolio content lives exclusively in `src/lib/data.ts` and is imported by section components. Updating content means editing only that file — never the components.
 
 ### Data layer (`src/lib/data.ts`)
 

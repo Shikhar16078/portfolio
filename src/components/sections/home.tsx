@@ -10,6 +10,23 @@ import HeroSpotlight from '@/components/hero-spotlight';
 // Position in the hero's entrance sequence (see the hero-* utilities in globals.css).
 const seq = (i: number) => ({ '--i': i }) as CSSProperties;
 
+// Splits the bio around its highlight phrases, so they can be emphasised.
+function BioText({ text, highlights }: { text: string; highlights: string[] }) {
+  if (!highlights.length) return text;
+  const escaped = highlights.map((h) => h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const parts = text.split(new RegExp(`(${escaped.join('|')})`));
+  let n = 0;
+  return parts.map((part, i) =>
+    i % 2 ? (
+      <strong key={i} className="hero-highlight" style={{ '--h': n++ } as CSSProperties}>
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 export default function HomeSection() {
   return (
     <section id="home" className="relative isolate overflow-hidden w-full min-h-[calc(100dvh-3.5rem)] flex items-center justify-center bg-hero text-hero-foreground py-8 [@media(max-height:700px)]:py-4">
@@ -48,14 +65,14 @@ export default function HomeSection() {
                 {personalData.title}
               </p>
               <p data-hero-fg="text" className="hero-rise max-w-[860px] text-muted-foreground md:text-xl mx-auto text-pretty" style={seq(3)}>
-                {personalData.bio}
+                <BioText text={personalData.bio} highlights={personalData.bioHighlights} />
               </p>
             </div>
             {personalData.workAuthorization && (
-              <Badge data-hero-fg="box" variant="outline" className="hero-in gap-2 rounded-xl sm:rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground" style={seq(4)}>
-                <BadgeCheck className="h-4 w-4 shrink-0 text-primary" />
+              <Badge data-hero-fg="box" variant="outline" className="hero-in hero-sheen gap-2 rounded-xl sm:rounded-full border-primary/40 bg-primary/5 px-4 py-1.5 text-sm font-medium text-muted-foreground" style={seq(4)}>
+                <BadgeCheck className="hero-check h-4 w-4 shrink-0 text-primary" />
                 <span className="flex flex-col sm:flex-row sm:gap-1.5">
-                  <span>{personalData.workAuthorization.status}</span>
+                  <span className="text-hero-foreground">{personalData.workAuthorization.status}</span>
                   <span className="hidden sm:inline" aria-hidden="true">·</span>
                   <span>{personalData.workAuthorization.note}</span>
                 </span>

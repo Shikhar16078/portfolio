@@ -202,6 +202,47 @@ html:not([data-motion-ready]) [data-reveal] {
   }
 }
 
+/* Key phrases of the bio: brighter (dark) or darker (light) than the rest of the text. Once the bio has
+   risen into place they light up one after another, with a brief glow, then stay emphasised.
+   A one-off color/text-shadow animation on a few words, so the paint cost is negligible. */
+@utility hero-highlight {
+  color: hsl(var(--hero-foreground) / 0.85);
+  font-weight: 500;
+  animation: hero-highlight 0.9s ease-out backwards;
+  animation-delay: calc(950ms + var(--h, 0) * 110ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Work authorization badge: a band of light sweeps across it every 3.5s, and the check icon
+   pops as it passes. Both move by transform only. */
+@utility hero-sheen {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(100deg, transparent, hsl(var(--primary) / var(--hero-sheen)), transparent);
+    transform: translateX(-120%);
+    animation: hero-sheen 3.5s ease-in-out 1.6s infinite;
+    pointer-events: none;
+  }
+  & .hero-check {
+    animation: hero-check 3.5s ease-in-out 1.6s infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+    & .hero-check {
+      animation: none;
+    }
+  }
+}
+
 /* Scroll cue: a dot sliding down inside a mouse outline. */
 @utility hero-scroll-dot {
   animation: hero-scroll-dot 1.8s ease-in-out infinite;
@@ -286,6 +327,7 @@ html:not([data-motion-ready]) [data-reveal] {
     --chrome: 0 0% 90%;
     --chrome-foreground: 240 10% 3.9%;
     --hero-glow: 0.1;
+    --hero-sheen: 0.18;
   }
  
   .dark {
@@ -313,6 +355,7 @@ html:not([data-motion-ready]) [data-reveal] {
     --chrome: 240 4% 2%;
     --chrome-foreground: 0 0% 98%;
     --hero-glow: 0.2;
+    --hero-sheen: 0.3;
   }
 }
  
@@ -414,6 +457,41 @@ html:not([data-motion-ready]) [data-reveal] {
 @keyframes hero-word {
   from {
     transform: translateY(105%);
+  }
+}
+
+@keyframes hero-highlight {
+  0% {
+    color: hsl(var(--muted-foreground));
+  }
+  45% {
+    text-shadow: 0 0 12px hsl(var(--primary) / 0.4);
+  }
+  100% {
+    text-shadow: 0 0 0 hsl(var(--primary) / 0);
+  }
+}
+
+/* The sweep takes the first 37% of each cycle (about 1.3s); the rest is a pause. */
+@keyframes hero-sheen {
+  0% {
+    transform: translateX(-120%);
+  }
+  37%,
+  100% {
+    transform: translateX(270%);
+  }
+}
+
+@keyframes hero-check {
+  0%,
+  10%,
+  34%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: scale(1.25) rotate(-8deg);
   }
 }
 

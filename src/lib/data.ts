@@ -120,7 +120,7 @@ export const educationData = [
     institution: 'Dr. A.P.J. Abdul Kalam Technical University, India',
     period: 'Aug 2016 – Sept 2020',
     gpa: 'CGPA: 7.47/10.00',
-    description: 'With a passion for engineering after completing my 12 th grade, I joined Inderprastha Engineering College, affiliated with Dr. A.P.J. Abdul Kalam Technical University. During my time there, I developed a strong foundation in Computer Science fundamentals, which enabled me to secure three job offers by the end of my bachelor’s degree, ultimately leading me to join Nagarro as an Associate Software Engineer. I am grateful to my professors and mentors for their guidance in shaping my journey as a Computer Science student.',
+    description: 'With a passion for engineering after completing my 12th grade, I joined Inderprastha Engineering College, affiliated with Dr. A.P.J. Abdul Kalam Technical University. During my time there, I developed a strong foundation in Computer Science fundamentals, which enabled me to secure three job offers by the end of my bachelor’s degree, ultimately leading me to join Nagarro as an Associate Software Engineer. I am grateful to my professors and mentors for their guidance in shaping my journey as a Computer Science student.',
     website: 'https://aktu.ac.in/',
     courses: [
       'Data Structures & Algorithms',
@@ -171,10 +171,10 @@ export const experienceData = [
     company: 'Translation Commons',
     period: 'June 2026 – Present',
     icon: '/assets/images/langnav.png',
-    summary: 'Own the PostgreSQL and Python ETL backend replacing a heavy browser-side TSV pipeline for language, locale, and territory data.',
+    summary: 'I own the PostgreSQL and Python ETL backend that is replacing a heavy browser-side TSV pipeline for language, locale, and territory data.',
     highlights: [
-      { value: 'Up to 125 MB', label: 'less browser memory by moving data processing to the backend' },
-      { value: 'Backend owner', label: 'PostgreSQL, ETL, and APIs powering the entire frontend' },
+      { value: 'Up to 125 MB', label: 'less browser memory as data processing moves to the backend' },
+      { value: 'Backend owner', label: 'PostgreSQL, ETL, and APIs built to power the entire frontend' },
       { value: 'Full-stack fixes', label: 'GitHub issues and UI bugs resolved across the React app' },
     ],
     stack: ['Python', 'PostgreSQL', 'Supabase', 'PostgREST', 'ETL', 'TypeScript', 'React'],
@@ -182,11 +182,11 @@ export const experienceData = [
 
     I am focused on building a backend to replace it: a PostgreSQL database on Supabase with a relational schema and materialized views that reconcile conflicting source datasets, a Python ETL pipeline to load the data, and PostgREST APIs so the frontend can query only what it needs instead of downloading everything up front.`,
     responsibilities: [
-      'Reduced client-side heap usage by up to 125 MB by moving a heavy browser-side fetch pipeline into a queryable PostgreSQL database on Supabase, loaded by a Python ETL pipeline.',
-      'Own the backend powering the entire frontend, from database architecture and ETL to the APIs the app consumes.',
-      'Replaced flat TSV lookups with fast, queryable access to language, locale, and territory data by designing a relational schema and materialized views across conflicting source datasets.',
-      'Enabled structured data access for the frontend by building PostgREST APIs.',
-      'Resolved GitHub issues and fixed UI bugs across the TypeScript, React, and Tailwind CSS frontend.',
+      'Cutting client-side heap usage by up to 125 MB by moving a heavy browser-side fetch pipeline into a queryable PostgreSQL database on Supabase, loaded by a Python ETL pipeline.',
+      'Own the backend that will power the entire frontend, from database architecture and ETL to the APIs the app consumes.',
+      'Replacing flat TSV lookups with fast, queryable access to language, locale, and territory data through a relational schema and materialized views that reconcile conflicting source datasets.',
+      'Building PostgREST APIs that give the frontend structured, on-demand data access.',
+      'Resolving GitHub issues and fixing UI bugs across the TypeScript, React, and Tailwind CSS frontend.',
     ],
   },
   {
@@ -197,8 +197,8 @@ export const experienceData = [
     summary: 'Designed and led an AI-powered course planning platform for UCR students, built in collaboration with Google on an agentic workflow.',
     highlights: [
       { value: 'Hours → ~30 min', label: 'course planning time for students' },
-      { value: 'Multi-Agent', label: 'workflow on Google ADK' },
-      { value: 'Led with Google', label: 'system architecture, in collaboration with Google and UCR' },
+      { value: 'Lead architect', label: 'designed and led the multi-agent system on Google ADK' },
+      { value: 'Built with Google', label: "showcased the system design to Google's team as a joint UCR project" },
       { value: 'Calendar view', label: 'chatbot and interactive schedule for a smoother planning experience' },
     ],
     stack: ['Python', 'Google ADK', 'LLMs', 'RAG', 'React', 'REST APIs'],
@@ -207,8 +207,9 @@ export const experienceData = [
   I led the design and development of a one-stop AI-powered solution to streamline this experience. The system intelligently combines student history, degree requirements, and real-time course availability to generate personalized schedules. As the project evolved, I expanded the system by integrating structured university data, enabling it to handle academic policies, constraints, and FAQs, making it a more comprehensive and practical tool for students.`,
     responsibilities: [
       'Reduced course planning from hours of manual searching to ~30 minutes by building a one-stop AI-powered platform for UCR students to discover courses, validate prerequisites, and generate personalized schedules from live quarter offerings.',
+      'Led the project and designed its system architecture end to end, from agent orchestration through backend APIs to the React frontend.',
       'Delivered a multi-agent workflow on Google ADK with agent orchestration, session persistence, and multi-step reasoning for context-aware recommendations.',
-      'Led the design and system architecture in collaboration with Google and UCR, from agent orchestration through backend APIs to the frontend.',
+      "Collaborated with Google throughout the project, showcasing the system design to Google's team as a joint effort with UCR.",
       'Improved the planning experience with a React chatbot and an interactive calendar view that lets students see and refine their generated schedules.',
       'Extended the system with structured university data so it could handle academic policies, constraints, and FAQs as a true one-stop solution.',
     ],

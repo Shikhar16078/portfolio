@@ -22,7 +22,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground">
-        Designed by {personalData.name} ©{new Date().getFullYear()}. All Rights Reserved.
+        Designed and Developed by {personalData.name} ©{new Date().getFullYear()}. All Rights Reserved.
         </p>
       </Reveal>
     </footer>

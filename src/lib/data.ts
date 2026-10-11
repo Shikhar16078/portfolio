@@ -171,6 +171,12 @@ export const experienceData = [
     company: 'Translation Commons',
     period: 'June 2026 – Present',
     icon: '/assets/images/langnav.png',
+    summary: 'Building a PostgreSQL and Python ETL backend to replace a browser-side TSV data pipeline for language, locale, and territory data.',
+    highlights: [
+      { value: 'Up to 125 MB', label: 'lower client-side heap usage' },
+      { value: 'PostgREST', label: 'APIs for structured frontend data access' },
+    ],
+    stack: ['Python', 'PostgreSQL', 'Supabase', 'PostgREST', 'ETL', 'TypeScript', 'React'],
     description: `At Translation Commons, I work on a frontend application built around language, locale, and territory data. Today, the app loads all of this data from flat TSV files and processes it in the browser, which puts a heavy load on client-side memory.
 
     I am focused on building a backend to replace it: a PostgreSQL database on Supabase with a relational schema and materialized views that reconcile conflicting source datasets, a Python ETL pipeline to load the data, and PostgREST APIs so the frontend can query only what it needs instead of downloading everything up front.`,
@@ -186,6 +192,12 @@ export const experienceData = [
     company: 'University of California, Riverside',
     period: 'June 2025 – Aug 2025',
     icon: '/assets/images/ucr.png',
+    summary: 'Designed and led an AI-powered course planning platform for UCR students, built in collaboration with Google on an agentic workflow.',
+    highlights: [
+      { value: 'Hours → ~30 min', label: 'course planning time' },
+      { value: 'Google ADK', label: 'multi-agent workflow, built with Google' },
+    ],
+    stack: ['Python', 'Google ADK', 'LLMs', 'RAG', 'React', 'REST APIs'],
     description: `During my Data Science Fellowship at UCR, I worked on solving a major friction point students face every quarter when planning their courses. The process was highly fragmented and manual — students had to check course offerings, track completed courses, refer to recommended degree plans, and verify eligibility across multiple university systems, making planning time-consuming and often confusing.
 
   I led the design and development of a one-stop AI-powered solution to streamline this experience. The system intelligently combines student history, degree requirements, and real-time course availability to generate personalized schedules. As the project evolved, I expanded the system by integrating structured university data, enabling it to handle academic policies, constraints, and FAQs, making it a more comprehensive and practical tool for students.`,
@@ -202,6 +214,13 @@ export const experienceData = [
     company: 'Nagarro',
     period: 'Jan 2020 – Sept 2022',
     icon: '/assets/images/nagarro.jpg',
+    summary: 'Built event-driven microservices and reliability tooling that kept real-time inventory in sync for a large-scale automobile client.',
+    highlights: [
+      { value: '10K/sec', label: 'events processed' },
+      { value: '~99%', label: 'data accuracy' },
+      { value: '2 days → 1 hr', label: 'environment setup' },
+    ],
+    stack: ['.NET Core', 'AWS Lambda', 'Amazon SQS', 'EC2', 'Terraform', 'Oracle 18c'],
     description: `At Nagarro, our team worked on a distributed system responsible for maintaining data consistency across multiple services for a large-scale automobile client. These systems needed to stay synchronized in near real-time, with changes flowing in both directions. This introduced challenges around handling continuous streams of events, ensuring reliability, and maintaining consistency across services even in the presence of failures.\n
     To address this, we built a robust event-driven synchronization system that processed incoming change events, propagated updates across services, and ensured data integrity. The system was designed to handle failures gracefully and maintain consistency at scale, while supporting reliable operation in a production environment.`,
     responsibilities: [

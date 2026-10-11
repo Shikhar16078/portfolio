@@ -96,12 +96,18 @@ export default function HeroSpotlight() {
 
     const resize = new ResizeObserver(() => active && carve());
     resize.observe(area);
+    // The hero content drifts while the page scrolls (hero-scroll-away.tsx); re-carve on the next move.
+    const scrolled = () => {
+      active = false;
+    };
     area.addEventListener("pointermove", move);
     area.addEventListener("pointerleave", leave);
+    window.addEventListener("scroll", scrolled, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
       clearTimeout(idle);
       resize.disconnect();
+      window.removeEventListener("scroll", scrolled);
       area.removeEventListener("pointermove", move);
       area.removeEventListener("pointerleave", leave);
     };

@@ -6,6 +6,7 @@ import { personalData, socialLinks } from '@/lib/data';
 import { BadgeCheck, Download, Mail } from 'lucide-react';
 import HeroSpotlight from '@/components/hero-spotlight';
 import HeroPhoto from '@/components/hero-photo';
+import HeroScrollAway from '@/components/hero-scroll-away';
 
 // Position in the hero's entrance sequence (see the hero-* utilities in globals.css).
 const seq = (i: number) => ({ '--i': i }) as CSSProperties;
@@ -35,7 +36,7 @@ export default function HomeSection() {
         <div className="hero-glow -right-56 -bottom-72 animate-[glow-drift-b_26s_ease-in-out_infinite_alternate]" />
         <HeroSpotlight />
       </div>
-      <div className="relative container px-4 md:px-6 mx-auto">
+      <HeroScrollAway className="relative container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center space-y-5 text-center [@media(max-height:700px)]:space-y-3">
             <HeroPhoto status={personalData.status} />
             <div className="space-y-2">
@@ -95,7 +96,7 @@ export default function HomeSection() {
                 ))}
               </div>
         </div>
-      </div>
+      </HeroScrollAway>
       {/* Scroll cue: only where there's room below the content (wide and tall screens). */}
       <a
         href="#experience"

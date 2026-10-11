@@ -18,6 +18,7 @@ interface SkillCategory {
 const categoryLabels: Record<string, string> = {
   languages: 'Languages',
   backend: 'Backend',
+  ai: 'AI/ML',
   frontend: 'Frontend',
   cloud: 'Cloud',
   databases: 'Databases',
@@ -50,16 +51,16 @@ export default function SkillsSection() {
           </div>
         </AnimatedContent>
         <AnimatedContent>
-          <div className="mx-auto max-w-4xl py-12">
+          <div className="mx-auto max-w-5xl py-12">
             <Tabs defaultValue="All" className="w-full">
               <TabsList
-                className="grid h-auto w-full grid-cols-3 gap-2 rounded-md bg-muted/70 p-1.5 md:flex md:flex-wrap md:justify-center"
+                className="grid h-auto w-full grid-cols-4 lg:grid-cols-8 gap-2 rounded-md bg-muted/70 p-1.5"
               >
                 {skillCategories.map((category) => (
                   <TabsTrigger
                     key={category.title}
                     value={category.title}
-                    className="w-full px-2 py-2.5 text-xs sm:px-4 sm:text-sm md:min-w-[112px] md:flex-1 md:px-4 md:text-base last:col-start-2 md:last:col-start-auto"
+                    className="w-full px-2 py-2.5 text-xs sm:text-sm md:text-base lg:px-3"
                   >
                     {category.title}
                   </TabsTrigger>

@@ -217,6 +217,7 @@ export const skillsData = {
     { name: 'C#' },
     { name: 'Java' },
     { name: 'JavaScript' },
+    { name: 'TypeScript' },
   ],
 
   backend: [
@@ -230,6 +231,19 @@ export const skillsData = {
     { name: 'Distributed Systems' },
     { name: 'Event-Driven Architecture' },
     { name: 'REST APIs' },
+    { name: 'PostgREST' },
+    { name: 'ETL Pipelines' },
+  ],
+
+  ai: [
+    { name: 'LLMs' },
+    { name: 'SLMs' },
+    { name: 'RAG' },
+    { name: 'Agentic AI' },
+    { name: 'Google ADK' },
+    { name: 'OpenAI API' },
+    { name: 'Anthropic Claude API' },
+    { name: 'BERT' },
   ],
 
   frontend: [
@@ -238,6 +252,7 @@ export const skillsData = {
     { name: 'HTML' },
     { name: 'CSS' },
     { name: 'Bootstrap' },
+    { name: 'Electron' },
   ],
 
   cloud: [
@@ -245,13 +260,17 @@ export const skillsData = {
     { name: 'Lambda' },
     { name: 'SQS' },
     { name: 'EC2' },
+    { name: 'S3' },
     { name: 'CloudWatch' },
+    { name: 'Google Cloud Platform' },
     { name: 'Docker' },
     { name: 'Terraform' },
+    { name: 'CI/CD' },
   ],
 
   databases: [
     { name: 'PostgreSQL' },
+    { name: 'Supabase' },
     { name: 'MySQL' },
     { name: 'Oracle 18c' },
   ],
@@ -259,6 +278,9 @@ export const skillsData = {
   tools: [
     { name: 'Git' },
     { name: 'GitHub' },
+    { name: 'Vite' },
+    { name: 'Claude Code' },
+    { name: 'Windsurf' },
     { name: 'Splunk' },
     { name: 'New Relic' },
     { name: 'PagerDuty' },

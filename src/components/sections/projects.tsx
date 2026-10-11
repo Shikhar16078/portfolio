@@ -13,7 +13,8 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { ChevronRight, Github } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
+import { Github } from '@/components/icons';
 import SectionShell from '../section-shell';
 
 export default function ProjectsSection() {

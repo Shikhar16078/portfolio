@@ -1,6 +1,6 @@
 // data.ts
 
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin } from '@/components/icons';
 
 export const personalData = {
   name: 'Shikhar Kumar',

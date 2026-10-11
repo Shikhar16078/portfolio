@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award, Star, X, BadgeCheck } from 'lucide-react';
+import { House, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award, Star, X, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme-toggle';
@@ -78,7 +78,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
   // The sheet's scroll lock cancels in-flight scrolling, so scroll only after it has closed.
   const pendingTarget = useRef<string | null>(null);
   const navLinks = [
-    { href: '#home', label: 'Home', icon: Home },
+    { href: '#home', label: 'Home', icon: House },
     { href: '#experience', label: 'Experience', icon: Briefcase },
     { href: '#projects', label: 'Projects', icon: FolderGit2 },
     { href: '#education', label: 'Education', icon: GraduationCap },

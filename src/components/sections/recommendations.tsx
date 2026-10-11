@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPagination, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Linkedin, User } from "lucide-react";
+import { User } from "lucide-react";
+import { Linkedin } from "@/components/icons";
 import SectionShell from '../section-shell';
 
 export default function RecommendationsSection() {

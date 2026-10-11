@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { experienceData } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ChevronDown } from "lucide-react";
+import { CircleCheck, ChevronDown } from "lucide-react";
 import SectionShell from "../section-shell";
 import { Timeline, TimelineEntry } from "../timeline";
 import { cn } from "@/lib/utils";
@@ -90,7 +90,7 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
             <ul className="space-y-3 text-muted-foreground">
               {item.responsibilities.map((resp, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <CircleCheck className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                   <span>{resp}</span>
                 </li>
               ))}

@@ -96,17 +96,6 @@
     }
   }
 
-  @keyframes scale-out {
-    from {
-      transform: scale(1);
-      opacity: 1;
-    }
-    to {
-      transform: scale(0);
-      opacity: 0;
-    }
-  }
-
   @keyframes rotate-in {
     from {
       transform: rotate(-90deg);
@@ -116,46 +105,11 @@
     }
   }
 
-  @keyframes rotate-out {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(90deg);
-    }
-  }
-
   .animate-scale-in {
     animation: scale-in 0.3s ease-out;
   }
-  .animate-scale-out {
-    animation: scale-out 0.3s ease-in;
-  }
   .animate-rotate-in {
     animation: rotate-in 0.3s ease-out;
-  }
-  .animate-rotate-out {
-    animation: rotate-out 0.3s ease-in;
-  }
-
-  @keyframes card-fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  .animate-card-fade-in {
-    opacity: 0;
-    animation: card-fade-in 0.5s ease-out forwards;
-  }
-
-  @keyframes collapsible-down-slow {
-    from { height: 0 }
-    to { height: var(--radix-collapsible-content-height) }
-  }
-
-  @keyframes collapsible-up-slow {
-    from { height: var(--radix-collapsible-content-height) }
-    to { height: 0 }
   }
 
   @keyframes profile-ring-spin {
@@ -193,11 +147,4 @@
     padding: 3px;
   }
 
-  .animate-collapsible-down-slow {
-    animation: collapsible-down-slow 0.5s ease-out;
-  }
-  
-  .animate-collapsible-up-slow {
-    animation: collapsible-up-slow 0.5s ease-out;
-  }
 }

@@ -62,7 +62,7 @@ export default function HomeSection() {
                 ))}
               </h1>
               <p data-hero-fg="text" className="hero-rise text-primary text-xl md:text-2xl font-semibold" style={seq(2)}>
-                {personalData.title}
+                <span className="hero-underline">{personalData.title}</span>
               </p>
               <p data-hero-fg="text" className="hero-rise max-w-[860px] text-muted-foreground md:text-xl mx-auto text-pretty" style={seq(3)}>
                 <BioText text={personalData.bio} highlights={personalData.bioHighlights} />

@@ -243,6 +243,43 @@ html:not([data-motion-ready]) [data-reveal] {
   }
 }
 
+/* The title: an accent line draws out from the centre beneath it, then every 3.5s a glint slides
+   along the line. Transform and opacity only. */
+@utility hero-underline {
+  position: relative;
+  display: inline-block;
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    height: 2px;
+    border-radius: 9999px;
+    pointer-events: none;
+  }
+  &::after {
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.7), transparent);
+    animation: hero-underline 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.8s backwards;
+  }
+  &::before {
+    left: 0;
+    width: 25%;
+    background: linear-gradient(90deg, transparent, hsl(var(--hero-foreground) / 0.9), transparent);
+    opacity: 0;
+    animation: hero-underline-glint 3.5s ease-in-out 1.9s infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+    }
+    &::before {
+      display: none;
+    }
+  }
+}
+
 /* Scroll cue: a dot sliding down inside a mouse outline. */
 @utility hero-scroll-dot {
   animation: hero-scroll-dot 1.8s ease-in-out infinite;
@@ -499,6 +536,31 @@ html:not([data-motion-ready]) [data-reveal] {
   }
   20% {
     transform: scale(1.25) rotate(-8deg);
+  }
+}
+
+@keyframes hero-underline {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes hero-underline-glint {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  28% {
+    opacity: 1;
+  }
+  36%,
+  100% {
+    transform: translateX(400%);
+    opacity: 0;
   }
 }
 

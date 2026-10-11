@@ -31,7 +31,7 @@ function BioText({ text, highlights }: { text: string; highlights: string[] }) {
 
 export default function HomeSection({ config }: { config: SiteConfig }) {
   return (
-    <section id="home" className="relative isolate overflow-hidden w-full min-h-[calc(100dvh-3.5rem)] flex items-center justify-center bg-hero text-hero-foreground py-8 [@media(max-height:700px)]:py-4">
+    <section id="home" className="relative isolate overflow-hidden w-full min-h-[calc(100svh-3.5rem)] flex items-center justify-center bg-hero text-hero-foreground py-8 [@media(max-height:700px)]:py-4">
       <div aria-hidden="true" className="hero-backdrop">
         <div className="hero-glow -left-56 -top-64 animate-[glow-drift-a_22s_ease-in-out_infinite_alternate]" />
         <div className="hero-glow -right-56 -bottom-72 animate-[glow-drift-b_26s_ease-in-out_infinite_alternate]" />

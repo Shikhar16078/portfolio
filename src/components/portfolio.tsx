@@ -52,7 +52,7 @@ export default function Portfolio({ config }: { config: SiteConfig }) {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="flex flex-col min-h-svh">
       <Header activeSection={activeSection} resume={config.resume} />
       <main className="flex-1">
         <HomeSection config={config} />

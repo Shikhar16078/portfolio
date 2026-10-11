@@ -15,11 +15,13 @@ interface SectionShellProps {
 
 // Every section fills at least one screen below the sticky header (h-14), so jumping to it
 // from the nav never shows the neighbouring section. Content is centered within that screen.
+// svh, not dvh: dvh changes whenever a phone's address bar shows or hides, which resized every
+// section mid-scroll and made small swipes jitter.
 export default function SectionShell({ id, title, subtitle, children, className, revealBody = true }: SectionShellProps) {
   return (
     <section
       id={id}
-      className={cn("relative isolate flex w-full min-h-[calc(100dvh-3.5rem)] items-center py-8 md:py-10", className)}
+      className={cn("relative isolate flex w-full min-h-[calc(100svh-3.5rem)] items-center py-8 md:py-10", className)}
     >
       <SectionBackdrop />
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">

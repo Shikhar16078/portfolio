@@ -93,7 +93,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
               Summary
             </Button>
           </DialogTrigger>
-          <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg">
+          <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg" aria-describedby={undefined}>
             <SummaryContent />
           </DialogContent>
         </Dialog>
@@ -149,7 +149,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
                       Summary
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg">
+                  <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg" aria-describedby={undefined}>
                     <SummaryContent />
                   </DialogContent>
                 </Dialog>

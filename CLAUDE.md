@@ -35,4 +35,4 @@ Radix UI-based shadcn/ui components. Extend or add here when a new primitive is 
 
 ### Theme
 
-`next-themes` with a `ThemeProvider` in `src/app/layout.tsx`. The toggle lives in `src/app/theme-toggle.tsx`. Tailwind dark mode uses the `class` strategy.
+`next-themes` with a `ThemeProvider` in `src/app/layout.tsx`. The toggle lives in `src/components/theme-toggle.tsx`. Tailwind dark mode uses the `class` strategy.

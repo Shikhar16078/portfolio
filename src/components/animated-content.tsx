@@ -27,11 +27,7 @@ export default function AnimatedContent({ children, className }: AnimatedContent
       observer.observe(ref.current);
     }
 
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (

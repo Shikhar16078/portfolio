@@ -45,14 +45,7 @@ export default function Home() {
       }
     });
 
-    return () => {
-      sections.forEach((id) => {
-        const element = document.getElementById(id);
-        if (element) {
-          observer.unobserve(element);
-        }
-      });
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (

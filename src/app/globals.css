@@ -64,6 +64,99 @@ html:not([data-motion-ready]) [data-reveal] {
   }
 }
 
+/* Hero entrance: pure CSS so it plays on first paint, before any JS. Each element sets --i for its
+   place in the sequence; `backwards` fill means nothing lingers once it finishes.
+   The large items (photo, name, title, summary) only move and never start invisible: Chrome does not
+   count an opacity-0 element as painted, so fading them would delay Largest Contentful Paint.
+   The small items below them fade in as well. */
+@utility hero-rise {
+  animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility hero-in {
+  animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: appear;
+    animation-duration: 0.4s;
+  }
+}
+
+@utility hero-pop {
+  animation: hero-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Hero backdrop: two soft red glows drifting slowly and, on desktop, a dot grid revealed around the
+   cursor only while the mouse moves (hero-spotlight.tsx sets --mx/--my/--spot).
+   Only transform/opacity animate; gradients never count as Largest Contentful Paint. */
+@utility hero-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  animation: appear 1.2s ease-out backwards;
+}
+
+@utility hero-spotlight {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(hsl(var(--primary) / 0.6) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(200px circle at var(--mx, -999px) var(--my, -999px), black, transparent 75%);
+  opacity: var(--spot, 0);
+  transition: opacity 0.25s ease-out;
+  /* Fades away slowly once the mouse rests. */
+  &[data-idle] {
+    transition-duration: 0.9s;
+  }
+}
+
+@utility hero-glow {
+  position: absolute;
+  width: 44rem;
+  height: 44rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, hsl(var(--primary) / var(--hero-glow)), transparent 62%);
+  will-change: transform;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none !important;
+  }
+}
+
+/* The name: each word slides up from behind a mask. */
+@utility hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+  & > span {
+    display: inline-block;
+    animation: hero-word 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: calc(100ms + var(--w, 0) * 90ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & > span {
+      animation: none;
+    }
+  }
+}
+
+/* Scroll cue: a dot sliding down inside a mouse outline. */
+@utility hero-scroll-dot {
+  animation: hero-scroll-dot 1.8s ease-in-out infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
 @utility animate-scale-in {
   animation: scale-in 0.3s ease-out;
 }
@@ -131,6 +224,7 @@ html:not([data-motion-ready]) [data-reveal] {
     --hero-foreground: 240 10% 3.9%;
     --chrome: 0 0% 90%;
     --chrome-foreground: 240 10% 3.9%;
+    --hero-glow: 0.1;
   }
  
   .dark {
@@ -157,6 +251,7 @@ html:not([data-motion-ready]) [data-reveal] {
     --hero-foreground: 0 0% 98%;
     --chrome: 240 4% 2%;
     --chrome-foreground: 0 0% 98%;
+    --hero-glow: 0.2;
   }
 }
  
@@ -210,5 +305,67 @@ html:not([data-motion-ready]) [data-reveal] {
 @keyframes profile-ring-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* transform, not scale: the ring's hover zoom uses the scale property and must not be overridden. */
+@keyframes hero-pop {
+  from {
+    transform: scale(0.94);
+  }
+}
+
+/* Plain fade in; shared by several utilities above. */
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes glow-drift-a {
+  to {
+    transform: translate(18%, 12%) scale(1.1);
+  }
+}
+
+@keyframes glow-drift-b {
+  to {
+    transform: translate(-16%, -10%) scale(1.15);
+  }
+}
+
+@keyframes hero-word {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes hero-scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
   }
 }

@@ -5,7 +5,12 @@ import { Github, Linkedin } from 'lucide-react';
 export const personalData = {
   name: 'Shikhar Kumar',
   title: "Software Engineer",
-  bio: "Software engineer focused on backend, distributed systems, and applied AI, with 3+ years of experience building production systems across .NET, Python, and AWS. M.S. in Computer Science from UC Riverside.",
+  bio: "Software engineer focused on backend, distributed systems, and applied AI, with 3+ years of experience building production systems across .NET, Python, and AWS.",
+  degree: 'M.S. in Computer Science from UC Riverside',
+  workAuthorization: {
+    status: 'Authorized to work in the US on F-1 OPT',
+    note: 'Eligible for 24-month STEM extension',
+  },
   email: 'skuma154@ucr.edu',
   phone: '+1 (951) 377-2505',
   resumeUrl: 'https://drive.google.com/file/d/1501D5LMF1nKlSaEdqiZAyJysep-V2r31/view?usp=sharing',

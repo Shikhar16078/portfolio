@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import MotionProvider from '@/components/motion-provider';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { personalData } from '@/lib/data';
 
@@ -34,6 +35,8 @@ export default function RootLayout({
         >
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
+        {/* Vercel Web Analytics: page views and visitors, reported only from Vercel deployments. */}
+        <Analytics />
       </body>
     </html>
   );

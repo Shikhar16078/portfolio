@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { m, useScroll, useSpring } from 'motion/react';
 import { House, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award, Star, X, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -23,6 +24,7 @@ import { personalData, summaryData } from '@/lib/data';
 import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from './ui/scroll-area';
+import { slideInRight, springSnappy, staggerChildren } from '@/lib/motion';
 
 function SummaryContent() {
   return (
@@ -31,7 +33,7 @@ function SummaryContent() {
         <DialogTitle>{personalData.name} - {personalData.title}</DialogTitle>
       </DialogHeader>
       <ScrollArea className="h-[60vh] sm:h-auto">
-        <div className="space-y-4 text-sm text-muted-foreground pr-6">
+        <div className="stagger-in space-y-4 text-sm text-muted-foreground pr-6">
           <p>{summaryData.intro}</p>
           {personalData.workAuthorization && (
             <p className="flex items-start gap-2 text-foreground">
@@ -70,6 +72,22 @@ function SummaryContent() {
         </Button>
       </DialogFooter>
     </>
+  );
+}
+
+// Mobile menu links slide in one after another each time the menu opens.
+const mobileNavStagger = staggerChildren(0.035, 0.08);
+
+// Thin bar along the bottom of the header that fills as the page scrolls.
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
+  return (
+    <m.div
+      aria-hidden="true"
+      style={{ scaleX }}
+      className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-primary"
+    />
   );
 }
 
@@ -113,12 +131,15 @@ export default function Header({ activeSection }: { activeSection: string }) {
                     asChild
                     variant='ghost'
                     size="icon"
-                    className={cn('hover:bg-primary hover:text-primary-foreground', {
-                      'bg-primary text-primary-foreground': (link.href === `#${activeSection}`),
+                    className={cn('relative hover:bg-primary hover:text-primary-foreground', {
+                      'text-primary-foreground': (link.href === `#${activeSection}`),
                     })}
                   >
                     <Link href={link.href} prefetch={false}>
-                      <link.icon className="h-5 w-5" />
+                      {link.href === `#${activeSection}` && (
+                        <m.span layoutId="nav-active" transition={springSnappy} className="absolute inset-0 rounded-md bg-primary" />
+                      )}
+                      <link.icon className="relative h-5 w-5" />
                       <span className="sr-only">{link.label}</span>
                     </Link>
                   </Button>
@@ -158,42 +179,49 @@ export default function Header({ activeSection }: { activeSection: string }) {
                <SheetHeader>
                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                </SheetHeader>
-               <nav className="grid gap-4 text-lg font-medium p-6">
-                 <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg hover:bg-primary hover:text-primary-foreground">
-                      <User className="mr-3 h-5 w-5" />
-                      Summary
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg" aria-describedby={undefined}>
-                    <SummaryContent />
-                  </DialogContent>
-                </Dialog>
+              <m.nav className="grid gap-4 text-lg font-medium p-6" initial="hidden" animate="show" variants={mobileNavStagger}>
+                <m.div variants={slideInRight}>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" className="font-bold -ml-3 justify-start text-lg hover:bg-primary hover:text-primary-foreground">
+                        <User className="mr-3 h-5 w-5" />
+                        Summary
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg" aria-describedby={undefined}>
+                      <SummaryContent />
+                    </DialogContent>
+                  </Dialog>
+                </m.div>
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      pendingTarget.current = link.href;
-                      setMobileNavOpen(false);
-                    }}
-                    className={cn(
-                      'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-                      { 'text-primary bg-primary/10': (link.href === `#${activeSection}`) }
-                    )}
-                    prefetch={false}
-                  >
-                    <link.icon className="h-5 w-5" />
-                    {link.label}
-                  </Link>
+                  <m.div key={link.href} variants={slideInRight}>
+                    <Link
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        pendingTarget.current = link.href;
+                        setMobileNavOpen(false);
+                      }}
+                      className={cn(
+                        'relative flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:text-primary',
+                        { 'text-primary': (link.href === `#${activeSection}`) }
+                      )}
+                      prefetch={false}
+                    >
+                      {link.href === `#${activeSection}` && (
+                        <m.span layoutId="mobile-nav-active" transition={springSnappy} className="absolute inset-0 rounded-lg bg-primary/10" />
+                      )}
+                      <link.icon className="relative h-5 w-5" />
+                      <span className="relative">{link.label}</span>
+                    </Link>
+                  </m.div>
                 ))}
-              </nav>
+              </m.nav>
             </SheetContent>
           </Sheet>
         </div>
       </div>
+      <ScrollProgress />
     </header>
   );
 }

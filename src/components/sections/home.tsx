@@ -7,6 +7,7 @@ import { BadgeCheck, Download, Mail } from 'lucide-react';
 import HeroSpotlight from '@/components/hero-spotlight';
 import HeroPhoto from '@/components/hero-photo';
 import HeroScrollAway from '@/components/hero-scroll-away';
+import type { SiteConfig } from '@/lib/site-config';
 
 // Position in the hero's entrance sequence (see the hero-* utilities in globals.css).
 const seq = (i: number) => ({ '--i': i }) as CSSProperties;
@@ -28,7 +29,7 @@ function BioText({ text, highlights }: { text: string; highlights: string[] }) {
   );
 }
 
-export default function HomeSection() {
+export default function HomeSection({ config }: { config: SiteConfig }) {
   return (
     <section id="home" className="relative isolate overflow-hidden w-full min-h-[calc(100dvh-3.5rem)] flex items-center justify-center bg-hero text-hero-foreground py-8 [@media(max-height:700px)]:py-4">
       <div aria-hidden="true" className="hero-backdrop">
@@ -38,7 +39,7 @@ export default function HomeSection() {
       </div>
       <HeroScrollAway className="relative container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center space-y-5 text-center [@media(max-height:700px)]:space-y-3">
-            <HeroPhoto status={personalData.status} />
+            <HeroPhoto status={config.status} />
             <div className="space-y-2">
               <h1 data-hero-fg="text" className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
                 {personalData.name.split(' ').map((word, i, words) => (
@@ -74,12 +75,14 @@ export default function HomeSection() {
                   Contact Me
                 </Link>
               </Button>
-              <Button asChild variant="secondary" className="group w-auto">
-                <a href={personalData.resumeUrl} target="_blank" rel="noopener noreferrer">
-                  <Download className="transition-transform duration-300 group-hover:translate-y-0.5" />
-                  Resume
-                </a>
-              </Button>
+              {config.resume && (
+                <Button asChild variant="secondary" className="group w-auto">
+                  <a href={config.resume} target="_blank" rel="noopener noreferrer">
+                    <Download className="transition-transform duration-300 group-hover:translate-y-0.5" />
+                    Resume
+                  </a>
+                </Button>
+              )}
             </div>
             <div data-hero-fg="children" className="hero-in flex items-center justify-center space-x-4 pt-2" style={seq(6)}>
                 {socialLinks.map((link) => (

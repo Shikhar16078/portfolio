@@ -15,15 +15,21 @@ There are no tests in this project.
 
 ## Architecture
 
-This is a Next.js 16 (React 19) App Router single-page portfolio. Next 16 has breaking changes from older versions; the docs matching the installed version are in `node_modules/next/dist/docs/`. The key architectural pattern is **data-driven rendering**: all portfolio content lives exclusively in `src/lib/data.ts` and is imported by section components. Updating content means editing only that file — never the components.
+This is a Next.js 16 (React 19) App Router single-page portfolio. Next 16 has breaking changes from older versions; the docs matching the installed version are in `node_modules/next/dist/docs/`. The key architectural pattern is **data-driven rendering**: all portfolio content lives exclusively in `src/lib/data.ts` and is imported by section components. Updating content means editing only that file (or the Global Config store, for the live values) — never the components.
 
 ### Data layer (`src/lib/data.ts`)
 
-Exports typed objects/arrays for each section: `personalData`, `summaryData`, `socialLinks`, `projectsData`, `experienceData`, `educationData`, `skillsData`, `awardsData`, `recommendationsData`. This is the single source of truth for all displayed content.
+Exports typed objects/arrays for each section: `personalData`, `summaryData`, `socialLinks`, `projectsData`, `experienceData`, `educationData`, `skillsData`, `awardsData`, `recommendationsData`.
 
-### Page composition (`src/app/page.tsx`)
+This is the single source of truth for all displayed content, except the few live values in the Global Config store below.
 
-A client component that mounts all section components in order and manages `activeSection` state via an `IntersectionObserver` (with `rootMargin: '-50% 0px -50% 0px'`). The active section ID is passed to `<Header>` for nav highlighting.
+### Live config (`src/lib/site-config.ts`)
+
+A few values live only in the Vercel Global Config store (formerly Edge Config) connected to the project, so they can change without a deploy: `status` (the hero photo's "Open to work" dot) and `resume` (the Resume buttons in the hero and the Summary dialog; https links only). `getSiteConfig()` reads them on the server through the `GLOBAL_CONFIG` connection string. There is deliberately no fallback in `data.ts`: if a key is missing or empty, or the store can't be reached, whatever it feeds is not rendered. For local development, `npx vercel env pull .env.local` provides `GLOBAL_CONFIG`. To add a live value, add it to `SiteConfig` and `KEYS` there and pass it down from the `config` prop.
+
+### Page composition (`src/app/page.tsx`, `src/components/portfolio.tsx`)
+
+`page.tsx` is a server component: it reads the live config and renders `Portfolio`. It sets `revalidate = 60`, so the page stays prerendered and is rebuilt in the background at most once a minute. `Portfolio` is a client component that mounts all section components in order and manages `activeSection` state via an `IntersectionObserver` (with `rootMargin: '-50% 0px -50% 0px'`). The active section ID is passed to `<Header>` for nav highlighting.
 
 ### Section components (`src/components/sections/`)
 

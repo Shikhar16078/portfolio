@@ -26,7 +26,7 @@ import { cn } from '@/lib/utils';
 import { ScrollArea } from './ui/scroll-area';
 import { slideInRight, springSnappy, staggerChildren } from '@/lib/motion';
 
-function SummaryContent() {
+function SummaryContent({ resume }: { resume?: string }) {
   return (
     <>
       <DialogHeader>
@@ -49,19 +49,21 @@ function SummaryContent() {
           <p>{summaryData.closing}</p>
         </div>
       </ScrollArea>
-      <DialogFooter className="grid grid-cols-2 gap-2 pt-4">
+      <DialogFooter className={cn('grid gap-2 pt-4', resume && 'grid-cols-2')}>
         <DialogClose asChild>
           <Button type="button" variant="secondary">
             <X className="mr-2" />
             Close
           </Button>
         </DialogClose>
-        <Button asChild>
-          <a href={personalData.resumeUrl} target="_blank" rel="noopener noreferrer">
-            <Download className="mr-2" />
-            Resume
-          </a>
-        </Button>
+        {resume && (
+          <Button asChild>
+            <a href={resume} target="_blank" rel="noopener noreferrer">
+              <Download className="mr-2" />
+              Resume
+            </a>
+          </Button>
+        )}
       </DialogFooter>
     </>
   );
@@ -83,7 +85,7 @@ function ScrollProgress() {
   );
 }
 
-export default function Header({ activeSection }: { activeSection: string }) {
+export default function Header({ activeSection, resume }: { activeSection: string; resume?: string }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   // The sheet's scroll lock cancels in-flight scrolling, so scroll only after it has closed.
   const pendingTarget = useRef<string | null>(null);
@@ -109,7 +111,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
             </Button>
           </DialogTrigger>
           <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg" aria-describedby={undefined}>
-            <SummaryContent />
+            <SummaryContent resume={resume} />
           </DialogContent>
         </Dialog>
 
@@ -181,7 +183,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="w-[95vw] mx-auto sm:max-w-xl rounded-lg" aria-describedby={undefined}>
-                      <SummaryContent />
+                      <SummaryContent resume={resume} />
                     </DialogContent>
                   </Dialog>
                 </m.div>

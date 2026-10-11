@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { personalData, socialLinks } from "@/lib/data";
+import { Reveal } from "./reveal";
+import { REVEAL_MARGIN_PAGE_END } from "@/lib/motion";
 
 export default function Footer() {
   return (
     <footer className="w-full py-6 bg-chrome text-chrome-foreground">
-      <div className="container mx-auto flex flex-col items-center justify-center gap-4 px-4 text-center max-w-7xl">
+      <Reveal margin={REVEAL_MARGIN_PAGE_END} className="container mx-auto flex flex-col items-center justify-center gap-4 px-4 text-center max-w-7xl">
         <div className="flex items-center space-x-4">
           {socialLinks.map((link) => (
             <Link
@@ -22,7 +24,7 @@ export default function Footer() {
         <p className="text-sm text-muted-foreground">
         Designed by {personalData.name} ©{new Date().getFullYear()}. All Rights Reserved.
         </p>
-      </div>
+      </Reveal>
     </footer>
   );
 }

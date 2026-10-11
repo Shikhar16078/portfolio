@@ -49,15 +49,18 @@
 }
 
 
-@utility animate-fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
-  &.is-visible {
+/* Failsafe: reveal content starts hidden and is shown by JS. If JS hasn't taken over within 4s
+   (blocked, failed or very slow), show it anyway. Once JS runs, MotionProvider sets
+   data-motion-ready and this rule stops applying. (Without JS at all, the <noscript> rule in
+   layout.tsx shows it straight away.) */
+html:not([data-motion-ready]) [data-reveal] {
+  animation: reveal-failsafe 0s 4s forwards;
+}
+
+@keyframes reveal-failsafe {
+  to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 

@@ -153,6 +153,21 @@ export const awardsData = [
 
 export const experienceData = [
   {
+    role: 'Software Engineer',
+    company: 'Translation Commons',
+    period: 'June 2026 – Present',
+    icon: '/assets/images/langnav.png',
+    description: `At Translation Commons, I work on a frontend application built around language, locale, and territory data. Today, the app loads all of this data from flat TSV files and processes it in the browser, which puts a heavy load on client-side memory.
+
+    I am focused on building a backend to replace it: a PostgreSQL database on Supabase with a relational schema and materialized views that reconcile conflicting source datasets, a Python ETL pipeline to load the data, and PostgREST APIs so the frontend can query only what it needs instead of downloading everything up front.`,
+    responsibilities: [
+      'Reduced client-side heap usage by up to 125 MB by architecting a PostgreSQL backend on Supabase and a Python ETL pipeline that migrated a heavy browser-side fetch pipeline into a queryable database.',
+      'Replaced flat TSV lookups with fast, queryable access to language, locale, and territory data by designing a relational schema and materialized views across conflicting source datasets.',
+      'Enabled structured data access for the frontend by building PostgREST APIs.',
+      'Resolved GitHub issues and fixed UI bugs across the TypeScript, React, and Tailwind CSS frontend.',
+    ],
+  },
+  {
   role: 'Data Science Fellowship',
   company: 'University of California, Riverside',
   period: 'June 2025 – Aug 2025',

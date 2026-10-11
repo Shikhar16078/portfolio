@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Reveal } from "./reveal";
+import SectionBackdrop from "./section-backdrop";
 import { cn } from "@/lib/utils";
 
 interface SectionShellProps {
@@ -18,8 +19,9 @@ export default function SectionShell({ id, title, subtitle, children, className,
   return (
     <section
       id={id}
-      className={cn("flex w-full min-h-[calc(100dvh-3.5rem)] items-center py-8 md:py-10", className)}
+      className={cn("relative isolate flex w-full min-h-[calc(100dvh-3.5rem)] items-center py-8 md:py-10", className)}
     >
+      <SectionBackdrop />
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <Reveal className="mx-auto max-w-3xl space-y-2 text-center">
           <h2 className="text-3xl font-bold tracking-tighter md:text-4xl font-headline">{title}</h2>

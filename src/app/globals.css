@@ -315,6 +315,93 @@ html:not([data-motion-ready]) [data-reveal] {
   }
 }
 
+/* Section backgrounds below the hero (section-backdrop.tsx). Everything sits behind the content
+   (z-index -1 inside each section's isolated stacking context) and only transform/opacity move. */
+@utility section-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Sections alternate sides: Experience (the 2nd section) on the left, Projects on the right, and so
+   on. The outer element carries the scroll parallax, the inner one the slow drift. */
+@utility section-glow {
+  position: absolute;
+  top: 12%;
+  width: 40rem;
+  height: 40rem;
+  section:nth-of-type(even) > .section-backdrop > & {
+    left: -16rem;
+  }
+  section:nth-of-type(odd) > .section-backdrop > & {
+    right: -16rem;
+  }
+  & > div {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    background: radial-gradient(circle, hsl(var(--primary) / var(--section-glow)), transparent 62%);
+    will-change: transform;
+    animation: glow-drift-a 24s ease-in-out infinite alternate;
+  }
+  section:nth-of-type(odd) > .section-backdrop > & > div {
+    animation-name: glow-drift-b;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & > div {
+      animation: none !important;
+    }
+  }
+}
+
+/* The hero's dot grid, static and faint, fading out from behind the section heading. */
+@utility section-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(hsl(var(--foreground) / var(--section-dots)) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 55% 320px at 50% 0, #000, transparent);
+}
+
+/* Divider along the top edge: draws out from the centre once in view (data-shown), then a glint
+   passes along it every 7s. */
+@utility section-divider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(48rem, 80%);
+  height: 1px;
+  translate: -50% 0;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.8), transparent);
+  scale: 0 1;
+  opacity: 0;
+  transition:
+    scale 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.9s ease-out;
+  &[data-shown] {
+    scale: 1 1;
+    opacity: 1;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -1px auto -1px 0;
+    width: 18%;
+    background: linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.8), transparent);
+    opacity: 0;
+    animation: section-glint 7s ease-in-out 1s infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    scale: 1 1;
+    transition: opacity 0.4s ease-out;
+    &::after {
+      display: none;
+    }
+  }
+}
+
 /* Scroll cue: a dot sliding down inside a mouse outline. */
 @utility hero-scroll-dot {
   animation: hero-scroll-dot 1.8s ease-in-out infinite;
@@ -489,6 +576,8 @@ html:not([data-motion-ready]) [data-reveal] {
     --chrome: 0 0% 90%;
     --chrome-foreground: 240 10% 3.9%;
     --hero-glow: 0.1;
+    --section-glow: 0.07;
+    --section-dots: 0.1;
     --hero-sheen: 0.18;
   }
  
@@ -517,6 +606,8 @@ html:not([data-motion-ready]) [data-reveal] {
     --chrome: 240 4% 2%;
     --chrome-foreground: 0 0% 98%;
     --hero-glow: 0.2;
+    --section-glow: 0.11;
+    --section-dots: 0.09;
     --hero-sheen: 0.3;
   }
 }
@@ -758,6 +849,23 @@ html:not([data-motion-ready]) [data-reveal] {
   45%,
   100% {
     transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* The glint crosses in the first ~18% of each cycle (about 1.3s); the rest is a pause. */
+@keyframes section-glint {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  4%,
+  14% {
+    opacity: 1;
+  }
+  18%,
+  100% {
+    transform: translateX(560%);
     opacity: 0;
   }
 }

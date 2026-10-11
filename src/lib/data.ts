@@ -78,7 +78,7 @@ export const projectsData = [
       'Configured GitHub Pages for deployment and automated the hosting process.',
     ],
     technologies: ['React.js', 'Next.js', 'Tailwind CSS', 'Github'],
-    alsoUsed: ['HTML', 'CSS', 'Bootstrap'],
+    alsoUsed: ['TypeScript', 'HTML', 'CSS', 'Bootstrap'],
     icon: '/assets/images/website.png',
     type: 'Personal',
     github: 'https://github.com/Shikhar16078/portfolio',

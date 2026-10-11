@@ -9,8 +9,11 @@ import { personalData } from '@/lib/data';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(personalData.siteUrl),
   title: `${personalData.name} | Portfolio`,
   description: personalData.bio,
+  // The one address search engines should list, whichever domain the page was reached on.
+  alternates: { canonical: '/' },
 };
 
 export default function RootLayout({

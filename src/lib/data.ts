@@ -5,6 +5,8 @@ import { Github, Linkedin } from '@/components/icons';
 export const personalData = {
   name: 'Shikhar Kumar',
   title: "Software Engineer",
+  // Production address, used for the sitemap, robots.txt and canonical URL.
+  siteUrl: 'https://shikharkumar.in',
   bio: "Software Engineer with an MS in Computer Science from UC Riverside and 3+ years of experience building production systems, with a strong focus on backend, distributed systems, system design, and applied AI.",
   // Phrases of the bio the hero emphasises; each must appear in the bio exactly as written.
   bioHighlights: ['MS in Computer Science', 'UC Riverside', '3+ years', 'backend', 'distributed systems', 'system design', 'applied AI'],

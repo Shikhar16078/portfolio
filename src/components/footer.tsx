@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { personalData, socialLinks } from "@/lib/data";
+import { Reveal } from "./reveal";
+import { REVEAL_MARGIN_PAGE_END } from "@/lib/motion";
 
 export default function Footer() {
   return (
     <footer className="w-full py-6 bg-chrome text-chrome-foreground">
-      <div className="container mx-auto flex flex-col items-center justify-center gap-4 px-4 text-center max-w-7xl">
+      <Reveal margin={REVEAL_MARGIN_PAGE_END} className="container mx-auto flex flex-col items-center justify-center gap-4 px-4 text-center max-w-7xl">
         <div className="flex items-center space-x-4">
           {socialLinks.map((link) => (
             <Link
@@ -20,9 +22,11 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground">
-        Designed by {personalData.name} ©{new Date().getFullYear()}. All Rights Reserved.
+        Designed and Developed by {personalData.name} ©{new Date().getFullYear()}.{" "}
+          {/* Its own line on phones, inline from sm up. */}
+          <span className="block sm:inline">All Rights Reserved.</span>
         </p>
-      </div>
+      </Reveal>
     </footer>
   );
 }

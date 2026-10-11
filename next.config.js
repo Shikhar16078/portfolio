@@ -1,24 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'placehold.co', pathname: '/**' },
-      { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'picsum.photos', pathname: '/**' },
-      { protocol: 'https', hostname: 'media.licdn.com', pathname: '/**' },
-    ],
-  },
-  typescript: { ignoreBuildErrors: true },
-  eslint: { ignoreDuringBuilds: true },
-  
-  /**
-   * @param {import('webpack').Configuration} config
-   * @returns {import('webpack').Configuration}
-   */
-  webpack(config) {
-    config.experiments = { ...config.experiments, topLevelAwait: true }
-    return config
-  },
+  // Don't generate AGENTS.md on `next dev`; CLAUDE.md covers it.
+  agentRules: false,
+  // Dev only: let a phone on the same Wi-Fi load the dev server. Next blocks other hosts by default,
+  // and the page then never hydrates. Update the IP if the Mac's local address changes.
+  allowedDevOrigins: ['10.0.0.36', 'iBook.local'],
 };
 
 module.exports = nextConfig;

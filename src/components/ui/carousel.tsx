@@ -19,6 +19,8 @@ type CarouselProps = {
   plugins?: CarouselPlugin
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
+  /** Advance to the next slide every this many ms (see CarouselPagination). */
+  autoplay?: number
 }
 
 type CarouselContextProps = {
@@ -28,10 +30,26 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
-  scrollSnaps: number[]
+  snapCount: number
   selectedIndex: number
   scrollTo: (index: number) => void
+  /** Autoplay interval in ms, or 0 when off (not requested, a single slide, or reduced motion). */
+  autoplayMs: number
+  advance: () => void
 } & CarouselProps
+
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)"
+function usePrefersReducedMotion() {
+  return React.useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia(reducedMotionQuery)
+      query.addEventListener("change", onChange)
+      return () => query.removeEventListener("change", onChange)
+    },
+    () => window.matchMedia(reducedMotionQuery).matches,
+    () => false
+  )
+}
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
@@ -55,6 +73,7 @@ const Carousel = React.forwardRef<
       opts,
       setApi,
       plugins,
+      autoplay = 0,
       className,
       children,
       ...props
@@ -68,20 +87,26 @@ const Carousel = React.forwardRef<
       },
       plugins
     )
-    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-    const [canScrollNext, setCanScrollNext] = React.useState(false)
-    const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([])
-    const [selectedIndex, setSelectedIndex] = React.useState(0)
+    // Reads Embla's state straight from the API, re-rendering on select/reInit events.
+    const subscribe = React.useCallback(
+      (onChange: () => void) => {
+        if (!api) return () => {}
+        api.on("select", onChange)
+        api.on("reInit", onChange)
+        return () => {
+          api.off("select", onChange)
+          api.off("reInit", onChange)
+        }
+      },
+      [api]
+    )
+    const useEmblaValue = <T,>(read: (api: NonNullable<CarouselApi>) => T, fallback: T) =>
+      React.useSyncExternalStore(subscribe, () => (api ? read(api) : fallback), () => fallback)
 
-    const onSelect = React.useCallback((api: CarouselApi) => {
-      if (!api) {
-        return
-      }
-
-      setCanScrollPrev(api.canScrollPrev())
-      setCanScrollNext(api.canScrollNext())
-      setSelectedIndex(api.selectedScrollSnap())
-    }, [])
+    const canScrollPrev = useEmblaValue((a) => a.canScrollPrev(), false)
+    const canScrollNext = useEmblaValue((a) => a.canScrollNext(), false)
+    const snapCount = useEmblaValue((a) => a.scrollSnapList().length, 0)
+    const selectedIndex = useEmblaValue((a) => a.selectedScrollSnap(), 0)
 
     const scrollPrev = React.useCallback(() => {
       api?.scrollPrev()
@@ -94,6 +119,68 @@ const Carousel = React.forwardRef<
     const scrollTo = React.useCallback((index: number) => {
       api?.scrollTo(index)
     }, [api]);
+
+    // Autoplay. The active pagination dot fills up over the interval and advances the carousel when
+    // full, so the dot is the timer and stays in sync with it. It pauses (the fill's animation is
+    // paused through data-autoplay-paused) while the pointer is over the carousel, while it has
+    // keyboard focus or a jumped-to card has focus, while a slide is being dragged, and while the
+    // carousel is off screen. Off for reduced motion.
+    const reducedMotion = usePrefersReducedMotion()
+    const autoplayMs = autoplay > 0 && snapCount > 1 && !reducedMotion ? autoplay : 0
+    const rootRef = React.useRef<HTMLDivElement | null>(null)
+    const [hovered, setHovered] = React.useState(false)
+    const [focused, setFocused] = React.useState(false)
+    const [dragging, setDragging] = React.useState(false)
+    const [offscreen, setOffscreen] = React.useState(true)
+    const paused = hovered || focused || dragging || offscreen
+
+    const advance = React.useCallback(() => {
+      if (!api) return
+      if (api.canScrollNext()) api.scrollNext()
+      else api.scrollTo(0)
+    }, [api])
+
+    React.useEffect(() => {
+      if (!api || !autoplayMs) return
+      const down = () => setDragging(true)
+      const up = () => setDragging(false)
+      api.on("pointerDown", down)
+      api.on("pointerUp", up)
+      return () => {
+        api.off("pointerDown", down)
+        api.off("pointerUp", up)
+      }
+    }, [api, autoplayMs])
+
+    React.useEffect(() => {
+      const root = rootRef.current
+      if (!root || !autoplayMs) return
+      const observer = new IntersectionObserver(([entry]) => setOffscreen(!entry.isIntersecting), { threshold: 0.4 })
+      observer.observe(root)
+      return () => observer.disconnect()
+    }, [autoplayMs])
+
+    // `carousel:reveal` from inside a slide (show-on-page.ts) scrolls that slide into place.
+    React.useEffect(() => {
+      const root = rootRef.current
+      if (!api || !root) return
+      const reveal = (event: Event) => {
+        const slide = (event.target as Element).closest('[aria-roledescription="slide"]')
+        const index = api.slideNodes().findIndex((node) => node === slide)
+        if (index >= 0) api.scrollTo(index)
+      }
+      root.addEventListener("carousel:reveal", reveal)
+      return () => root.removeEventListener("carousel:reveal", reveal)
+    }, [api])
+
+    const setRootRef = React.useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node
+        if (typeof ref === "function") ref(node)
+        else if (ref) ref.current = node
+      },
+      [ref]
+    )
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -116,20 +203,47 @@ const Carousel = React.forwardRef<
       if (setApi) {
         setApi(api)
       }
-      
-      setScrollSnaps(api.scrollSnapList())
+    }, [api, setApi])
 
-      onSelect(api)
-      api.on("reInit", () => {
-        onSelect(api)
-        setScrollSnaps(api.scrollSnapList())
-      })
-      api.on("select", onSelect)
+    // Depth while slides move: a card partly outside the viewport turns away from the centre, shrinks
+    // and fades in proportion to how much of it is hidden, and incoming cards do the reverse. It follows
+    // Embla's scroll position, so dragging drives it directly. Fully visible cards are left untouched,
+    // so nothing changes at rest. Targets the [data-slide-card] element inside each slide (Embla moves
+    // the slides themselves). Skipped for reduced motion.
+    React.useEffect(() => {
+      if (!api || orientation === "vertical") return
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
-      return () => {
-        api?.off("select", onSelect)
+      const tween = () => {
+        const view = api.rootNode().getBoundingClientRect()
+        for (const slide of api.slideNodes()) {
+          const card = slide.querySelector<HTMLElement>("[data-slide-card]")
+          if (!card) continue
+          // Measure the card's parent: it excludes the slide's gap padding (which sits outside the
+          // viewport) and isn't moved by the transform written below. 2px tolerance for rounding.
+          const r = (card.parentElement ?? slide).getBoundingClientRect()
+          const visible = Math.max(0, Math.min(r.right, view.right + 2) - Math.max(r.left, view.left - 2)) / r.width
+          const hidden = 1 - Math.min(1, visible)
+          if (hidden < 0.005) {
+            card.style.transform = ""
+            card.style.opacity = ""
+            continue
+          }
+          // Left of centre turns its left edge away; right of centre, its right edge.
+          const side = r.left + r.width / 2 < view.left + view.width / 2 ? -1 : 1
+          card.style.transform = `perspective(1200px) rotateY(${side * 16 * hidden}deg) scale(${1 - 0.12 * hidden})`
+          card.style.opacity = String(1 - 0.75 * hidden)
+        }
       }
-    }, [api, onSelect, setApi])
+
+      tween()
+      api.on("scroll", tween)
+      api.on("reInit", tween)
+      return () => {
+        api.off("scroll", tween)
+        api.off("reInit", tween)
+      }
+    }, [api, orientation])
 
     return (
       <CarouselContext.Provider
@@ -143,14 +257,24 @@ const Carousel = React.forwardRef<
           scrollNext,
           canScrollPrev,
           canScrollNext,
-          scrollSnaps,
+          snapCount,
           selectedIndex,
           scrollTo,
+          autoplayMs,
+          advance,
         }}
       >
         <div
-          ref={ref}
+          ref={setRootRef}
           onKeyDownCapture={handleKeyDown}
+          onPointerEnter={(e) => e.pointerType !== "touch" && setHovered(true)}
+          onPointerLeave={() => setHovered(false)}
+          // Keyboard focus pauses autoplay, and so does a card focused by a jump to it (show-on-page.ts),
+          // so it isn't carried away while being read. A mouse click on an arrow or dot doesn't: hover
+          // already pauses, and focus left on the button shouldn't keep it paused after the mouse leaves.
+          onFocus={(e) => setFocused(e.target.matches(":focus-visible") || e.target.hasAttribute("data-slide-card"))}
+          onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setFocused(false)}
+          data-autoplay-paused={autoplayMs && paused ? "" : undefined}
           className={cn("relative", className)}
           role="region"
           aria-roledescription="carousel"
@@ -171,7 +295,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden cursor-grab active:cursor-grabbing select-none">
+    <div ref={carouselRef} data-reveal-clip="" className="overflow-hidden cursor-grab active:cursor-grabbing select-none">
       <div
         ref={ref}
         className={cn(
@@ -220,7 +344,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full disabled:hidden",
+        "group/arrow absolute h-8 w-8 rounded-full disabled:hidden",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -230,7 +354,7 @@ const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover/arrow:-translate-x-0.5" />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -249,7 +373,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full disabled:hidden",
+        "group/arrow absolute h-8 w-8 rounded-full disabled:hidden",
         orientation === "horizontal"
           ? "-right-12 top-1/2 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -259,7 +383,7 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight className="h-4 w-4" />
+      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/arrow:translate-x-0.5" />
       <span className="sr-only">Next slide</span>
     </Button>
   )
@@ -270,7 +394,7 @@ const CarouselPagination = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { scrollSnaps, selectedIndex, scrollTo } = useCarousel()
+  const { snapCount, selectedIndex, scrollTo, autoplayMs, advance } = useCarousel()
 
   return (
     <div
@@ -278,16 +402,28 @@ const CarouselPagination = React.forwardRef<
       className={cn("flex justify-center gap-2 mt-4", className)}
       {...props}
     >
-      {scrollSnaps.map((_, index) => (
+      {Array.from({ length: snapCount }, (_, index) => (
         <Button
           key={index}
           variant="outline"
           size="icon"
-          className={cn("h-2 w-2 rounded-full", {
-            "bg-primary": selectedIndex === index,
+          // The active dot stretches into a pill; width eases so the row slides rather than jumps.
+          // With autoplay it fills up as the timer runs (carousel-progress in globals.css).
+          className={cn("relative h-2 w-2 overflow-hidden rounded-full transition-[width,background-color] duration-300 ease-out", {
+            "w-5 bg-primary": selectedIndex === index && !autoplayMs,
+            "w-5 bg-primary/25": selectedIndex === index && autoplayMs,
           })}
           onClick={() => scrollTo(index)}
         >
+          {selectedIndex === index && autoplayMs > 0 && (
+            <span
+              key={selectedIndex}
+              aria-hidden="true"
+              className="carousel-progress"
+              style={{ animationDuration: `${autoplayMs}ms` }}
+              onAnimationEnd={advance}
+            />
+          )}
           <span className="sr-only">Go to slide {index + 1}</span>
         </Button>
       ))}

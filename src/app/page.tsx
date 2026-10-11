@@ -1,74 +1,11 @@
-"use client";
+import Portfolio from '@/components/portfolio';
+import { getSiteConfig } from '@/lib/site-config';
 
-import Header from '@/components/header';
-import HomeSection from '@/components/sections/home';
-import ExperienceSection from '@/components/sections/experience';
-import ProjectsSection from '@/components/sections/projects';
-import EducationSection from '@/components/sections/education';
-import AwardsSection from '@/components/sections/awards';
-import SkillsSection from '@/components/sections/skills';
-import ContactSection from '@/components/sections/contact';
-import Footer from '@/components/footer';
-import { useEffect, useState } from 'react';
-import RecommendationsSection from '@/components/sections/recommendations';
+// The page is prerendered, then rebuilt in the background at most once a minute, so edits to the
+// Global Config store show up within a minute or two without a deploy. The first visit after the
+// minute is up may still get the old page while the new one is built.
+export const revalidate = 60;
 
-export default function Home() {
-  const [activeSection, setActiveSection] = useState('home');
-
-  useEffect(() => {
-    const sections = [
-      'home', 
-      'experience', 
-      'projects', 
-      'education', 
-      'skills', 
-      'awards', 
-      'recommendations',
-      'contact'
-    ];
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
-    );
-
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
-    return () => {
-      sections.forEach((id) => {
-        const element = document.getElementById(id);
-        if (element) {
-          observer.unobserve(element);
-        }
-      });
-    };
-  }, []);
-
-  return (
-    <div className="flex flex-col min-h-[100dvh]">
-      <Header activeSection={activeSection} />
-      <main className="flex-1">
-        <HomeSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <EducationSection />
-        <SkillsSection />
-        <AwardsSection />
-        <RecommendationsSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
-  );
+export default async function Page() {
+  return <Portfolio config={await getSiteConfig()} />;
 }

@@ -62,7 +62,7 @@
     @apply border-border;
   }
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth scroll-pt-14;
   }
   body {
     @apply bg-background text-foreground;

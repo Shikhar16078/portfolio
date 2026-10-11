@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award, Star, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,9 @@ import { cn } from '@/lib/utils';
 import { ScrollArea } from './ui/scroll-area';
 
 export default function Header({ activeSection }: { activeSection: string }) {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  // The sheet's scroll lock cancels in-flight scrolling, so scroll only after it has closed.
+  const pendingTarget = useRef<string | null>(null);
   const navLinks = [
     { href: '#home', label: 'Home', icon: Home },
     { href: '#experience', label: 'Experience', icon: Briefcase },
@@ -122,14 +126,26 @@ export default function Header({ activeSection }: { activeSection: string }) {
           <ThemeToggle />
           
           {/* Mobile Navigation */}
-          <Sheet>
+          <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="md:hidden">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="bg-chrome">
+            <SheetContent
+              side="right"
+              className="bg-chrome"
+              aria-describedby={undefined}
+              onCloseAutoFocus={(e) => {
+                const target = pendingTarget.current;
+                if (!target) return;
+                e.preventDefault();
+                pendingTarget.current = null;
+                document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+                history.replaceState(null, '', target);
+              }}
+            >
                <SheetHeader>
                  <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                </SheetHeader>
@@ -149,6 +165,11 @@ export default function Header({ activeSection }: { activeSection: string }) {
                   <Link
                     key={link.href}
                     href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      pendingTarget.current = link.href;
+                      setMobileNavOpen(false);
+                    }}
                     className={cn(
                       'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
                       { 'text-primary bg-primary/10': (link.href === `#${activeSection}`) }

@@ -1,12 +1,12 @@
 import { Fragment, type CSSProperties } from 'react';
 import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { personalData, socialLinks } from '@/lib/data';
-import { BadgeCheck, Download, Mail, MapPin } from 'lucide-react';
+import { Download, Mail, MapPin } from 'lucide-react';
 import HeroSpotlight from '@/components/hero-spotlight';
 import HeroPhoto from '@/components/hero-photo';
 import HeroScrollAway from '@/components/hero-scroll-away';
+import WorkAuthBadge from '@/components/work-auth-badge';
 import type { SiteConfig } from '@/lib/site-config';
 
 // Position in the hero's entrance sequence (see the hero-* utilities in globals.css).
@@ -67,14 +67,9 @@ export default function HomeSection({ config }: { config: SiteConfig }) {
               </p>
             </div>
             {personalData.workAuthorization && (
-              <Badge data-hero-fg="box" variant="outline" className="hero-in hero-sheen gap-2 rounded-xl sm:rounded-full border-primary/40 bg-primary/5 px-4 py-1.5 text-sm font-medium text-muted-foreground" style={seq(4)}>
-                <BadgeCheck className="hero-check h-4 w-4 shrink-0 text-primary" />
-                <span className="flex flex-col sm:flex-row sm:gap-1.5">
-                  <span className="text-hero-foreground">{personalData.workAuthorization.status}</span>
-                  <span className="hidden sm:inline" aria-hidden="true">·</span>
-                  <span>{personalData.workAuthorization.note}</span>
-                </span>
-              </Badge>
+              <div data-hero-fg="box" className="hero-in" style={seq(4)}>
+                <WorkAuthBadge status={personalData.workAuthorization.status} note={personalData.workAuthorization.note} />
+              </div>
             )}
             <div data-hero-fg="children" className="hero-in flex w-auto max-w-sm flex-col gap-2 min-[400px]:flex-row" style={seq(5)}>
               <Button asChild className="group w-auto">

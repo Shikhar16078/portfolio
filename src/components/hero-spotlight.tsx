@@ -96,6 +96,8 @@ export default function HeroSpotlight() {
 
     const resize = new ResizeObserver(() => active && carve());
     resize.observe(area);
+    // Foreground elements can change size on their own, e.g. the work authorization badge expanding.
+    area.querySelectorAll("[data-hero-fg]").forEach((el) => resize.observe(el));
     // The hero content drifts while the page scrolls (hero-scroll-away.tsx); re-carve on the next move.
     const scrolled = () => {
       active = false;

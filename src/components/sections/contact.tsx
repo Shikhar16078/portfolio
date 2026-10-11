@@ -15,8 +15,6 @@ export default function ContactSection() {
       id="contact"
       title="Let's Connect"
       subtitle="I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. Whether you have a question or just want to say hi, I'll do my best to get back to you!"
-      // Last section: leave room for the footer so it fits on the same screen.
-      className="min-h-[calc(100dvh-3.5rem-8rem)] sm:min-h-[calc(100dvh-3.5rem-6.75rem)]"
     >
       <div className="rounded-lg border bg-card text-card-foreground shadow-xs w-full max-w-sm sm:max-w-lg mx-auto">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center p-6 sm:p-8 gap-6 sm:gap-8">

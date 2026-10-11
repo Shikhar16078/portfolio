@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { personalData, socialLinks } from '@/lib/data';
-import { BadgeCheck, Download, Mail } from 'lucide-react';
+import { BadgeCheck, Download, Mail, MapPin } from 'lucide-react';
 import HeroSpotlight from '@/components/hero-spotlight';
 import HeroPhoto from '@/components/hero-photo';
 import HeroScrollAway from '@/components/hero-scroll-away';
@@ -54,6 +54,14 @@ export default function HomeSection({ config }: { config: SiteConfig }) {
               <p data-hero-fg="text" className="hero-rise text-primary text-xl md:text-2xl font-semibold" style={seq(2)}>
                 <span className="hero-underline">{personalData.title}</span>
               </p>
+              {config.location && (
+                <p data-hero-fg="text" className="hero-in flex items-center justify-center gap-1.5 pt-1 text-sm text-muted-foreground md:text-base" style={seq(2.5)}>
+                  <span aria-hidden="true" className="hero-pin">
+                    <MapPin className="h-4 w-4 text-primary" />
+                  </span>
+                  <span className="font-medium text-hero-foreground/85">{config.location}</span>
+                </p>
+              )}
               <p data-hero-fg="text" className="hero-rise max-w-[860px] text-muted-foreground md:text-xl mx-auto text-pretty" style={seq(3)}>
                 <BioText text={personalData.bio} highlights={personalData.bioHighlights} />
               </p>

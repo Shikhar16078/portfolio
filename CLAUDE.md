@@ -25,7 +25,7 @@ This is the single source of truth for all displayed content, except the few liv
 
 ### Live config (`src/lib/site-config.ts`)
 
-A few values live only in the Vercel Global Config store (formerly Edge Config) connected to the project, so they can change without a deploy: `status` (the hero photo's "Open to work" dot) and `resume` (the Resume buttons in the hero and the Summary dialog; https links only). `getSiteConfig()` reads them on the server through the `GLOBAL_CONFIG` connection string. There is deliberately no fallback in `data.ts`: if a key is missing or empty, or the store can't be reached, whatever it feeds is not rendered. For local development, `npx vercel env pull .env.local` provides `GLOBAL_CONFIG`. To add a live value, add it to `SiteConfig` and `KEYS` there and pass it down from the `config` prop.
+A few values live only in the Vercel Global Config store (formerly Edge Config) connected to the project, so they can change without a deploy: `status` (the hero photo's "Open to work" dot), `location` (the pin line under the hero title) and `resume` (the Resume buttons in the hero and the Summary dialog; https links only). `getSiteConfig()` reads them on the server through the `GLOBAL_CONFIG` connection string. There is deliberately no fallback in `data.ts`: if a key is missing or empty, or the store can't be reached, whatever it feeds is not rendered. For local development, `npx vercel env pull .env.local` provides `GLOBAL_CONFIG`. To add a live value, add it to `SiteConfig` and `KEYS` there and pass it down from the `config` prop.
 
 ### Page composition (`src/app/page.tsx`, `src/components/portfolio.tsx`)
 

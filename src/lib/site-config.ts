@@ -8,10 +8,11 @@ import { createClient } from '@vercel/global-config';
 // feeds is not rendered at all. There is deliberately no fallback in data.ts.
 export type SiteConfig = {
   status?: string; // "Open to work" dot on the hero photo
+  location?: string; // map pin line under the hero title
   resume?: string; // Resume buttons in the hero and the Summary dialog (https only)
 };
 
-const KEYS = ['status', 'resume'] as const satisfies readonly (keyof SiteConfig)[];
+const KEYS = ['status', 'location', 'resume'] as const satisfies readonly (keyof SiteConfig)[];
 
 // Only the resume key is a link; anything other than an https URL is ignored rather than rendered.
 const isHttpsUrl = (value: string) => {

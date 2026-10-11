@@ -280,6 +280,41 @@ html:not([data-motion-ready]) [data-reveal] {
   }
 }
 
+/* Location pin under the hero title: drops in once and settles, then every 3.5s hops and lands
+   with a ripple spreading on the ground beneath it. Transform and opacity only. */
+@utility hero-pin {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  & > svg {
+    transform-origin: bottom center;
+    animation:
+      hero-pin 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s backwards,
+      hero-pin-hop 3.5s ease-in-out 2.2s infinite;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -3px;
+    width: 10px;
+    height: 4px;
+    margin-left: -5px;
+    border-radius: 50%;
+    border: 1.5px solid hsl(var(--primary));
+    opacity: 0;
+    animation: hero-pin-ripple 3.5s ease-out 2.2s infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & > svg {
+      animation: none;
+    }
+    &::after {
+      display: none;
+    }
+  }
+}
+
 /* Scroll cue: a dot sliding down inside a mouse outline. */
 @utility hero-scroll-dot {
   animation: hero-scroll-dot 1.8s ease-in-out infinite;
@@ -670,6 +705,60 @@ html:not([data-motion-ready]) [data-reveal] {
   85% {
     opacity: 1;
     translate: 0 0;
+  }
+}
+
+@keyframes hero-pin {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  55% {
+    transform: translateY(0) scaleY(0.85);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-2px) scaleY(1.03);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes hero-pin-hop {
+  0%,
+  100% {
+    transform: none;
+  }
+  8% {
+    transform: translateY(-5px);
+  }
+  15% {
+    transform: translateY(0) scaleY(0.85);
+  }
+  21% {
+    transform: translateY(-1px) scaleY(1.03);
+  }
+  26% {
+    transform: none;
+  }
+}
+
+/* Starts as the pin lands (15% of the hop). */
+@keyframes hero-pin-ripple {
+  0%,
+  14% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  16% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+  45%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
   }
 }
 

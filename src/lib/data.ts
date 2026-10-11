@@ -5,7 +5,7 @@ import { Github, Linkedin } from '@/components/icons';
 export const personalData = {
   name: 'Shikhar Kumar',
   title: "Software Engineer",
-  bio: "Software Engineer with an MS in Computer Science from UC Riverside, focused on backend, distributed systems, and applied AI, with 3+ years of experience building production systems across .NET, Python, and AWS.",
+  bio: "Software Engineer with an MS in Computer Science from UC Riverside and 3+ years of experience building production systems, with a strong focus on backend, distributed systems, system design, and applied AI.",
   workAuthorization: {
     status: 'Authorized to work in the US on F-1 OPT',
     note: 'Eligible for 24-month STEM extension',

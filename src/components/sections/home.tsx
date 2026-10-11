@@ -30,7 +30,7 @@ export default function HomeSection() {
               <p className="text-primary text-xl md:text-2xl font-semibold">
                 {personalData.title}
               </p>
-              <p className="max-w-[860px] text-muted-foreground md:text-xl mx-auto text-balance">
+              <p className="max-w-[860px] text-muted-foreground md:text-xl mx-auto text-pretty">
                 {personalData.bio}
               </p>
             </div>

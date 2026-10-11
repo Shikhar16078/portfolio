@@ -124,6 +124,46 @@ const Carousel = React.forwardRef<
       }
     }, [api, setApi])
 
+    // Depth while slides move: a card partly outside the viewport turns away from the centre, shrinks
+    // and fades in proportion to how much of it is hidden, and incoming cards do the reverse. It follows
+    // Embla's scroll position, so dragging drives it directly. Fully visible cards are left untouched,
+    // so nothing changes at rest. Targets the [data-slide-card] element inside each slide (Embla moves
+    // the slides themselves). Skipped for reduced motion.
+    React.useEffect(() => {
+      if (!api || orientation === "vertical") return
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+      const tween = () => {
+        const view = api.rootNode().getBoundingClientRect()
+        for (const slide of api.slideNodes()) {
+          const card = slide.querySelector<HTMLElement>("[data-slide-card]")
+          if (!card) continue
+          // Measure the card's parent: it excludes the slide's gap padding (which sits outside the
+          // viewport) and isn't moved by the transform written below. 2px tolerance for rounding.
+          const r = (card.parentElement ?? slide).getBoundingClientRect()
+          const visible = Math.max(0, Math.min(r.right, view.right + 2) - Math.max(r.left, view.left - 2)) / r.width
+          const hidden = 1 - Math.min(1, visible)
+          if (hidden < 0.005) {
+            card.style.transform = ""
+            card.style.opacity = ""
+            continue
+          }
+          // Left of centre turns its left edge away; right of centre, its right edge.
+          const side = r.left + r.width / 2 < view.left + view.width / 2 ? -1 : 1
+          card.style.transform = `perspective(1200px) rotateY(${side * 16 * hidden}deg) scale(${1 - 0.12 * hidden})`
+          card.style.opacity = String(1 - 0.75 * hidden)
+        }
+      }
+
+      tween()
+      api.on("scroll", tween)
+      api.on("reInit", tween)
+      return () => {
+        api.off("scroll", tween)
+        api.off("reInit", tween)
+      }
+    }, [api, orientation])
+
     return (
       <CarouselContext.Provider
         value={{
@@ -164,7 +204,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden cursor-grab active:cursor-grabbing select-none">
+    <div ref={carouselRef} data-reveal-clip="" className="overflow-hidden cursor-grab active:cursor-grabbing select-none">
       <div
         ref={ref}
         className={cn(
@@ -213,7 +253,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full disabled:hidden",
+        "group/arrow absolute h-8 w-8 rounded-full disabled:hidden",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -223,7 +263,7 @@ const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover/arrow:-translate-x-0.5" />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -242,7 +282,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full disabled:hidden",
+        "group/arrow absolute h-8 w-8 rounded-full disabled:hidden",
         orientation === "horizontal"
           ? "-right-12 top-1/2 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -252,7 +292,7 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight className="h-4 w-4" />
+      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/arrow:translate-x-0.5" />
       <span className="sr-only">Next slide</span>
     </Button>
   )
@@ -276,8 +316,9 @@ const CarouselPagination = React.forwardRef<
           key={index}
           variant="outline"
           size="icon"
-          className={cn("h-2 w-2 rounded-full", {
-            "bg-primary": selectedIndex === index,
+          // The active dot stretches into a pill; width eases so the row slides rather than jumps.
+          className={cn("h-2 w-2 rounded-full transition-[width,background-color] duration-300 ease-out", {
+            "w-5 bg-primary": selectedIndex === index,
           })}
           onClick={() => scrollTo(index)}
         >

@@ -36,3 +36,18 @@ Radix UI-based shadcn/ui components. Extend or add here when a new primitive is 
 ### Theme
 
 `next-themes` with a `ThemeProvider` in `src/app/layout.tsx`. The toggle lives in `src/components/theme-toggle.tsx`. Tailwind v4 is configured in CSS (no tailwind.config): theme tokens live in the `@theme` block of `src/app/globals.css`, and the `dark` variant follows the `.dark` class.
+
+### Animation
+
+- **Motion** (`motion/react`) is loaded through `src/components/motion-provider.tsx`: `LazyMotion` in strict mode, so use `m.*` components, not `motion.*`. `MotionConfig reducedMotion="user"` turns transforms off for users who prefer reduced motion.
+- Shared easing, durations and variants live in `src/lib/motion.ts`. In this version, stagger with `delayChildren: stagger(...)`; `staggerChildren` is deprecated.
+- Scroll reveals use `Reveal`, `RevealGroup` and `RevealItem` from `src/components/reveal.tsx`, built on `useScrollReveal`. They are reversible: content reveals once it rises above a trigger line near the bottom of the screen, and undoes (in reverse order) when it drops back below it, i.e. when scrolling up. Content already scrolled past stays revealed. The state depends only on position, so fast flings can't skip an element. Their `data-reveal` attribute lets the `<noscript>` rule in `layout.tsx` show them without JS. `SectionShell` reveals its heading, and also its body unless `revealBody={false}` is passed. Content at the very end of the page (the footer) passes `margin={REVEAL_MARGIN_PAGE_END}`, because it can never scroll above the default line.
+- The hero entrance is pure CSS (`hero-rise`, `hero-in` and `hero-pop` in `globals.css`), so it plays before JS loads. Large hero elements must never start at opacity 0, because that delays Largest Contentful Paint.
+- Animate only `transform` and `opacity`. In Tailwind v4, `scale-*`, `rotate-*` and `translate-*` set the individual CSS properties (`scale`, `rotate`, `translate`), so a custom transition has to list those properties.
+- If JS hasn't started within 4s, a CSS failsafe in `globals.css` shows all `data-reveal` content, so a failed script can't leave the page blank. `MotionProvider` sets `data-motion-ready` on `<html>` to switch the failsafe off.
+- `RevealGroup` staggers its `RevealItem`s in on-screen order (top to bottom, left to right), not DOM order, because looping carousels reorder their slides. Mark a clipping container with `data-reveal-clip` (the carousel viewport does) so items scrolled out of it are skipped.
+- Use Motion's shorthand transforms (`x`, `y`, `scale`), not `transform` strings: `reducedMotion="user"` only suppresses the shorthands.
+- In the hero, anything marked `data-hero-fg` cuts a hole in the cursor spotlight's dot layer (`hero-spotlight.tsx`), so new foreground elements need that attribute.
+- `DialogContent` and `SheetContent` return focus to their trigger without scrolling (`src/lib/return-focus.ts`). Plain Radix focus return made the page jump, because the triggers sit in the sticky header.
+- To test on a phone over Wi-Fi, the Mac's address must be listed in `allowedDevOrigins` in `next.config.js`. Otherwise Next blocks the dev client and the page never hydrates.
+

@@ -11,7 +11,6 @@ export const personalData = {
     note: 'Eligible for 24-month STEM extension',
   },
   email: 'skuma154@ucr.edu',
-  phone: '+1 (951) 377-2505',
   resumeUrl: 'https://drive.google.com/file/d/1501D5LMF1nKlSaEdqiZAyJysep-V2r31/view?usp=sharing',
   linkedinRecommendationsUrl: 'https://www.linkedin.com/in/shikhar1999/details/recommendations/?detailScreenTabIndex=0',
 };

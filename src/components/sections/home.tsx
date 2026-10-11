@@ -1,11 +1,11 @@
 import { Fragment, type CSSProperties } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { personalData, socialLinks } from '@/lib/data';
 import { BadgeCheck, Download, Mail } from 'lucide-react';
 import HeroSpotlight from '@/components/hero-spotlight';
+import HeroPhoto from '@/components/hero-photo';
 
 // Position in the hero's entrance sequence (see the hero-* utilities in globals.css).
 const seq = (i: number) => ({ '--i': i }) as CSSProperties;
@@ -37,19 +37,7 @@ export default function HomeSection() {
       </div>
       <div className="relative container px-4 md:px-6 mx-auto">
         <div className="flex flex-col items-center space-y-5 text-center [@media(max-height:700px)]:space-y-3">
-            <div data-hero-fg="circle" className="profile-ring hero-pop hover:scale-105 hover:cursor-none">
-              <div className="profile-ring-spinner" />
-              <div className="profile-ring-inner">
-                <Image
-                  src="/assets/images/profile.jpeg"
-                  alt="Profile Picture"
-                  width={192}
-                  height={192}
-                  className="rounded-full object-cover aspect-square block [@media(max-height:700px)]:h-32 [@media(max-height:700px)]:w-32"
-                  priority
-                />
-              </div>
-            </div>
+            <HeroPhoto status={personalData.status} />
             <div className="space-y-2">
               <h1 data-hero-fg="text" className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
                 {personalData.name.split(' ').map((word, i, words) => (

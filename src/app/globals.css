@@ -306,6 +306,25 @@ html:not([data-motion-ready]) [data-reveal] {
   transition: scale 0.3s ease, transform 0.3s ease; /* Tailwind v4 scale-* sets `scale`, not `transform` */
 }
 
+/* Brighter glow while the photo is hovered (hero-photo.tsx also speeds up the ring). */
+@utility profile-ring-boost {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow:
+      0 0 28px 8px hsl(var(--primary) / 0.4),
+      0 0 64px 20px hsl(var(--primary) / 0.18);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
 @utility profile-ring-spinner {
   position: absolute;
   inset: 0;
@@ -327,6 +346,70 @@ html:not([data-motion-ready]) [data-reveal] {
   overflow: hidden;
   background: hsl(var(--hero));
   padding: 3px;
+}
+
+/* Status dot on the hero photo: a green dot with a slow ping. Its label slides out once after the
+   hero entrance, and again whenever the photo is hovered. */
+@utility hero-status {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+@utility hero-status-dot {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 3px solid hsl(var(--hero));
+  background: rgb(16 185 129);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    background: rgb(16 185 129);
+    animation: hero-status-ping 2.4s cubic-bezier(0, 0, 0.2, 1) 1.5s infinite;
+    z-index: -1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+@utility hero-status-label {
+  position: absolute;
+  left: 100%;
+  margin-left: 6px;
+  white-space: nowrap;
+  border-radius: 9999px;
+  border: 1px solid rgb(16 185 129 / 0.35);
+  background: hsl(var(--hero) / 0.85);
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(5 150 105);
+  opacity: 0;
+  translate: -6px 0;
+  transition:
+    opacity 0.3s ease,
+    translate 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: hero-status-label 4s ease-in-out 1.4s;
+  .dark & {
+    color: rgb(52 211 153);
+  }
+  :where(.group\/photo:hover) & {
+    opacity: 1;
+    translate: 0 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 /* Theme switch: theme-toggle.tsx reveals the new theme with a growing circle, so turn off the
@@ -561,6 +644,32 @@ html:not([data-motion-ready]) [data-reveal] {
   100% {
     transform: translateX(400%);
     opacity: 0;
+  }
+}
+
+@keyframes hero-status-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Slides out, holds, then slides back. */
+@keyframes hero-status-label {
+  0%,
+  100% {
+    opacity: 0;
+    translate: -6px 0;
+  }
+  12%,
+  85% {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 

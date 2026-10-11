@@ -12,6 +12,8 @@ export const personalData = {
     status: 'Authorized to work in the US on F-1 OPT',
     note: 'Eligible for 24-month STEM extension',
   },
+  // Shown beside a green dot on the hero photo; remove to hide the dot.
+  status: 'Open to work',
   email: 'skuma154@ucr.edu',
   resumeUrl: 'https://drive.google.com/file/d/1501D5LMF1nKlSaEdqiZAyJysep-V2r31/view?usp=sharing',
   linkedinRecommendationsUrl: 'https://www.linkedin.com/in/shikhar1999/details/recommendations/?detailScreenTabIndex=0',

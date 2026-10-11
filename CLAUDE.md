@@ -48,6 +48,7 @@ Radix UI-based shadcn/ui components. Extend or add here when a new primitive is 
 - `RevealGroup` staggers its `RevealItem`s in on-screen order (top to bottom, left to right), not DOM order, because looping carousels reorder their slides. Mark a clipping container with `data-reveal-clip` (the carousel viewport does) so items scrolled out of it are skipped.
 - Use Motion's shorthand transforms (`x`, `y`, `scale`), not `transform` strings: `reducedMotion="user"` only suppresses the shorthands.
 - In the hero, anything marked `data-hero-fg` cuts a hole in the cursor spotlight's dot layer (`hero-spotlight.tsx`), so new foreground elements need that attribute.
+- The hero photo lives in `hero-photo.tsx`: hovering it eases the ring's spin up through the Web Animations API (`updatePlaybackRate`), and `personalData.status` adds the "Open to work" dot.
 - `DialogContent` and `SheetContent` return focus to their trigger without scrolling (`src/lib/return-focus.ts`). Plain Radix focus return made the page jump, because the triggers sit in the sticky header.
 - To test on a phone over Wi-Fi, the Mac's address must be listed in `allowedDevOrigins` in `next.config.js`. Otherwise Next blocks the dev client and the page never hydrates.
 

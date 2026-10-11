@@ -33,9 +33,6 @@ export default function HomeSection() {
               <p className="max-w-[860px] text-muted-foreground md:text-xl mx-auto text-balance">
                 {personalData.bio}
               </p>
-              <p className="max-w-[700px] text-muted-foreground md:text-xl mx-auto">
-                {personalData.degree}
-              </p>
             </div>
             {personalData.workAuthorization && (
               <Badge variant="outline" className="gap-2 rounded-xl sm:rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground">

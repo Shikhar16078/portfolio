@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ChevronDown } from "lucide-react";
-import AnimatedContent from "../animated-content";
+import SectionShell from "../section-shell";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -108,26 +108,12 @@ const TimelineItem = ({ item, isLast }: { item: Experience; isLast: boolean }) =
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="w-full py-12 md:py-16">
-      <div className="container px-4 md:px-6 max-w-7xl mx-auto">
-        <AnimatedContent>
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Experience</h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                My journey in software engineering.
-              </p>
-            </div>
-          </div>
-        </AnimatedContent>
-        <AnimatedContent>
-          <ol className="mx-auto max-w-4xl py-12">
-            {experienceData.map((item, index) => (
-              <TimelineItem key={`${item.company}-${item.period}`} item={item} isLast={index === experienceData.length - 1} />
-            ))}
-          </ol>
-        </AnimatedContent>
-      </div>
-    </section>
+    <SectionShell id="experience" title="Experience" subtitle="My journey in software engineering.">
+      <ol className="mx-auto max-w-4xl">
+        {experienceData.map((item, index) => (
+          <TimelineItem key={`${item.company}-${item.period}`} item={item} isLast={index === experienceData.length - 1} />
+        ))}
+      </ol>
+    </SectionShell>
   );
 }

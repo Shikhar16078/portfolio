@@ -7,9 +7,9 @@ import { BadgeCheck, Download, Mail } from 'lucide-react';
 
 export default function HomeSection() {
   return (
-    <section id="home" className="w-full min-h-[calc(100dvh-3.5rem)] flex items-center justify-center bg-hero text-hero-foreground py-8">
+    <section id="home" className="w-full min-h-[calc(100dvh-3.5rem)] flex items-center justify-center bg-hero text-hero-foreground py-8 [@media(max-height:700px)]:py-4">
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="flex flex-col items-center space-y-5 text-center">
+        <div className="flex flex-col items-center space-y-5 text-center [@media(max-height:700px)]:space-y-3">
             <div className="profile-ring hover:scale-105 hover:cursor-none">
               <div className="profile-ring-spinner" />
               <div className="profile-ring-inner">
@@ -18,7 +18,7 @@ export default function HomeSection() {
                   alt="Profile Picture"
                   width={192}
                   height={192}
-                  className="rounded-full object-cover aspect-square block"
+                  className="rounded-full object-cover aspect-square block [@media(max-height:700px)]:h-32 [@media(max-height:700px)]:w-32"
                   priority
                 />
               </div>

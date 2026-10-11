@@ -110,7 +110,7 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
         ))}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
         {item.stack.map((tech) => (
           <Badge key={tech} variant="secondary">{tech}</Badge>
         ))}

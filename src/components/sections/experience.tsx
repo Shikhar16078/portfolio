@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { animate, useReducedMotion } from "motion/react";
+import { EASE_IN, EASE_OUT } from "@/lib/motion";
+import { useScrollReveal } from "../reveal";
 import { experienceData } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,8 +22,10 @@ const highlightCols: Record<number, string> = {
 // useLayoutEffect warns during server rendering; it is only needed in the browser.
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-// Cross-fades between two texts while the container's height glides to fit the visible one.
-function CrossfadeText({ showAlt, primary, alt }: { showAlt: boolean; primary: string; alt: string }) {
+// Swaps between two texts with a fade-through: the outgoing one fades out, then the incoming one fades
+// in (swap-in/swap-out in globals.css), while the container's height glides to fit it. Both texts
+// stay in the page. `animated` is false until the first toggle, so nothing plays on page load.
+function SwapText({ showAlt, animated, primary, alt }: { showAlt: boolean; animated: boolean; primary: string; alt: string }) {
   const primaryRef = useRef<HTMLParagraphElement>(null);
   const altRef = useRef<HTMLParagraphElement>(null);
   const [height, setHeight] = useState<number>();
@@ -37,13 +42,15 @@ function CrossfadeText({ showAlt, primary, alt }: { showAlt: boolean; primary: s
 
   const layer = (visible: boolean) =>
     cn(
-      "text-muted-foreground whitespace-pre-line transition-opacity duration-300 ease-out motion-reduce:transition-none",
-      visible ? "opacity-100" : "pointer-events-none invisible absolute inset-x-0 top-0 opacity-0"
+      "text-muted-foreground whitespace-pre-line",
+      // The outgoing text is taken out of the flow so the height follows the incoming one.
+      !visible && "pointer-events-none absolute inset-x-0 top-0",
+      animated ? (visible ? "swap-in" : "swap-out") : !visible && "invisible opacity-0"
     );
 
   return (
     <div
-      className="relative mt-3 overflow-hidden transition-[height] duration-300 ease-out motion-reduce:transition-none"
+      className="relative mt-3 overflow-hidden transition-[height] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
       style={{ height }}
     >
       <p ref={primaryRef} className={layer(!showAlt)} aria-hidden={showAlt}>{primary}</p>
@@ -52,10 +59,56 @@ function CrossfadeText({ showAlt, primary, alt }: { showAlt: boolean; primary: s
   );
 }
 
+// Counts the number in a value like "10K/sec", "~99%" or "Up to 125 MB" up from 0 as its card scrolls
+// into view, and back down as the card leaves through the bottom (scrolling up). Values with an arrow
+// or several numbers ("2 days → 1 hr") are shown as they are. The server renders the final value;
+// digits are written to the DOM directly to avoid re-rendering on every frame.
+function CountUp({ value }: { value: string }) {
+  const match = useMemo(() => (value.includes("→") ? null : /^(\D*)(\d+)(\D*)$/.exec(value)), [value]);
+  const [ref, shown] = useScrollReveal<HTMLSpanElement>();
+  const reduceMotion = useReducedMotion();
+  // The number currently on screen; null until the counter is parked at 0 after hydration.
+  const current = useRef<number | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!match || reduceMotion || !el) return;
+    const [, prefix, digits, suffix] = match;
+    const write = (v: number) => {
+      current.current = v;
+      el.textContent = `${prefix}${Math.round(v)}${suffix}`;
+    };
+    // Park at 0 before the first reveal. The card is still hidden then, so the swap is never seen.
+    if (current.current === null) write(0);
+    const target = shown ? Number(digits) : 0;
+    if (current.current === target) return;
+    // Starts from whatever is on screen, so reversing mid-count is seamless.
+    const controls = animate(current.current ?? 0, target, {
+      duration: shown ? 1.2 : 0.5,
+      ease: shown ? EASE_OUT : EASE_IN,
+      onUpdate: write,
+      onComplete: () => {
+        if (shown) el.textContent = value;
+      },
+    });
+    return () => controls.stop();
+  }, [shown, match, reduceMotion, value, ref]);
+
+  return (
+    // The invisible copy reserves the final width so neighbouring text never shifts while counting.
+    <span className="inline-grid">
+      <span aria-hidden="true" className="invisible col-start-1 row-start-1">{value}</span>
+      <span ref={ref} aria-hidden="true" className="col-start-1 row-start-1">{value}</span>
+      <span className="sr-only">{value}</span>
+    </span>
+  );
+}
+
 type Experience = (typeof experienceData)[number];
 
 function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }) {
   const [showBackground, setShowBackground] = useState(false);
+  const [toggled, setToggled] = useState(false);
   const isCurrent = item.period.includes("Present");
 
   return (
@@ -72,7 +125,10 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
             variant="ghost"
             size="sm"
             className={cn("h-7 px-2.5 text-primary hover:text-primary", showBackground && "bg-primary/10 hover:bg-primary/15")}
-            onClick={() => setShowBackground(!showBackground)}
+            onClick={() => {
+              setShowBackground(!showBackground);
+              setToggled(true);
+            }}
             aria-pressed={showBackground}
           >
             Background
@@ -87,7 +143,7 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
           id: "responsibilities",
           label: "Responsibilities",
           content: (
-            <ul className="space-y-3 text-muted-foreground">
+            <ul className="stagger-rise space-y-3 text-muted-foreground">
               {item.responsibilities.map((resp, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CircleCheck className="h-5 w-5 text-primary mt-0.5 shrink-0" />
@@ -99,13 +155,13 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
         },
       ]}
     >
-      <CrossfadeText showAlt={showBackground} primary={item.summary} alt={item.description} />
+      <SwapText showAlt={showBackground} animated={toggled} primary={item.summary} alt={item.description} />
 
       <div className={cn("mt-4 grid grid-cols-1 gap-2 sm:gap-3", highlightCols[item.highlights.length])}>
         {item.highlights.map((h) => (
-          <div key={h.label} className="flex items-baseline gap-2 rounded-lg bg-muted/50 px-3 py-2 sm:block sm:p-3">
-            <p className="whitespace-nowrap text-base sm:text-lg font-bold text-primary leading-tight sm:leading-7">{h.value}</p>
-            <p className="text-sm text-muted-foreground leading-snug sm:mt-1">{h.label}</p>
+          <div key={h.label} className="rounded-lg bg-muted/50 p-3">
+            <p className="whitespace-nowrap text-lg font-bold text-primary leading-7"><CountUp value={h.value} /></p>
+            <p className="mt-1 text-sm text-muted-foreground leading-snug">{h.label}</p>
           </div>
         ))}
       </div>
@@ -121,7 +177,7 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
 
 export default function ExperienceSection() {
   return (
-    <SectionShell id="experience" title="Experience" subtitle="My journey in software engineering.">
+    <SectionShell id="experience" title="Experience" subtitle="My journey in software engineering." revealBody={false}>
       <Timeline>
         {experienceData.map((item, index) => (
           <ExperienceEntry

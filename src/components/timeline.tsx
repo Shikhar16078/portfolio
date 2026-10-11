@@ -1,21 +1,49 @@
 "use client";
 
 import { useId, useState, type ReactNode } from "react";
+import { AnimatePresence, m, useScroll, type Transition, type Variants } from "motion/react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { DURATION, EASE_IN, EASE_OUT, exitTransition } from "@/lib/motion";
+import { useScrollReveal } from "./reveal";
+
+// Leaving reverses arriving: the logo goes first, then the card (afterChildren).
+const entryVariants: Variants = {
+  hidden: { opacity: 0, y: 24, transition: { ...exitTransition, when: "afterChildren" } },
+  show: { opacity: 1, y: 0, transition: { duration: DURATION.slow, ease: EASE_OUT } },
+};
+
+// Panels open by easing to their natural height while the content fades in; they close by fading the
+// content first and then folding shut. Inner items can cascade with the stagger-rise utility.
+const panelOpen: Transition = {
+  height: { duration: 0.45, ease: EASE_OUT },
+  opacity: { duration: 0.3, delay: 0.05 },
+};
+const panelClose: Transition = {
+  height: { duration: 0.32, ease: [0.4, 0, 0.2, 1], delay: 0.06 },
+  opacity: { duration: 0.15, ease: EASE_IN },
+};
+
+// The rail logo pops in just after its card starts rising.
+const logoVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.6, transition: { duration: DURATION.fast, ease: EASE_IN } },
+  show: { opacity: 1, scale: 1, transition: { duration: DURATION.base, ease: EASE_OUT, delay: 0.15 } },
+};
 
 interface TimelineLogoProps {
   src: string;
   alt: string;
   highlight: boolean;
   className?: string;
+  variants?: Variants;
 }
 
-const TimelineLogo = ({ src, alt, highlight, className }: TimelineLogoProps) => (
-  <div
+const TimelineLogo = ({ src, alt, highlight, className, variants }: TimelineLogoProps) => (
+  <m.div
+    variants={variants}
     className={cn(
       "items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-2",
       highlight ? "ring-primary" : "ring-border",
@@ -23,7 +51,7 @@ const TimelineLogo = ({ src, alt, highlight, className }: TimelineLogoProps) => 
     )}
   >
     <Image src={src} alt={alt} width={40} height={40} className="h-full w-full rounded-full object-contain" />
-  </div>
+  </m.div>
 );
 
 export function Timeline({ children }: { children: ReactNode }) {
@@ -64,25 +92,33 @@ export function TimelineEntry({
   action,
 }: TimelineEntryProps) {
   const [openId, setOpenId] = useState<string | null>(null);
-  // Keep the last panel rendered while it animates closed.
-  const [shownId, setShownId] = useState<string | null>(null);
   const baseId = useId();
+  const [ref, revealed] = useScrollReveal<HTMLLIElement>();
+  // Rail fill follows the scroll: empty when this entry's top reaches 60% down the screen, full when its bottom does.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.6", "end 0.6"] });
   const openPanel = panels.find((p) => p.id === openId) ?? null;
-  const shown = openPanel ?? panels.find((p) => p.id === shownId) ?? null;
-
-  const toggle = (id: string) => {
-    const next = openId === id ? null : id;
-    setOpenId(next);
-    if (next) setShownId(next);
-  };
 
   return (
-    <li className="relative sm:pl-16 pb-6 last:pb-0">
+    <m.li
+      ref={ref}
+      data-reveal=""
+      className="relative sm:pl-16 pb-6 last:pb-0"
+      initial="hidden"
+      animate={revealed ? "show" : "hidden"}
+      variants={entryVariants}
+    >
       {/* Logo and rail offsets centre the logo on the title + subtitle block of the card header. */}
       {!isLast && (
-        <span aria-hidden="true" className="absolute left-[22px] top-[69px] bottom-[-25px] hidden w-px bg-border sm:block" />
+        <span aria-hidden="true" className="absolute left-[22px] top-[69px] bottom-[-25px] hidden w-px bg-border sm:block">
+          <m.span style={{ scaleY: scrollYProgress }} className="absolute inset-0 origin-top bg-primary" />
+        </span>
       )}
-      <TimelineLogo {...logo} highlight={highlight} className="absolute left-0 top-[25px] hidden h-11 w-11 sm:flex" />
+      <TimelineLogo
+        {...logo}
+        highlight={highlight}
+        variants={logoVariants}
+        className="absolute left-0 top-[25px] hidden h-11 w-11 sm:flex"
+      />
 
       <Card className="p-5">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
@@ -109,7 +145,7 @@ export function TimelineEntry({
                     variant="ghost"
                     size="sm"
                     className={cn("text-primary hover:text-primary", isOpen && "bg-primary/10 hover:bg-primary/15")}
-                    onClick={() => toggle(panel.id)}
+                    onClick={() => setOpenId(isOpen ? null : panel.id)}
                     aria-expanded={isOpen}
                     aria-controls={`${baseId}-panel`}
                   >
@@ -123,25 +159,23 @@ export function TimelineEntry({
           </div>
         )}
 
-        {panels.length > 0 && (
-          <div
-            id={`${baseId}-panel`}
-            role="region"
-            aria-label={shown?.label}
-            aria-hidden={!openPanel}
-            className={cn(
-              "grid transition-[grid-template-rows] duration-300 ease-in-out",
-              openPanel ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-            )}
-          >
-            <div className="overflow-hidden">
-              <div key={shown?.id} className="pt-3 animate-in fade-in-0 duration-300">
-                {shown?.content}
-              </div>
-            </div>
-          </div>
-        )}
+        <AnimatePresence initial={false}>
+          {openPanel && (
+            <m.div
+              key={openPanel.id}
+              id={`${baseId}-panel`}
+              role="region"
+              aria-label={openPanel.label}
+              className="overflow-hidden"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1, transition: panelOpen }}
+              exit={{ height: 0, opacity: 0, transition: panelClose }}
+            >
+              <div className="pt-3">{openPanel.content}</div>
+            </m.div>
+          )}
+        </AnimatePresence>
       </Card>
-    </li>
+    </m.li>
   );
 }

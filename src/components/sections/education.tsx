@@ -8,7 +8,7 @@ import { Timeline, TimelineEntry } from "../timeline";
 
 export default function EducationSection() {
   return (
-    <SectionShell id="education" title="Education" subtitle="My academic background and qualifications.">
+    <SectionShell id="education" title="Education" subtitle="My academic background and qualifications." revealBody={false}>
       <Timeline>
         {educationData.map((item, index) => (
           <TimelineEntry

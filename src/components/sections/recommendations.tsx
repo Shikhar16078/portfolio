@@ -1,7 +1,7 @@
 
 "use client";
 
-import { recommendationsData } from "@/lib/data";
+import { personalData, recommendationsData } from "@/lib/data";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPagination, CarouselPrevious } from "@/components/ui/carousel";
 import AnimatedContent from "../animated-content";
@@ -68,7 +68,7 @@ export default function RecommendationsSection() {
         <AnimatedContent>
           <div className="flex justify-center mt-8">
             <Button asChild>
-              <Link href="https://www.linkedin.com/in/shikhar1999/details/recommendations/?detailScreenTabIndex=0" target="_blank" rel="noopener noreferrer">
+              <Link href={personalData.linkedinRecommendationsUrl} target="_blank" rel="noopener noreferrer">
                 <Linkedin className="mr-2 h-4 w-4" />
                 View on LinkedIn
               </Link>

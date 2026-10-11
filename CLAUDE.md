@@ -19,7 +19,7 @@ This is a Next.js 14 App Router single-page portfolio. The key architectural pat
 
 ### Data layer (`src/lib/data.ts`)
 
-Exports typed objects/arrays for each section: `personalData`, `socialLinks`, `projectsData`, `experienceData`, `educationData`, `skillsData`, `awardsData`, `recommendationsData`. This is the single source of truth for all displayed content.
+Exports typed objects/arrays for each section: `personalData`, `summaryData`, `socialLinks`, `projectsData`, `experienceData`, `educationData`, `skillsData`, `awardsData`, `recommendationsData`. This is the single source of truth for all displayed content.
 
 ### Page composition (`src/app/page.tsx`)
 

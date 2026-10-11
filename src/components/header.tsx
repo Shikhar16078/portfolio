@@ -19,7 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { personalData } from '@/lib/data';
+import { personalData, summaryData } from '@/lib/data';
 import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from './ui/scroll-area';
@@ -39,31 +39,23 @@ export default function Header({ activeSection }: { activeSection: string }) {
   const SummaryContent = () => (
     <>
       <DialogHeader>
-        <DialogTitle>{personalData.name} - Software Engineer</DialogTitle>
+        <DialogTitle>{personalData.name} - {personalData.title}</DialogTitle>
       </DialogHeader>
       <ScrollArea className="h-[60vh] sm:h-auto">
         <div className="space-y-4 text-sm text-muted-foreground pr-6">
-          <p>
-            I am a Computer Science graduate from UC Riverside seeking roles in software engineering and machine learning.
-          </p>
+          <p>{summaryData.intro}</p>
           <Separator />
           <div>
             <h3 className="font-semibold text-foreground mb-1">Work</h3>
-            <p>
-              With a background in software engineering, I previously worked as a Software Engineer at Nagarro, contributing to a large-scale automobile project. My work involved building real-time data publishers, automating infrastructure, and developing monitoring solutions using technologies like .NET Core, AWS, Terraform, Splunk, and New Relic.
-            </p>
+            <p>{summaryData.work}</p>
           </div>
           <Separator />
           <div>
             <h3 className="font-semibold text-foreground mb-1">Skills</h3>
-            <p>
-              My skill set includes C#, Java, Python, database systems such as Oracle Database and MySQL, and cloud technologies such as AWS, Splunk, and New Relic.
-            </p>
+            <p>{summaryData.skills}</p>
           </div>
           <Separator />
-          <p>
-            I am passionate about applying my Computer Science knowledge to solve real-world problems and create efficient, scalable solutions.
-          </p>
+          <p>{summaryData.closing}</p>
         </div>
       </ScrollArea>
       <DialogFooter className="grid grid-cols-2 gap-2 pt-4">
@@ -74,7 +66,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
           </Button>
         </DialogClose>
         <Button asChild>
-          <a href="https://drive.google.com/file/d/1501D5LMF1nKlSaEdqiZAyJysep-V2r31/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <a href={personalData.resumeUrl} target="_blank" rel="noopener noreferrer">
             <Download className="mr-2" />
             Resume
           </a>

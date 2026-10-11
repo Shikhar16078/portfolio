@@ -41,7 +41,7 @@ export default function HomeSection() {
                 </Link>
               </Button>
               <Button asChild variant="secondary" className="w-auto">
-                <a href="https://drive.google.com/file/d/1501D5LMF1nKlSaEdqiZAyJysep-V2r31/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <a href={personalData.resumeUrl} target="_blank" rel="noopener noreferrer">
                   <Download />
                   Resume
                 </a>

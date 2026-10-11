@@ -1,18 +1,27 @@
 // data.ts
 
-import { Github, Linkedin, Server, Star } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
 
 export const personalData = {
   name: 'Shikhar Kumar',
   title: "Software Engineer",
-  bio: "Software engineer with a Master’s degree in Computer Science from UC Riverside and 3 years of experience at Nagarro, building scalable systems and data-driven solutions.",
+  bio: "Software engineer focused on backend, distributed systems, and applied AI, with 3+ years of experience building production systems across .NET, Python, and AWS. M.S. in Computer Science from UC Riverside.",
   email: 'skuma154@ucr.edu',
   phone: '+1 (951) 377-2505',
+  resumeUrl: 'https://drive.google.com/file/d/1501D5LMF1nKlSaEdqiZAyJysep-V2r31/view?usp=sharing',
+  linkedinRecommendationsUrl: 'https://www.linkedin.com/in/shikhar1999/details/recommendations/?detailScreenTabIndex=0',
+};
+
+export const summaryData = {
+  intro: 'I am a Software Engineer at Translation Commons with an M.S. in Computer Science from UC Riverside and 3+ years of experience building production backends.',
+  work: "I'm currently helping build a PostgreSQL and Python ETL backend for a language data application at Translation Commons. Before that, I designed an agentic AI course-planning platform on Google ADK with Google and UCR, and spent nearly three years at Nagarro building event-driven microservices on .NET Core and AWS that processed 10,000 events/sec.",
+  skills: 'My core stack includes Python, C#, TypeScript, PostgreSQL, AWS, and React, along with LLMs, RAG, and agentic AI frameworks like Google ADK.',
+  closing: 'I enjoy building reliable, scalable systems and applying AI to real-world problems.',
 };
 
 export const socialLinks = [
   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shikhar1999/', icon: Linkedin },
-  { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github }
+  { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github },
 ];
 
 export const projectsData = [
@@ -58,7 +67,7 @@ export const projectsData = [
     title: 'Portfolio Website',
     date: 'Summer 2025',
     description: [
-      'Built a personal portfolio web application using React.js and Next.js, using from Firebase Studio AI.',
+      'Built a personal portfolio web application using React.js and Next.js.',
       'Configured GitHub Pages for deployment and automated the hosting process.',
     ],
     technologies: ['React.js', 'Next.js', 'Tailwind CSS', 'Github'],
@@ -68,12 +77,12 @@ export const projectsData = [
   },
   {
     title: 'Snipper',
-    date: 'Spring 2026',
+    date: 'Winter – Spring 2026',
     description: [
-      'Built a cross-platform desktop snippet manager in Electron and React for one-click clipboard copy of saved text.',
-      'Supports folder organization, instant search, drag-and-drop, multi-select, 11 themes, and fully local JSON storage.',
+      'Shipped a production-ready cross-platform desktop app for storing, tagging, and instantly searching frequently used text, with folder organization and bulk multi-select built in.',
+      'Delivered 4 public releases by owning the full release cycle, shipping a self-updating installer and integrating Google OAuth and the Drive API for secure cloud sync of user data.',
     ],
-    technologies: ['Electron', 'React', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    technologies: ['Electron', 'React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Google OAuth', 'Drive API'],
     icon: '/assets/images/snipper.png',
     type: 'Personal',
     github: 'https://github.com/Shikhar16078/Snipper',
@@ -168,11 +177,11 @@ export const experienceData = [
     ],
   },
   {
-  role: 'Data Science Fellowship',
-  company: 'University of California, Riverside',
-  period: 'June 2025 – Aug 2025',
-  icon: '/assets/images/ucr.png',
-  description: `During my Data Science Fellowship at UCR, I worked on solving a major friction point students face every quarter when planning their courses. The process was highly fragmented and manual — students had to check course offerings, track completed courses, refer to recommended degree plans, and verify eligibility across multiple university systems, making planning time-consuming and often confusing.
+    role: 'Agentic Software Engineer',
+    company: 'University of California, Riverside',
+    period: 'June 2025 – Aug 2025',
+    icon: '/assets/images/ucr.png',
+    description: `During my Data Science Fellowship at UCR, I worked on solving a major friction point students face every quarter when planning their courses. The process was highly fragmented and manual — students had to check course offerings, track completed courses, refer to recommended degree plans, and verify eligibility across multiple university systems, making planning time-consuming and often confusing.
 
   I led the design and development of a one-stop AI-powered solution to streamline this experience. The system intelligently combines student history, degree requirements, and real-time course availability to generate personalized schedules. As the project evolved, I expanded the system by integrating structured university data, enabling it to handle academic policies, constraints, and FAQs, making it a more comprehensive and practical tool for students.`,
     responsibilities: [

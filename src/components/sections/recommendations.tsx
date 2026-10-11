@@ -30,7 +30,7 @@ export default function RecommendationsSection() {
                 <Card className="flex flex-col h-full">
                   <CardContent className="p-5 flex-grow">
                     <blockquote className="border-l-2 border-primary pl-5 italic text-muted-foreground">
-                      "{rec.quote}"
+                      &ldquo;{rec.quote}&rdquo;
                     </blockquote>
                   </CardContent>
                   <CardHeader className="flex-row items-center justify-between gap-4 p-5 pt-0">

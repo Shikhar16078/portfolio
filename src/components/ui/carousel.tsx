@@ -28,7 +28,7 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
-  scrollSnaps: number[]
+  snapCount: number
   selectedIndex: number
   scrollTo: (index: number) => void
 } & CarouselProps
@@ -68,20 +68,26 @@ const Carousel = React.forwardRef<
       },
       plugins
     )
-    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-    const [canScrollNext, setCanScrollNext] = React.useState(false)
-    const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([])
-    const [selectedIndex, setSelectedIndex] = React.useState(0)
+    // Reads Embla's state straight from the API, re-rendering on select/reInit events.
+    const subscribe = React.useCallback(
+      (onChange: () => void) => {
+        if (!api) return () => {}
+        api.on("select", onChange)
+        api.on("reInit", onChange)
+        return () => {
+          api.off("select", onChange)
+          api.off("reInit", onChange)
+        }
+      },
+      [api]
+    )
+    const useEmblaValue = <T,>(read: (api: NonNullable<CarouselApi>) => T, fallback: T) =>
+      React.useSyncExternalStore(subscribe, () => (api ? read(api) : fallback), () => fallback)
 
-    const onSelect = React.useCallback((api: CarouselApi) => {
-      if (!api) {
-        return
-      }
-
-      setCanScrollPrev(api.canScrollPrev())
-      setCanScrollNext(api.canScrollNext())
-      setSelectedIndex(api.selectedScrollSnap())
-    }, [])
+    const canScrollPrev = useEmblaValue((a) => a.canScrollPrev(), false)
+    const canScrollNext = useEmblaValue((a) => a.canScrollNext(), false)
+    const snapCount = useEmblaValue((a) => a.scrollSnapList().length, 0)
+    const selectedIndex = useEmblaValue((a) => a.selectedScrollSnap(), 0)
 
     const scrollPrev = React.useCallback(() => {
       api?.scrollPrev()
@@ -116,20 +122,7 @@ const Carousel = React.forwardRef<
       if (setApi) {
         setApi(api)
       }
-      
-      setScrollSnaps(api.scrollSnapList())
-
-      onSelect(api)
-      api.on("reInit", () => {
-        onSelect(api)
-        setScrollSnaps(api.scrollSnapList())
-      })
-      api.on("select", onSelect)
-
-      return () => {
-        api?.off("select", onSelect)
-      }
-    }, [api, onSelect, setApi])
+    }, [api, setApi])
 
     return (
       <CarouselContext.Provider
@@ -143,7 +136,7 @@ const Carousel = React.forwardRef<
           scrollNext,
           canScrollPrev,
           canScrollNext,
-          scrollSnaps,
+          snapCount,
           selectedIndex,
           scrollTo,
         }}
@@ -270,7 +263,7 @@ const CarouselPagination = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { scrollSnaps, selectedIndex, scrollTo } = useCarousel()
+  const { snapCount, selectedIndex, scrollTo } = useCarousel()
 
   return (
     <div
@@ -278,7 +271,7 @@ const CarouselPagination = React.forwardRef<
       className={cn("flex justify-center gap-2 mt-4", className)}
       {...props}
     >
-      {scrollSnaps.map((_, index) => (
+      {Array.from({ length: snapCount }, (_, index) => (
         <Button
           key={index}
           variant="outline"

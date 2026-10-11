@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -65,11 +65,16 @@ export function TimelineEntry({
 }: TimelineEntryProps) {
   const [openId, setOpenId] = useState<string | null>(null);
   // Keep the last panel rendered while it animates closed.
-  const lastShown = useRef<TimelinePanel | null>(null);
+  const [shownId, setShownId] = useState<string | null>(null);
   const baseId = useId();
   const openPanel = panels.find((p) => p.id === openId) ?? null;
-  if (openPanel) lastShown.current = openPanel;
-  const shown = openPanel ?? lastShown.current;
+  const shown = openPanel ?? panels.find((p) => p.id === shownId) ?? null;
+
+  const toggle = (id: string) => {
+    const next = openId === id ? null : id;
+    setOpenId(next);
+    if (next) setShownId(next);
+  };
 
   return (
     <li className="relative sm:pl-16 pb-6 last:pb-0">
@@ -104,7 +109,7 @@ export function TimelineEntry({
                     variant="ghost"
                     size="sm"
                     className={cn("text-primary hover:text-primary", isOpen && "bg-primary/10 hover:bg-primary/15")}
-                    onClick={() => setOpenId(isOpen ? null : panel.id)}
+                    onClick={() => toggle(panel.id)}
                     aria-expanded={isOpen}
                     aria-controls={`${baseId}-panel`}
                   >

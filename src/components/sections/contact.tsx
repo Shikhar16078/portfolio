@@ -30,7 +30,7 @@ export default function ContactSection() {
 
           <Button asChild size="lg">
             <a href={phoneLink}>
-              <Phone className="mr-2 h-5 w-5" /> Let's talk
+              <Phone className="mr-2 h-5 w-5" /> Let&apos;s talk
             </a>
           </Button>
         </div>

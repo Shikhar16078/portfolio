@@ -7,7 +7,6 @@ import ThemeToggle from '@/components/theme-toggle';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -25,22 +24,8 @@ import { Separator } from './ui/separator';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from './ui/scroll-area';
 
-export default function Header({ activeSection }: { activeSection: string }) {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  // The sheet's scroll lock cancels in-flight scrolling, so scroll only after it has closed.
-  const pendingTarget = useRef<string | null>(null);
-  const navLinks = [
-    { href: '#home', label: 'Home', icon: Home },
-    { href: '#experience', label: 'Experience', icon: Briefcase },
-    { href: '#projects', label: 'Projects', icon: FolderGit2 },
-    { href: '#education', label: 'Education', icon: GraduationCap },
-    { href: '#skills', label: 'Skills', icon: Wrench },
-    { href: '#awards', label: 'Awards', icon: Award },
-    { href: '#recommendations', label: 'Recommendations', icon: Star },
-    { href: '#contact', label: 'Contact', icon: Mail },
-  ];
-
-  const SummaryContent = () => (
+function SummaryContent() {
+  return (
     <>
       <DialogHeader>
         <DialogTitle>{personalData.name} - {personalData.title}</DialogTitle>
@@ -86,6 +71,22 @@ export default function Header({ activeSection }: { activeSection: string }) {
       </DialogFooter>
     </>
   );
+}
+
+export default function Header({ activeSection }: { activeSection: string }) {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  // The sheet's scroll lock cancels in-flight scrolling, so scroll only after it has closed.
+  const pendingTarget = useRef<string | null>(null);
+  const navLinks = [
+    { href: '#home', label: 'Home', icon: Home },
+    { href: '#experience', label: 'Experience', icon: Briefcase },
+    { href: '#projects', label: 'Projects', icon: FolderGit2 },
+    { href: '#education', label: 'Education', icon: GraduationCap },
+    { href: '#skills', label: 'Skills', icon: Wrench },
+    { href: '#awards', label: 'Awards', icon: Award },
+    { href: '#recommendations', label: 'Recommendations', icon: Star },
+    { href: '#contact', label: 'Contact', icon: Mail },
+  ];
 
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center bg-chrome/80 backdrop-blur-sm border-b border-chrome-foreground/10 sticky top-0 z-50">

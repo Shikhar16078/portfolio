@@ -42,7 +42,7 @@ export default function AwardsSection() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="flex justify-center items-center mt-5">
+        <div className="flex min-h-8 justify-center items-center mt-5">
           <CarouselPrevious className="relative translate-x-[-75%] sm:translate-x-[-150%] translate-y-0" />
           <CarouselPagination />
           <CarouselNext className="relative translate-x-[75%] sm:translate-x-[150%] translate-y-0" />

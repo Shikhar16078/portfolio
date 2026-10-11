@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award, Star, X } from 'lucide-react';
+import { Home, Briefcase, GraduationCap, Wrench, Mail, Menu, User, Download, FolderGit2, Award, Star, X, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme-toggle';
@@ -48,6 +48,14 @@ export default function Header({ activeSection }: { activeSection: string }) {
       <ScrollArea className="h-[60vh] sm:h-auto">
         <div className="space-y-4 text-sm text-muted-foreground pr-6">
           <p>{summaryData.intro}</p>
+          {personalData.workAuthorization && (
+            <p className="flex items-start gap-2 text-foreground">
+              <BadgeCheck className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
+              <span>
+                {personalData.workAuthorization.status} · {personalData.workAuthorization.note}
+              </span>
+            </p>
+          )}
           <Separator />
           <div>
             <h3 className="font-semibold text-foreground mb-1">Work</h3>

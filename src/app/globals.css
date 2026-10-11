@@ -210,12 +210,12 @@ html:not([data-motion-ready]) [data-reveal] {
   }
 }
 
-@utility animate-scale-in {
-  animation: scale-in 0.3s ease-out;
-}
-
-@utility animate-rotate-in {
-  animation: rotate-in 0.3s ease-out;
+/* Theme toggle icon: spins and grows in. One animation, since two would override each other. */
+@utility animate-icon-in {
+  animation: icon-in 0.3s ease-out;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 @utility profile-ring {
@@ -249,6 +249,14 @@ html:not([data-motion-ready]) [data-reveal] {
   overflow: hidden;
   background: hsl(var(--hero));
   padding: 3px;
+}
+
+/* Theme switch: theme-toggle.tsx reveals the new theme with a growing circle, so turn off the
+   default cross-fade of the whole page. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @layer base {
@@ -335,23 +343,10 @@ html:not([data-motion-ready]) [data-reveal] {
   }
 }
 
-@keyframes scale-in {
+@keyframes icon-in {
   from {
-    transform: scale(0);
+    transform: scale(0) rotate(-90deg);
     opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes rotate-in {
-  from {
-    transform: rotate(-90deg);
-  }
-  to {
-    transform: rotate(0deg);
   }
 }
 

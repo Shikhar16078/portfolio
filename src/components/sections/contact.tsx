@@ -19,18 +19,18 @@ export default function ContactSection() {
     >
       <div className="rounded-lg border bg-card text-card-foreground shadow-xs w-fit sm:w-full max-w-lg mx-auto">
         <div className="flex flex-col sm:flex-row items-center justify-center p-6 sm:p-8 gap-6 sm:gap-8">
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="group">
             <a href={`mailto:${personalData.email}`}>
-              <Mail className="mr-2 h-5 w-5" /> Say Hello
+              <Mail className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:-rotate-6" /> Say Hello
             </a>
           </Button>
 
           <Separator orientation="vertical" className="hidden sm:block h-10" />
           <Separator orientation="horizontal" className="block sm:hidden w-1/2" />
 
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="group">
             <a href={phoneLink}>
-              <Phone className="mr-2 h-5 w-5" /> Let&apos;s talk
+              <Phone className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:rotate-12" /> Let&apos;s talk
             </a>
           </Button>
         </div>

@@ -18,7 +18,7 @@ export const personalData = {
 };
 
 export const summaryData = {
-  intro: 'I am a Software Engineer at Translation Commons with an M.S. in Computer Science from UC Riverside and 3+ years of experience building production backends.',
+  intro: 'I am a Software Engineer at Translation Commons with an M.S. in Computer Science from UC Riverside and 3+ years of experience building production backends. I am authorized to work in the US on F-1 OPT and eligible for the 24-month STEM extension.',
   work: "I currently own the PostgreSQL and Python ETL backend being built for a language data application at Translation Commons. Before that, I designed an agentic AI course-planning platform on Google ADK with Google and UCR, and spent nearly three years at Nagarro building event-driven microservices on .NET Core and AWS that processed 10,000 events/sec.",
   skills: 'My core stack includes Python, C#, TypeScript, PostgreSQL, AWS, and React, along with LLMs, RAG, and agentic AI frameworks like Google ADK.',
   closing: 'I enjoy building reliable, scalable systems and applying AI to real-world problems.',

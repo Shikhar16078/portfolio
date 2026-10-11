@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 import SectionShell from "../section-shell";
 import { Timeline, TimelineEntry } from "../timeline";
+import CountUp from "../count-up";
 
 export default function EducationSection() {
   return (
@@ -18,8 +19,10 @@ export default function EducationSection() {
             subtitle={item.institution}
             meta={
               <>
-                <Badge variant="outline" className="w-fit whitespace-nowrap">{item.period}</Badge>
-                <Badge variant="default" className="w-fit whitespace-nowrap">{item.gpa}</Badge>
+                <Badge variant="outline" className="date-badge w-fit whitespace-nowrap">{item.period}</Badge>
+                <Badge variant="default" className="w-fit whitespace-nowrap">
+                  <CountUp value={item.gpa} />
+                </Badge>
               </>
             }
             isLast={index === educationData.length - 1}

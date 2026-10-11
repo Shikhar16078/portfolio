@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { animate, useReducedMotion } from "motion/react";
-import { EASE_IN, EASE_OUT } from "@/lib/motion";
-import { useScrollReveal } from "../reveal";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import CountUp from "../count-up";
+import BadgeRow, { techBadgeClass } from "../badge-row";
 import { experienceData } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CircleCheck, ChevronDown } from "lucide-react";
 import SectionShell from "../section-shell";
+import { experienceCardId } from "@/lib/skill-usage";
 import { Timeline, TimelineEntry } from "../timeline";
 import { cn } from "@/lib/utils";
 
@@ -59,51 +59,6 @@ function SwapText({ showAlt, animated, primary, alt }: { showAlt: boolean; anima
   );
 }
 
-// Counts the number in a value like "10K/sec", "~99%" or "Up to 125 MB" up from 0 as its card scrolls
-// into view, and back down as the card leaves through the bottom (scrolling up). Values with an arrow
-// or several numbers ("2 days → 1 hr") are shown as they are. The server renders the final value;
-// digits are written to the DOM directly to avoid re-rendering on every frame.
-function CountUp({ value }: { value: string }) {
-  const match = useMemo(() => (value.includes("→") ? null : /^(\D*)(\d+)(\D*)$/.exec(value)), [value]);
-  const [ref, shown] = useScrollReveal<HTMLSpanElement>();
-  const reduceMotion = useReducedMotion();
-  // The number currently on screen; null until the counter is parked at 0 after hydration.
-  const current = useRef<number | null>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!match || reduceMotion || !el) return;
-    const [, prefix, digits, suffix] = match;
-    const write = (v: number) => {
-      current.current = v;
-      el.textContent = `${prefix}${Math.round(v)}${suffix}`;
-    };
-    // Park at 0 before the first reveal. The card is still hidden then, so the swap is never seen.
-    if (current.current === null) write(0);
-    const target = shown ? Number(digits) : 0;
-    if (current.current === target) return;
-    // Starts from whatever is on screen, so reversing mid-count is seamless.
-    const controls = animate(current.current ?? 0, target, {
-      duration: shown ? 1.2 : 0.5,
-      ease: shown ? EASE_OUT : EASE_IN,
-      onUpdate: write,
-      onComplete: () => {
-        if (shown) el.textContent = value;
-      },
-    });
-    return () => controls.stop();
-  }, [shown, match, reduceMotion, value, ref]);
-
-  return (
-    // The invisible copy reserves the final width so neighbouring text never shifts while counting.
-    <span className="inline-grid">
-      <span aria-hidden="true" className="invisible col-start-1 row-start-1">{value}</span>
-      <span ref={ref} aria-hidden="true" className="col-start-1 row-start-1">{value}</span>
-      <span className="sr-only">{value}</span>
-    </span>
-  );
-}
-
 type Experience = (typeof experienceData)[number];
 
 function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }) {
@@ -113,12 +68,15 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
 
   return (
     <TimelineEntry
+      cardId={experienceCardId(item)}
       logo={{ src: item.icon, alt: `${item.company} logo` }}
       title={item.role}
       subtitle={item.company}
       meta={
         <>
-          <Badge variant={isCurrent ? "default" : "outline"} className="w-fit">
+          <Badge variant={isCurrent ? "default" : "outline"} className={cn("w-fit gap-1.5", !isCurrent && "date-badge")}>
+            {/* The current role gets a pulsing "now" dot. */}
+            {isCurrent && <span aria-hidden="true" className="live-dot" />}
             {item.period}
           </Badge>
           <Button
@@ -158,19 +116,21 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
       <SwapText showAlt={showBackground} animated={toggled} primary={item.summary} alt={item.description} />
 
       <div className={cn("mt-4 grid grid-cols-1 gap-2 sm:gap-3", highlightCols[item.highlights.length])}>
-        {item.highlights.map((h) => (
-          <div key={h.label} className="rounded-lg bg-muted/50 p-3">
-            <p className="whitespace-nowrap text-lg font-bold text-primary leading-7"><CountUp value={h.value} /></p>
+        {item.highlights.map((h, i) => (
+          // impact-tile: a sheen sweeps across the tiles as a wave (--t is each tile's place), and the
+          // value glows as it passes.
+          <div key={h.label} className="impact-tile rounded-lg bg-muted/50 p-3" style={{ "--t": i } as CSSProperties}>
+            <p className="impact-value whitespace-nowrap text-lg font-bold text-primary leading-7"><CountUp value={h.value} /></p>
             <p className="mt-1 text-sm text-muted-foreground leading-snug">{h.label}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 flex flex-wrap justify-center gap-2">
+      <BadgeRow delay={0.2} className="mt-4 flex flex-wrap justify-center gap-2">
         {item.stack.map((tech) => (
-          <Badge key={tech} variant="secondary">{tech}</Badge>
+          <Badge key={tech} variant="secondary" className={techBadgeClass}>{tech}</Badge>
         ))}
-      </div>
+      </BadgeRow>
     </TimelineEntry>
   );
 }

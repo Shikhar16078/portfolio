@@ -13,9 +13,12 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, GraduationCap, Sparkles } from 'lucide-react';
 import { Github } from '@/components/icons';
 import SectionShell from '../section-shell';
+import CardRing from '../card-ring';
+import BadgeRow, { techBadgeClass } from '../badge-row';
+import { projectCardId } from '@/lib/skill-usage';
 import { RevealGroup, RevealItem } from '../reveal';
 
 export default function ProjectsSection() {
@@ -27,7 +30,7 @@ export default function ProjectsSection() {
       revealBody={false}
     >
       <RevealGroup>
-        <Carousel 
+        <Carousel autoplay={6000} 
           className="w-full max-w-5xl mx-auto"
           opts={{
             align: "start",
@@ -39,7 +42,8 @@ export default function ProjectsSection() {
               return (
                 <CarouselItem key={index} className="md:basis-1/2">
                   <RevealItem className="p-1 h-full">
-                    <Card data-slide-card className="flex flex-col h-full transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-primary/30">
+                    <Card id={projectCardId(project)} tabIndex={-1} data-slide-card className="group/card relative flex flex-col h-full outline-hidden transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-primary/30">
+                      <CardRing />
                       <CardHeader className="gap-2 p-5 pb-3">
                           <div className="flex items-center justify-between gap-3">
                               <div className="flex items-center gap-3">
@@ -62,10 +66,18 @@ export default function ProjectsSection() {
                                   </Button>
                               )}
                           </div>
-                          <div className="flex justify-between gap-2">
-                              <Badge variant="outline" className="shrink-0">{project.date}</Badge>
-                              <Badge variant="outline" className="shrink-0">{project.type} Project</Badge>
-                          </div>
+                          <BadgeRow className="flex justify-between gap-2">
+                              <Badge variant="outline" className="date-badge shrink-0">{project.date}</Badge>
+                              <Badge variant="outline" className="shrink-0 gap-1.5">
+                                  {/* Nudges when the card is hovered (type-icon). */}
+                                  {project.type === 'Academic' ? (
+                                      <GraduationCap aria-hidden="true" className="type-icon h-3.5 w-3.5 text-primary" />
+                                  ) : (
+                                      <Sparkles aria-hidden="true" className="type-icon h-3.5 w-3.5 text-primary" />
+                                  )}
+                                  {project.type} Project
+                              </Badge>
+                          </BadgeRow>
                       </CardHeader>
                       <CardContent className="flex flex-col grow p-5 pt-0">
                         <ul className="space-y-2 text-muted-foreground mb-4 grow">
@@ -76,11 +88,11 @@ export default function ProjectsSection() {
                             </li>
                           ))}
                         </ul>
-                        <div className="flex flex-wrap gap-2 justify-center">
+                        <BadgeRow delay={0.15} className="flex flex-wrap gap-2 justify-center">
                           {project.technologies.map((tech) => (
-                            <Badge key={tech} variant="secondary">{tech}</Badge>
+                            <Badge key={tech} variant="secondary" className={techBadgeClass}>{tech}</Badge>
                           ))}
-                        </div>
+                        </BadgeRow>
                       </CardContent>
                     </Card>
                   </RevealItem>

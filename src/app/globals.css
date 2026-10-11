@@ -266,7 +266,7 @@ html:not([data-motion-ready]) [data-reveal] {
   &::before {
     left: 0;
     width: 25%;
-    background: linear-gradient(90deg, transparent, hsl(var(--hero-foreground) / 0.9), transparent);
+    background: linear-gradient(90deg, transparent, hsl(var(--glint) / 0.9), transparent);
     opacity: 0;
     animation: hero-underline-glint 3.5s ease-in-out 1.9s infinite;
   }
@@ -389,7 +389,7 @@ html:not([data-motion-ready]) [data-reveal] {
     position: absolute;
     inset: -1px auto -1px 0;
     width: 18%;
-    background: linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.8), transparent);
+    background: linear-gradient(90deg, transparent, hsl(var(--glint) / 0.8), transparent);
     opacity: 0;
     animation: section-glint 7s ease-in-out 1s infinite;
   }
@@ -399,6 +399,360 @@ html:not([data-motion-ready]) [data-reveal] {
     &::after {
       display: none;
     }
+  }
+}
+
+/* Section headings (section-heading.tsx): the words rise from behind a mask one after another, like
+   the hero name, then a short accent line draws out beneath and keeps breathing. Hidden only once JS runs, so headings
+   show without it. Reversible: data-shown comes and goes with the scroll position. */
+@utility heading-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+  & > span {
+    display: inline-block;
+    transition: translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--w, 0) * 80ms);
+  }
+  html[data-motion-ready] [data-heading]:not([data-shown]) & > span {
+    translate: 0 105%;
+    transition-duration: 0.3s;
+    transition-delay: 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    & > span {
+      transition: opacity 0.4s ease-out;
+    }
+    html[data-motion-ready] [data-heading]:not([data-shown]) & > span {
+      translate: none;
+      opacity: 0;
+    }
+  }
+}
+
+@utility heading-accent {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin-top: 0.75rem;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
+  transition: scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Draws in after the last word has started rising. */
+  transition-delay: calc(var(--words, 1) * 80ms + 150ms);
+  html[data-motion-ready] &:not([data-shown]) {
+    scale: 0 1;
+    transition-duration: 0.2s;
+    transition-delay: 0s;
+  }
+  /* Once drawn, it breathes: slowly swelling wider and brighter with a soft glow, then easing back.
+     transform, so it doesn't fight the draw-in's scale. */
+  &[data-shown] {
+    animation: accent-breathe 3.5s ease-in-out 1.2s infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    &[data-shown] {
+      animation: none;
+    }
+  }
+}
+
+/* Skill badges. On desktop the badge under the cursor grows and lifts above its neighbours, with the
+   hand cursor over it. The transition is set on the badge in skills.tsx so it replaces the Badge
+   variant's transition-colors (which would make the size change jump instead of ease).
+   The opaque hover background is set on the badge in skills.tsx, replacing the Badge variant's
+   translucent one: the magnified badge draws over its neighbours and must not let them show through. */
+@utility skill-badge {
+  position: relative;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      z-index: 1;
+      scale: 1.4;
+      translate: 0 -6px;
+      border-color: hsl(var(--primary) / 0.5);
+      box-shadow: 0 6px 16px -6px hsl(var(--primary) / 0.55);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      scale: none;
+      translate: none;
+    }
+  }
+}
+
+/* Only skills with a "Where I used it" popover are buttons, and only those show the hand cursor. */
+@utility skill-list {
+  @media (hover: hover) and (pointer: fine) {
+    button.skill-badge {
+      cursor: pointer;
+    }
+  }
+}
+
+/* A card jumped to from a skill's popover (show-on-page.ts) flashes a red ring that fades out. */
+[data-flash] {
+  animation: card-flash 1.8s ease-out;
+}
+
+/* Card border light (card-ring.tsx): a 1px ring over the card's border, masked to just the edge, with
+   a large slowly rotating conic gradient inside it, so a short arc of red light travels around the card.
+   The rotating square only needs to cover the card's diagonal (hypot of the ring's size; 250% where
+   hypot() isn't supported). */
+@utility card-ring {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  container-type: size;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  & > span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 250%;
+    width: hypot(100cqw, 100cqh);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      hsl(var(--primary) / 0.9) 30deg,
+      transparent 70deg
+    );
+    animation: profile-ring-spin linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+
+/* Contact card border: the hero photo's spinning conic ring, as a 1px edge. The wrapper's padding is
+   the border; a large rotating square behind the card paints it. */
+@utility contact-ring {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 1px;
+  border-radius: var(--radius);
+  background: hsl(var(--border));
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    width: 200%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      hsl(var(--primary)) 60deg,
+      transparent 140deg,
+      transparent 180deg,
+      hsl(var(--primary) / 0.6) 240deg,
+      transparent 320deg
+    );
+    animation: profile-ring-spin 6s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      animation: none;
+    }
+  }
+}
+
+/* Timeline (timeline.tsx): a glowing dot rides the rail's fill as it grows with the scroll. Mouse and
+   trackpad only, like the other scroll-linked movement (it lags behind touch scrolling). */
+@utility timeline-tip {
+  position: absolute;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  translate: -50% -50%;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  box-shadow:
+    0 0 6px 1px hsl(var(--primary) / 0.8),
+    0 0 16px 4px hsl(var(--primary) / 0.35);
+  pointer-events: none;
+  @media not ((hover: hover) and (pointer: fine)) {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+
+/* When the rail reaches an entry, its logo gives one glowing pulse (restarts each time data-reached
+   is set again). */
+@utility timeline-logo {
+  &[data-reached] {
+    animation: timeline-logo-pulse 1s ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &[data-reached] {
+      animation: none;
+    }
+  }
+}
+
+/* Carousel autoplay timer: the fill inside the active pagination dot (carousel.tsx). Its end advances
+   the carousel; data-autoplay-paused on the carousel pauses it. */
+@utility carousel-progress {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  background: hsl(var(--primary));
+  animation: carousel-progress linear forwards;
+  [data-autoplay-paused] & {
+    animation-play-state: paused;
+  }
+}
+
+/* Badges inside cards (badge-row.tsx): they cascade in one after another, rising slightly and
+   settling from a touch smaller, once their row is on screen, and rewind together when it leaves.
+   --delay holds the row back (e.g. until its card has risen), --i is each badge's place. */
+@utility badge-cascade {
+  & > span {
+    transition:
+      opacity 0.4s ease-out,
+      translate 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      scale 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--delay, 0s) + var(--i, 0) * 55ms);
+  }
+  html[data-motion-ready] &:not([data-shown]) > span {
+    opacity: 0;
+    translate: 0 8px;
+    scale: 0.9;
+    transition-duration: 0.2s;
+    transition-delay: 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html[data-motion-ready] &:not([data-shown]) > span {
+      translate: none;
+      scale: none;
+    }
+  }
+}
+
+/* Date badges: a glint of light sweeps across every 3.5s, on the same rhythm as the hero's work
+   authorization badge (the hero-sheen keyframes: the sweep, then a pause). Transform only. */
+@utility date-badge {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(100deg, transparent, hsl(var(--glint) / var(--glint-badge)), transparent);
+    transform: translateX(-120%);
+    animation: hero-sheen 3.5s ease-in-out 1.6s infinite;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* "Now" dot in the current role's date badge: solid, with a ring pinging outwards. */
+@utility live-dot {
+  position: relative;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: currentColor;
+    animation: live-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* The project type icon gives a small nudge when its card is hovered. */
+@utility type-icon {
+  @media (hover: hover) and (pointer: fine) {
+    :where(.group\/card:hover) & {
+      animation: type-nudge 0.6s ease-in-out;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none !important;
+  }
+}
+
+/* Company, university and issuer names in cards: a bright glint sweeps through the letters every 3.5s,
+   on the same rhythm as the date badges and the work authorization badge. The text is painted with
+   a wide gradient clipped to the glyphs; the glint moves it, repainting the line for about a second
+   per cycle. Use with w-fit so the glint crosses the text, not the whole row. */
+@utility text-glint {
+  background-image: linear-gradient(
+    100deg,
+    hsl(var(--muted-foreground)) 40%,
+    hsl(var(--glint-text)) 50%,
+    hsl(var(--muted-foreground)) 60%
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* text-fill-color, not color: it wins over the element's own text colour class. */
+  -webkit-text-fill-color: transparent;
+  animation: text-glint 3.5s ease-in-out 1.6s infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Experience impact tiles: a soft sheen sweeps across each tile, one after another (--t), so a wave
+   travels along the row every 3.5s, and the value glows briefly as the sheen passes it. */
+@utility impact-tile {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 60%;
+    background: linear-gradient(100deg, transparent, hsl(var(--glint) / var(--glint-tile)), transparent);
+    transform: translateX(-120%);
+    animation: hero-sheen 3.5s ease-in-out calc(1.6s + var(--t, 0) * 0.18s) infinite;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+@utility impact-value {
+  animation: impact-glow 3.5s ease-in-out calc(1.75s + var(--t, 0) * 0.18s) infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 }
 
@@ -551,7 +905,7 @@ html:not([data-motion-ready]) [data-reveal] {
 
 @layer base {
   :root {
-    --background: 0 0% 99%;
+    --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -573,11 +927,17 @@ html:not([data-motion-ready]) [data-reveal] {
     --radius: 0.5rem;
     --hero: 0 0% 100%;
     --hero-foreground: 240 10% 3.9%;
-    --chrome: 0 0% 90%;
+    --chrome: 0 0% 97%;
     --chrome-foreground: 240 10% 3.9%;
-    --hero-glow: 0.1;
-    --section-glow: 0.07;
-    --section-dots: 0.1;
+    --hero-glow: 0.05;
+    --section-glow: 0.03;
+    /* Glints (the light sweeping across lines, badges, tiles and names) always lighten: white here,
+       on light surfaces, with stronger strengths than in dark mode so the shine still shows. */
+    --glint: 0 0% 100%;
+    --glint-text: 240 5% 84%;
+    --glint-badge: 0.9;
+    --glint-tile: 0.75;
+    --section-dots: 0.08;
     --hero-sheen: 0.18;
   }
  
@@ -607,6 +967,10 @@ html:not([data-motion-ready]) [data-reveal] {
     --chrome-foreground: 0 0% 98%;
     --hero-glow: 0.2;
     --section-glow: 0.11;
+    --glint: 0 0% 98%;
+    --glint-text: 0 0% 98%;
+    --glint-badge: 0.25;
+    --glint-tile: 0.07;
     --section-dots: 0.09;
     --hero-sheen: 0.3;
   }
@@ -867,6 +1231,103 @@ html:not([data-motion-ready]) [data-reveal] {
   100% {
     transform: translateX(560%);
     opacity: 0;
+  }
+}
+
+/* A glow filter, not box-shadow: the logo's ring-2 is drawn with box-shadow and must stay. */
+@keyframes timeline-logo-pulse {
+  0% {
+    filter: drop-shadow(0 0 0 hsl(var(--primary) / 0));
+  }
+  30% {
+    filter: drop-shadow(0 0 10px hsl(var(--primary) / 0.9));
+  }
+  100% {
+    filter: drop-shadow(0 0 0 hsl(var(--primary) / 0));
+  }
+}
+
+@keyframes carousel-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes card-flash {
+  0%,
+  35% {
+    box-shadow:
+      0 0 0 2px hsl(var(--primary)),
+      0 0 28px -4px hsl(var(--primary) / 0.7);
+  }
+  100% {
+    box-shadow:
+      0 0 0 2px hsl(var(--primary) / 0),
+      0 0 28px -4px hsl(var(--primary) / 0);
+  }
+}
+
+@keyframes live-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  75%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes type-nudge {
+  0%,
+  100% {
+    transform: none;
+  }
+  30% {
+    transform: rotate(-14deg) scale(1.2);
+  }
+  60% {
+    transform: rotate(8deg) scale(1.1);
+  }
+}
+
+/* The glint crosses in the first ~37% of each cycle (like hero-sheen); the rest is a pause. */
+@keyframes text-glint {
+  0% {
+    background-position: 100% 0;
+  }
+  37%,
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes impact-glow {
+  0%,
+  32%,
+  100% {
+    text-shadow: 0 0 0 hsl(var(--primary) / 0);
+  }
+  14% {
+    text-shadow: 0 0 14px hsl(var(--primary) / 0.6);
+  }
+}
+
+@keyframes accent-breathe {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.75;
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
+  }
+  50% {
+    transform: scaleX(1.35);
+    opacity: 1;
+    box-shadow: 0 0 10px 1px hsl(var(--primary) / 0.45);
   }
 }
 

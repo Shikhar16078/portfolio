@@ -19,6 +19,8 @@ type CarouselProps = {
   plugins?: CarouselPlugin
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
+  /** Advance to the next slide every this many ms (see CarouselPagination). */
+  autoplay?: number
 }
 
 type CarouselContextProps = {
@@ -31,7 +33,23 @@ type CarouselContextProps = {
   snapCount: number
   selectedIndex: number
   scrollTo: (index: number) => void
+  /** Autoplay interval in ms, or 0 when off (not requested, a single slide, or reduced motion). */
+  autoplayMs: number
+  advance: () => void
 } & CarouselProps
+
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)"
+function usePrefersReducedMotion() {
+  return React.useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia(reducedMotionQuery)
+      query.addEventListener("change", onChange)
+      return () => query.removeEventListener("change", onChange)
+    },
+    () => window.matchMedia(reducedMotionQuery).matches,
+    () => false
+  )
+}
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
@@ -55,6 +73,7 @@ const Carousel = React.forwardRef<
       opts,
       setApi,
       plugins,
+      autoplay = 0,
       className,
       children,
       ...props
@@ -100,6 +119,68 @@ const Carousel = React.forwardRef<
     const scrollTo = React.useCallback((index: number) => {
       api?.scrollTo(index)
     }, [api]);
+
+    // Autoplay. The active pagination dot fills up over the interval and advances the carousel when
+    // full, so the dot is the timer and stays in sync with it. It pauses (the fill's animation is
+    // paused through data-autoplay-paused) while the pointer is over the carousel, while it has
+    // keyboard focus or a jumped-to card has focus, while a slide is being dragged, and while the
+    // carousel is off screen. Off for reduced motion.
+    const reducedMotion = usePrefersReducedMotion()
+    const autoplayMs = autoplay > 0 && snapCount > 1 && !reducedMotion ? autoplay : 0
+    const rootRef = React.useRef<HTMLDivElement | null>(null)
+    const [hovered, setHovered] = React.useState(false)
+    const [focused, setFocused] = React.useState(false)
+    const [dragging, setDragging] = React.useState(false)
+    const [offscreen, setOffscreen] = React.useState(true)
+    const paused = hovered || focused || dragging || offscreen
+
+    const advance = React.useCallback(() => {
+      if (!api) return
+      if (api.canScrollNext()) api.scrollNext()
+      else api.scrollTo(0)
+    }, [api])
+
+    React.useEffect(() => {
+      if (!api || !autoplayMs) return
+      const down = () => setDragging(true)
+      const up = () => setDragging(false)
+      api.on("pointerDown", down)
+      api.on("pointerUp", up)
+      return () => {
+        api.off("pointerDown", down)
+        api.off("pointerUp", up)
+      }
+    }, [api, autoplayMs])
+
+    React.useEffect(() => {
+      const root = rootRef.current
+      if (!root || !autoplayMs) return
+      const observer = new IntersectionObserver(([entry]) => setOffscreen(!entry.isIntersecting), { threshold: 0.4 })
+      observer.observe(root)
+      return () => observer.disconnect()
+    }, [autoplayMs])
+
+    // `carousel:reveal` from inside a slide (show-on-page.ts) scrolls that slide into place.
+    React.useEffect(() => {
+      const root = rootRef.current
+      if (!api || !root) return
+      const reveal = (event: Event) => {
+        const slide = (event.target as Element).closest('[aria-roledescription="slide"]')
+        const index = api.slideNodes().findIndex((node) => node === slide)
+        if (index >= 0) api.scrollTo(index)
+      }
+      root.addEventListener("carousel:reveal", reveal)
+      return () => root.removeEventListener("carousel:reveal", reveal)
+    }, [api])
+
+    const setRootRef = React.useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node
+        if (typeof ref === "function") ref(node)
+        else if (ref) ref.current = node
+      },
+      [ref]
+    )
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -179,11 +260,21 @@ const Carousel = React.forwardRef<
           snapCount,
           selectedIndex,
           scrollTo,
+          autoplayMs,
+          advance,
         }}
       >
         <div
-          ref={ref}
+          ref={setRootRef}
           onKeyDownCapture={handleKeyDown}
+          onPointerEnter={(e) => e.pointerType !== "touch" && setHovered(true)}
+          onPointerLeave={() => setHovered(false)}
+          // Keyboard focus pauses autoplay, and so does a card focused by a jump to it (show-on-page.ts),
+          // so it isn't carried away while being read. A mouse click on an arrow or dot doesn't: hover
+          // already pauses, and focus left on the button shouldn't keep it paused after the mouse leaves.
+          onFocus={(e) => setFocused(e.target.matches(":focus-visible") || e.target.hasAttribute("data-slide-card"))}
+          onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setFocused(false)}
+          data-autoplay-paused={autoplayMs && paused ? "" : undefined}
           className={cn("relative", className)}
           role="region"
           aria-roledescription="carousel"
@@ -303,7 +394,7 @@ const CarouselPagination = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { snapCount, selectedIndex, scrollTo } = useCarousel()
+  const { snapCount, selectedIndex, scrollTo, autoplayMs, advance } = useCarousel()
 
   return (
     <div
@@ -317,11 +408,22 @@ const CarouselPagination = React.forwardRef<
           variant="outline"
           size="icon"
           // The active dot stretches into a pill; width eases so the row slides rather than jumps.
-          className={cn("h-2 w-2 rounded-full transition-[width,background-color] duration-300 ease-out", {
-            "w-5 bg-primary": selectedIndex === index,
+          // With autoplay it fills up as the timer runs (carousel-progress in globals.css).
+          className={cn("relative h-2 w-2 overflow-hidden rounded-full transition-[width,background-color] duration-300 ease-out", {
+            "w-5 bg-primary": selectedIndex === index && !autoplayMs,
+            "w-5 bg-primary/25": selectedIndex === index && autoplayMs,
           })}
           onClick={() => scrollTo(index)}
         >
+          {selectedIndex === index && autoplayMs > 0 && (
+            <span
+              key={selectedIndex}
+              aria-hidden="true"
+              className="carousel-progress"
+              style={{ animationDuration: `${autoplayMs}ms` }}
+              onAnimationEnd={advance}
+            />
+          )}
           <span className="sr-only">Go to slide {index + 1}</span>
         </Button>
       ))}

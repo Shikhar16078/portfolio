@@ -9,6 +9,7 @@ import Link from "next/link";
 import { User } from "lucide-react";
 import { Linkedin } from "@/components/icons";
 import SectionShell from '../section-shell';
+import CardRing from '../card-ring';
 import { Reveal, RevealGroup, RevealItem } from '../reveal';
 
 export default function RecommendationsSection() {
@@ -20,7 +21,7 @@ export default function RecommendationsSection() {
       revealBody={false}
     >
       <RevealGroup>
-        <Carousel 
+        <Carousel autoplay={6000} 
           className="w-full max-w-5xl mx-auto"
           opts={{
             align: "start",
@@ -31,7 +32,8 @@ export default function RecommendationsSection() {
             {recommendationsData.map((rec, index) => (
               <CarouselItem key={index} className="md:basis-1/2">
                 <RevealItem className="p-1 h-full">
-                  <Card data-slide-card className="flex flex-col h-full transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-primary/30">
+                  <Card data-slide-card className="relative flex flex-col h-full transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-primary/30">
+                    <CardRing />
                     <CardContent className="p-5 grow">
                       <blockquote className="border-l-2 border-primary pl-5 italic text-muted-foreground">
                         &ldquo;{rec.quote}&rdquo;

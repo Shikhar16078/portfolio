@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState, type ReactNode } from "react";
-import { AnimatePresence, m, useScroll, type Transition, type Variants } from "motion/react";
+import { AnimatePresence, m, useMotionValueEvent, useScroll, useTransform, type Transition, type Variants } from "motion/react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { DURATION, EASE_IN, EASE_OUT, exitTransition } from "@/lib/motion";
 import { useScrollReveal } from "./reveal";
+import CardRing from "./card-ring";
+import BadgeRow from "./badge-row";
 
 // Leaving reverses arriving: the logo goes first, then the card (afterChildren).
 const entryVariants: Variants = {
@@ -37,15 +39,18 @@ interface TimelineLogoProps {
   src: string;
   alt: string;
   highlight: boolean;
+  /** The rail's fill has reached this entry: the logo gives one glowing pulse (timeline-logo). */
+  reached?: boolean;
   className?: string;
   variants?: Variants;
 }
 
-const TimelineLogo = ({ src, alt, highlight, className, variants }: TimelineLogoProps) => (
+const TimelineLogo = ({ src, alt, highlight, reached, className, variants }: TimelineLogoProps) => (
   <m.div
     variants={variants}
+    data-reached={reached ? "" : undefined}
     className={cn(
-      "items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-2",
+      "timeline-logo items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-2",
       highlight ? "ring-primary" : "ring-border",
       className
     )}
@@ -72,6 +77,8 @@ interface TimelineEntryProps {
   panels?: TimelinePanel[];
   /** Shown at the right end of the toggle row. */
   action?: ReactNode;
+  /** id for the card, so it can be jumped to (e.g. from a skill's popover; see show-on-page.ts). */
+  cardId?: string;
 }
 
 export interface TimelinePanel {
@@ -90,12 +97,20 @@ export function TimelineEntry({
   children,
   panels = [],
   action,
+  cardId,
 }: TimelineEntryProps) {
   const [openId, setOpenId] = useState<string | null>(null);
   const baseId = useId();
   const [ref, revealed] = useScrollReveal<HTMLLIElement>();
   // Rail fill follows the scroll: empty when this entry's top reaches 60% down the screen, full when its bottom does.
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.6", "end 0.6"] });
+  // A glowing tip rides the fill's leading edge, visible only while the fill is under way.
+  const tipTop = useTransform(scrollYProgress, (p) => `${p * 100}%`);
+  const tipOpacity = useTransform(scrollYProgress, [0, 0.03, 0.97, 1], [0, 1, 1, 0]);
+  // The previous entry's fill ends where this one's starts, so a fill under way means the line has
+  // reached this entry's logo.
+  const [reached, setReached] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (p) => setReached(p > 0));
   const openPanel = panels.find((p) => p.id === openId) ?? null;
 
   return (
@@ -111,25 +126,28 @@ export function TimelineEntry({
       {!isLast && (
         <span aria-hidden="true" className="absolute left-[22px] top-[69px] bottom-[-25px] hidden w-px bg-border sm:block">
           <m.span style={{ scaleY: scrollYProgress }} className="absolute inset-0 origin-top bg-primary" />
+          <m.span style={{ top: tipTop, opacity: tipOpacity }} className="timeline-tip" />
         </span>
       )}
       <TimelineLogo
         {...logo}
         highlight={highlight}
+        reached={reached}
         variants={logoVariants}
         className="absolute left-0 top-[25px] hidden h-11 w-11 sm:flex"
       />
 
-      <Card className="p-5">
+      <Card id={cardId} tabIndex={cardId ? -1 : undefined} className="group/card relative p-5 outline-hidden">
+        <CardRing />
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <div className="flex items-center gap-3">
-            <TimelineLogo {...logo} highlight={highlight} className="h-10 w-10 shrink-0 sm:hidden" />
+            <TimelineLogo {...logo} highlight={highlight} reached={reached} className="h-10 w-10 shrink-0 sm:hidden" />
             <div>
               <h3 className="text-lg sm:text-xl font-semibold leading-tight sm:leading-7">{title}</h3>
-              <p className="text-muted-foreground">{subtitle}</p>
+              <p className="text-glint w-fit text-muted-foreground">{subtitle}</p>
             </div>
           </div>
-          <div className="flex shrink-0 flex-wrap gap-2 sm:flex-col sm:items-end">{meta}</div>
+          <BadgeRow delay={0.3} className="flex shrink-0 flex-wrap gap-2 sm:flex-col sm:items-end">{meta}</BadgeRow>
         </div>
 
         {children}

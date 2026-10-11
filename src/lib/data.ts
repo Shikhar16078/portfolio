@@ -39,6 +39,7 @@ export const projectsData = [
         'Designed a Flask web app for querying and displaying results with sub-second response times.'
     ],
     technologies: ['Python', 'PRAW', 'PyLucene', 'Flask'],
+    alsoUsed: ['Java', 'FastAPI', 'BERT', 'SLMs'],
     icon: '/assets/images/reddit.png',
     type: 'Academic',
     github: 'https://github.com/Shikhar16078/reddit-search-engine',
@@ -77,6 +78,7 @@ export const projectsData = [
       'Configured GitHub Pages for deployment and automated the hosting process.',
     ],
     technologies: ['React.js', 'Next.js', 'Tailwind CSS', 'Github'],
+    alsoUsed: ['HTML', 'CSS', 'Bootstrap'],
     icon: '/assets/images/website.png',
     type: 'Personal',
     github: 'https://github.com/Shikhar16078/portfolio',
@@ -89,6 +91,7 @@ export const projectsData = [
       'Delivered 4 public releases by owning the full release cycle, shipping a self-updating installer and integrating Google OAuth and the Drive API for secure cloud sync of user data.',
     ],
     technologies: ['Electron', 'React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Google OAuth', 'Drive API'],
+    alsoUsed: ['HTML', 'CSS', 'Bootstrap', 'Google Cloud Platform'],
     icon: '/assets/images/snipper.png',
     type: 'Personal',
     github: 'https://github.com/Shikhar16078/Snipper',
@@ -179,6 +182,7 @@ export const experienceData = [
       { value: 'Full-stack fixes', label: 'GitHub issues and UI bugs resolved across the React app' },
     ],
     stack: ['Python', 'PostgreSQL', 'Supabase', 'PostgREST', 'ETL', 'TypeScript', 'React'],
+    alsoUsed: ['JavaScript', 'HTML', 'CSS', 'Bootstrap', 'REST APIs', 'Claude Code', 'Windsurf'],
     description: `At Translation Commons, I work on a frontend application built around language, locale, and territory data. Today, the app loads all of this data from flat TSV files and processes it in the browser, which puts a heavy load on client-side memory.
 
     I am focused on building a backend to replace it: a PostgreSQL database on Supabase with a relational schema and materialized views that reconcile conflicting source datasets, a Python ETL pipeline to load the data, and PostgREST APIs so the frontend can query only what it needs instead of downloading everything up front.`,
@@ -203,6 +207,7 @@ export const experienceData = [
       { value: 'Calendar view', label: 'chatbot and interactive schedule for a smoother planning experience' },
     ],
     stack: ['Python', 'Google ADK', 'LLMs', 'RAG', 'React', 'REST APIs'],
+    alsoUsed: ['SLMs', 'Agentic AI', 'OpenAI API', 'Anthropic Claude API'],
     description: `During my Data Science Fellowship at UCR, I worked on solving a major friction point students face every quarter when planning their courses. The process was highly fragmented and manual — students had to check course offerings, track completed courses, refer to recommended degree plans, and verify eligibility across multiple university systems, making planning time-consuming and often confusing.
 
   I led the design and development of a one-stop AI-powered solution to streamline this experience. The system intelligently combines student history, degree requirements, and real-time course availability to generate personalized schedules. As the project evolved, I expanded the system by integrating structured university data, enabling it to handle academic policies, constraints, and FAQs, making it a more comprehensive and practical tool for students.`,
@@ -222,12 +227,16 @@ export const experienceData = [
     icon: '/assets/images/nagarro.jpg',
     summary: 'Built event-driven microservices and reliability tooling that kept real-time inventory in sync for a large-scale automobile client.',
     highlights: [
-      { value: '10K/sec', label: 'events processed by event-driven microservices' },
+      { value: '10,000/sec', label: 'events processed by event-driven microservices' },
       { value: '~99%', label: 'data accuracy via automated multi-region reconciliation' },
       { value: '50% faster', label: 'incident detection with integrated monitoring and alerting' },
-      { value: '2 days → 1 hr', label: 'environment setup with automated VM provisioning' },
+      { value: '2 days → ~1 hr', label: 'environment setup with automated VM provisioning' },
     ],
     stack: ['.NET Core', 'AWS Lambda', 'Amazon SQS', 'EC2', 'Terraform', 'CloudWatch', 'Splunk', 'Oracle 18c'],
+    alsoUsed: [
+      'C#', 'Microservices', 'Distributed Systems', 'Event-Driven Architecture', 'AWS', 'S3', 'REST APIs',
+      'CI/CD', 'New Relic', 'PagerDuty', 'PowerShell',
+    ],
     description: `At Nagarro, our team worked on a distributed system responsible for maintaining data consistency across multiple services for a large-scale automobile client. These systems needed to stay synchronized in near real-time, with changes flowing in both directions. This introduced challenges around handling continuous streams of events, ensuring reliability, and maintaining consistency across services even in the presence of failures.\n
     To address this, we built a robust event-driven synchronization system that processed incoming change events, propagated updates across services, and ensured data integrity. The system was designed to handle failures gracefully and maintain consistency at scale, while supporting reliable operation in a production environment.`,
     responsibilities: [
@@ -241,6 +250,20 @@ export const experienceData = [
     ],
   },
 ];
+
+// Other names a skill appears under in experience stacks and project technologies, so its
+// "Where I used it" popover (src/lib/skill-usage.ts) finds them. Matching ignores case.
+// Skills used in an entry but not shown as its badges go in that entry's `alsoUsed` instead.
+export const skillAliases: Record<string, string[]> = {
+  AWS: ['AWS Lambda', 'Amazon SQS', 'EC2', 'CloudWatch'],
+  Lambda: ['AWS Lambda'],
+  SQS: ['Amazon SQS'],
+  'ETL Pipelines': ['ETL'],
+  React: ['React.js'],
+};
+
+// Skills used in every experience entry and project, so their popovers list them all.
+export const usedEverywhere = ['Git', 'GitHub'];
 
 export const skillsData = {
   languages: [

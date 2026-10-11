@@ -1,119 +1,136 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { experienceData } from "@/lib/data";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ChevronDown } from "lucide-react";
 import SectionShell from "../section-shell";
-import Image from "next/image";
+import { Timeline, TimelineEntry } from "../timeline";
 import { cn } from "@/lib/utils";
+
+// Full class names so Tailwind keeps them; four tiles go 2x2 on tablets, one row on desktop.
+const highlightCols: Record<number, string> = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
+};
+
+// useLayoutEffect warns during server rendering; it is only needed in the browser.
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+// Cross-fades between two texts while the container's height glides to fit the visible one.
+function CrossfadeText({ showAlt, primary, alt }: { showAlt: boolean; primary: string; alt: string }) {
+  const primaryRef = useRef<HTMLParagraphElement>(null);
+  const altRef = useRef<HTMLParagraphElement>(null);
+  const [height, setHeight] = useState<number>();
+
+  useIsomorphicLayoutEffect(() => {
+    const el = showAlt ? altRef.current : primaryRef.current;
+    if (!el) return;
+    const sync = () => setHeight(el.offsetHeight);
+    sync();
+    const observer = new ResizeObserver(sync); // keep in step when the card width changes
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [showAlt]);
+
+  const layer = (visible: boolean) =>
+    cn(
+      "text-muted-foreground whitespace-pre-line transition-opacity duration-300 ease-out motion-reduce:transition-none",
+      visible ? "opacity-100" : "pointer-events-none invisible absolute inset-x-0 top-0 opacity-0"
+    );
+
+  return (
+    <div
+      className="relative mt-3 overflow-hidden transition-[height] duration-300 ease-out motion-reduce:transition-none"
+      style={{ height }}
+    >
+      <p ref={primaryRef} className={layer(!showAlt)} aria-hidden={showAlt}>{primary}</p>
+      <p ref={altRef} className={layer(showAlt)} aria-hidden={!showAlt}>{alt}</p>
+    </div>
+  );
+}
 
 type Experience = (typeof experienceData)[number];
 
-const CompanyLogo = ({ item, isCurrent, className }: { item: Experience; isCurrent: boolean; className?: string }) => (
-  <div
-    className={cn(
-      "items-center justify-center overflow-hidden rounded-full bg-white p-0.5 ring-2",
-      isCurrent ? "ring-primary" : "ring-border",
-      className
-    )}
-  >
-    <Image src={item.icon} alt={`${item.company} logo`} width={40} height={40} className="h-full w-full rounded-full object-contain" />
-  </div>
-);
-
-const TimelineItem = ({ item, isLast }: { item: Experience; isLast: boolean }) => {
-  const [open, setOpen] = useState(false);
-  const detailsId = useId();
+function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }) {
+  const [showBackground, setShowBackground] = useState(false);
   const isCurrent = item.period.includes("Present");
 
   return (
-    <li className="relative sm:pl-16 pb-6 sm:pb-8 last:pb-0">
-      {!isLast && (
-        <span aria-hidden="true" className="absolute left-[22px] top-[73px] -bottom-[29px] hidden w-px bg-border sm:block" />
-      )}
-      <CompanyLogo item={item} isCurrent={isCurrent} className="absolute left-0 top-[29px] hidden h-11 w-11 sm:flex" />
-
-      <Card className="p-5 sm:p-6">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-          <div className="flex items-center gap-3">
-            <CompanyLogo item={item} isCurrent={isCurrent} className="h-10 w-10 flex-shrink-0 sm:hidden" />
-            <div>
-              <h3 className="text-lg sm:text-xl font-semibold leading-tight">{item.role}</h3>
-              <p className="text-muted-foreground">{item.company}</p>
-            </div>
-          </div>
-          <Badge variant={isCurrent ? "default" : "outline"} className="w-fit flex-shrink-0">
+    <TimelineEntry
+      logo={{ src: item.icon, alt: `${item.company} logo` }}
+      title={item.role}
+      subtitle={item.company}
+      meta={
+        <>
+          <Badge variant={isCurrent ? "default" : "outline"} className="w-fit">
             {item.period}
           </Badge>
-        </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className={cn("h-7 px-2.5 text-primary hover:text-primary", showBackground && "bg-primary/10 hover:bg-primary/15")}
+            onClick={() => setShowBackground(!showBackground)}
+            aria-pressed={showBackground}
+          >
+            Background
+            <ChevronDown className={cn("ml-1 h-4 w-4 transition-transform duration-300", showBackground && "rotate-180")} />
+          </Button>
+        </>
+      }
+      highlight={isCurrent}
+      isLast={isLast}
+      panels={[
+        {
+          id: "responsibilities",
+          label: "Responsibilities",
+          content: (
+            <ul className="space-y-3 text-muted-foreground">
+              {item.responsibilities.map((resp, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{resp}</span>
+                </li>
+              ))}
+            </ul>
+          ),
+        },
+      ]}
+    >
+      <CrossfadeText showAlt={showBackground} primary={item.summary} alt={item.description} />
 
-        <p className="mt-3 text-muted-foreground">{item.summary}</p>
-
-        <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3">
-          {item.highlights.map((h) => (
-            <div key={h.label} className="flex items-baseline gap-2 rounded-lg bg-muted/50 px-3 py-2 sm:block sm:p-3">
-              <p className="whitespace-nowrap text-base sm:text-lg font-bold text-primary leading-tight">{h.value}</p>
-              <p className="text-sm text-muted-foreground leading-snug sm:mt-1">{h.label}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {item.stack.map((tech) => (
-            <Badge key={tech} variant="secondary">{tech}</Badge>
-          ))}
-        </div>
-
-        <Button
-          variant="ghost"
-          size="sm"
-          className="mt-3 -ml-3 text-primary hover:text-primary"
-          onClick={() => setOpen(!open)}
-          aria-expanded={open}
-          aria-controls={detailsId}
-        >
-          {open ? "Hide details" : "Show details"}
-          <ChevronDown className={cn("ml-1 h-4 w-4 transition-transform duration-300", open && "rotate-180")} />
-        </Button>
-
-        <div
-          id={detailsId}
-          aria-hidden={!open}
-          className={cn(
-            "grid transition-[grid-template-rows] duration-300 ease-in-out",
-            open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-          )}
-        >
-          <div className="overflow-hidden">
-            <div className="space-y-4 pt-3">
-              <p className="text-muted-foreground whitespace-pre-line">{item.description}</p>
-              <ul className="space-y-3 text-muted-foreground">
-                {item.responsibilities.map((resp, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span>{resp}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div className={cn("mt-4 grid grid-cols-1 gap-2 sm:gap-3", highlightCols[item.highlights.length])}>
+        {item.highlights.map((h) => (
+          <div key={h.label} className="flex items-baseline gap-2 rounded-lg bg-muted/50 px-3 py-2 sm:block sm:p-3">
+            <p className="whitespace-nowrap text-base sm:text-lg font-bold text-primary leading-tight">{h.value}</p>
+            <p className="text-sm text-muted-foreground leading-snug sm:mt-1">{h.label}</p>
           </div>
-        </div>
-      </Card>
-    </li>
+        ))}
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {item.stack.map((tech) => (
+          <Badge key={tech} variant="secondary">{tech}</Badge>
+        ))}
+      </div>
+    </TimelineEntry>
   );
-};
+}
 
 export default function ExperienceSection() {
   return (
     <SectionShell id="experience" title="Experience" subtitle="My journey in software engineering.">
-      <ol className="mx-auto max-w-4xl">
+      <Timeline>
         {experienceData.map((item, index) => (
-          <TimelineItem key={`${item.company}-${item.period}`} item={item} isLast={index === experienceData.length - 1} />
+          <ExperienceEntry
+            key={`${item.company}-${item.period}`}
+            item={item}
+            isLast={index === experienceData.length - 1}
+          />
         ))}
-      </ol>
+      </Timeline>
     </SectionShell>
   );
 }

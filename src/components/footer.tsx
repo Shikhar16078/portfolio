@@ -22,7 +22,9 @@ export default function Footer() {
           ))}
         </div>
         <p className="text-sm text-muted-foreground">
-        Designed and Developed by {personalData.name} ©{new Date().getFullYear()}. All Rights Reserved.
+        Designed and Developed by {personalData.name} ©{new Date().getFullYear()}.{" "}
+          {/* Its own line on phones, inline from sm up. */}
+          <span className="block sm:inline">All Rights Reserved.</span>
         </p>
       </Reveal>
     </footer>

@@ -293,11 +293,18 @@ html:not([data-motion-ready]) [data-reveal] {
 }
 
 /* Theme switch: theme-toggle.tsx reveals the new theme with a growing circle, so turn off the
-   default cross-fade of the whole page. */
+   default cross-fade of the whole page. The circle is a mask with a feathered edge (solid to 75% of
+   its radius, then fading out); theme-toggle.tsx grows it by animating mask-size/mask-position. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  mask-image: radial-gradient(closest-side, #000 75%, transparent);
+  mask-repeat: no-repeat;
+  mask-size: 0 0;
 }
 
 @layer base {

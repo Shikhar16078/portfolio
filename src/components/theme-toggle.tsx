@@ -7,6 +7,9 @@ import { useSyncExternalStore, type MouseEvent } from 'react';
 import { flushSync } from 'react-dom';
 import { cn } from '@/lib/utils';
 
+// Where the circle's soft edge begins, as a fraction of its radius; matches the gradient in globals.css.
+const FEATHER_START = 0.75;
+
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   // False during server render and hydration, true afterwards; the theme is only known on the client.
@@ -16,8 +19,8 @@ export default function ThemeToggle() {
     () => false
   );
 
-  // The new theme spreads as a circle from the button (View Transitions API). Browsers without it,
-  // and users who prefer reduced motion, get the plain switch.
+  // The new theme spreads from the button as a soft-edged circle (View Transitions API). Browsers
+  // without it, and users who prefer reduced motion, get the plain switch.
   const toggleTheme = (event: MouseEvent<HTMLButtonElement>) => {
     const next = resolvedTheme === 'dark' ? 'light' : 'dark';
     if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -29,6 +32,9 @@ export default function ThemeToggle() {
     const x = left + width / 2;
     const y = top + height / 2;
     const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    // The mask's edge fades over its outer quarter (globals.css), so grow it until that soft edge has
+    // passed the farthest corner.
+    const size = (radius / FEATHER_START) * 2;
 
     const root = document.documentElement;
     // The page's colour transitions would leave the "after" snapshot half-faded; pause them.
@@ -46,8 +52,18 @@ export default function ThemeToggle() {
     transition.ready
       .then(() => {
         root.animate(
-          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-          { duration: 550, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', pseudoElement: '::view-transition-new(root)' }
+          {
+            maskSize: ['0px 0px', `${size}px ${size}px`],
+            maskPosition: [`${x}px ${y}px`, `${x - size / 2}px ${y - size / 2}px`],
+          },
+          // fill: hold the full size until the transition ends, or the mask snaps back to 0 (its value in
+          // globals.css) for a frame and the old theme flashes.
+          {
+            duration: 900,
+            easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+            fill: 'forwards',
+            pseudoElement: '::view-transition-new(root)',
+          }
         );
       })
       .catch(() => {}); // skipped, e.g. by a quick second click: the theme still switches, just without the circle

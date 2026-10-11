@@ -22,19 +22,22 @@ export default function AwardsSection() {
                 <RevealItem className="p-1 h-full">
                   <Card data-slide-card className="h-full flex flex-col transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-primary/30">
                     <CardHeader className="gap-2 p-5 pb-3">
-                      <CardTitle className="text-xl">{item.title}</CardTitle>
+                      {/* Title on the left, date pinned to the right edge of the same row. */}
+                      <div className="flex items-start justify-between gap-3">
+                        <CardTitle className="text-xl">{item.title}</CardTitle>
+                        <Badge variant="secondary" className="mt-0.5 shrink-0 whitespace-nowrap">{item.date}</Badge>
+                      </div>
                       <div className="flex items-center gap-3">
                         {item.icon && (
                           <Image
-                          src={item.icon}
-                          alt={`${item.issuer} logo`}
-                          width={24}
-                          height={24}
-                          className="rounded-sm"
+                            src={item.icon}
+                            alt={`${item.issuer} logo`}
+                            width={24}
+                            height={24}
+                            className="rounded-sm"
                           />
                         )}
                         <CardDescription>{item.issuer}</CardDescription>
-                        <Badge variant="secondary" className="w-fit">{item.date}</Badge>
                       </div>
                     </CardHeader>
                     <CardContent className="p-5 pt-0">

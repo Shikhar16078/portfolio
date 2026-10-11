@@ -36,7 +36,7 @@ export default function EducationSection() {
             <ul className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-sm text-muted-foreground sm:grid-cols-2">
               {item.courses.map((course) => (
                 <li key={course} className="flex items-start gap-2">
-                  <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                  <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>{course}</span>
                 </li>
               ))}

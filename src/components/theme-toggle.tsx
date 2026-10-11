@@ -23,7 +23,7 @@ export default function ThemeToggle() {
     // Return a placeholder or null to avoid hydration mismatch
     return (
       <Button variant="ghost" size="icon" disabled className="hover:bg-primary hover:text-primary-foreground relative overflow-hidden">
-        <Sun className="h-[1.5rem] w-[1.3rem]" />
+        <Sun className="h-6 w-[1.3rem]" />
       </Button>
     );
   }
@@ -38,7 +38,7 @@ export default function ThemeToggle() {
       {resolvedTheme === 'dark' ? (
         <Sun
           key="sun"
-          className={cn("h-[1.5rem] w-[1.3rem] animate-scale-in animate-rotate-in")}
+          className={cn("h-6 w-[1.3rem] animate-scale-in animate-rotate-in")}
         />
       ) : (
         <Moon

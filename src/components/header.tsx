@@ -35,7 +35,7 @@ function SummaryContent() {
           <p>{summaryData.intro}</p>
           {personalData.workAuthorization && (
             <p className="flex items-start gap-2 text-foreground">
-              <BadgeCheck className="h-4 w-4 mt-0.5 flex-shrink-0 text-primary" />
+              <BadgeCheck className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
               <span>
                 {personalData.workAuthorization.status} · {personalData.workAuthorization.note}
               </span>
@@ -89,7 +89,7 @@ export default function Header({ activeSection }: { activeSection: string }) {
   ];
 
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center bg-chrome/80 backdrop-blur-sm border-b border-chrome-foreground/10 sticky top-0 z-50">
+    <header className="px-4 lg:px-6 h-14 flex items-center bg-chrome/80 backdrop-blur-xs border-b border-chrome-foreground/10 sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6 max-w-7xl text-chrome-foreground">
         <Dialog>
           <DialogTrigger asChild>

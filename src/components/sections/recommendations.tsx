@@ -29,12 +29,12 @@ export default function RecommendationsSection() {
             <CarouselItem key={index} className="md:basis-1/2">
               <div className="p-1 h-full">
                 <Card className="flex flex-col h-full">
-                  <CardContent className="p-5 flex-grow">
+                  <CardContent className="p-5 grow">
                     <blockquote className="border-l-2 border-primary pl-5 italic text-muted-foreground">
                       &ldquo;{rec.quote}&rdquo;
                     </blockquote>
                   </CardContent>
-                  <CardHeader className="flex-row items-center justify-between gap-4 p-5 pt-0">
+                  <CardHeader className="flex-row items-center justify-between gap-4 space-y-0 p-5 pt-0">
                     <div className="flex flex-col">
                       <p className="font-semibold">{rec.author}</p>
                       <p className="text-sm text-muted-foreground">{rec.title}</p>
@@ -52,9 +52,9 @@ export default function RecommendationsSection() {
           ))}
         </CarouselContent>
         <div className="flex justify-center items-center mt-5">
-          <CarouselPrevious className="relative translate-x-[-75%] sm:translate-x-[-150%] -translate-y-0" />
+          <CarouselPrevious className="relative translate-x-[-75%] sm:translate-x-[-150%] translate-y-0" />
           <CarouselPagination />
-          <CarouselNext className="relative translate-x-[75%] sm:translate-x-[150%] -translate-y-0" />
+          <CarouselNext className="relative translate-x-[75%] sm:translate-x-[150%] translate-y-0" />
         </div>
       </Carousel>
       <div className="flex justify-center mt-5">

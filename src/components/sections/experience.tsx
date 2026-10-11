@@ -90,7 +90,7 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
             <ul className="space-y-3 text-muted-foreground">
               {item.responsibilities.map((resp, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CircleCheck className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <CircleCheck className="h-5 w-5 text-primary mt-0.5 shrink-0" />
                   <span>{resp}</span>
                 </li>
               ))}
@@ -104,7 +104,7 @@ function ExperienceEntry({ item, isLast }: { item: Experience; isLast: boolean }
       <div className={cn("mt-4 grid grid-cols-1 gap-2 sm:gap-3", highlightCols[item.highlights.length])}>
         {item.highlights.map((h) => (
           <div key={h.label} className="flex items-baseline gap-2 rounded-lg bg-muted/50 px-3 py-2 sm:block sm:p-3">
-            <p className="whitespace-nowrap text-base sm:text-lg font-bold text-primary leading-tight">{h.value}</p>
+            <p className="whitespace-nowrap text-base sm:text-lg font-bold text-primary leading-tight sm:leading-7">{h.value}</p>
             <p className="text-sm text-muted-foreground leading-snug sm:mt-1">{h.label}</p>
           </div>
         ))}

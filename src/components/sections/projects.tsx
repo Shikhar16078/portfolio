@@ -52,7 +52,7 @@ export default function ProjectsSection() {
                                 <CardTitle className="text-xl">{project.title}</CardTitle>
                             </div>
                             {project.github && (
-                                <Button asChild variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0">
+                                <Button asChild variant="ghost" size="icon" className="h-8 w-8 shrink-0">
                                     <Link href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} on GitHub`}>
                                         <Github className="h-4 w-4" />
                                     </Link>
@@ -60,15 +60,15 @@ export default function ProjectsSection() {
                             )}
                         </div>
                         <div className="flex justify-between gap-2">
-                            <Badge variant="outline" className="flex-shrink-0">{project.date}</Badge>
-                            <Badge variant="outline" className="flex-shrink-0">{project.type} Project</Badge>
+                            <Badge variant="outline" className="shrink-0">{project.date}</Badge>
+                            <Badge variant="outline" className="shrink-0">{project.type} Project</Badge>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex flex-col flex-grow p-5 pt-0">
-                      <ul className="space-y-2 text-muted-foreground mb-4 flex-grow">
+                    <CardContent className="flex flex-col grow p-5 pt-0">
+                      <ul className="space-y-2 text-muted-foreground mb-4 grow">
                         {project.description.map((point, i) => (
                           <li key={i} className="flex items-start gap-2">
-                            <ChevronRight className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
+                            <ChevronRight className="h-4 w-4 text-primary mt-1 shrink-0" />
                             <span>{point}</span>
                           </li>
                         ))}
@@ -86,9 +86,9 @@ export default function ProjectsSection() {
           })}
         </CarouselContent>
         <div className="flex justify-center items-center mt-5">
-          <CarouselPrevious className="relative translate-x-[-75%] sm:translate-x-[-150%] -translate-y-0" />
+          <CarouselPrevious className="relative translate-x-[-75%] sm:translate-x-[-150%] translate-y-0" />
           <CarouselPagination />
-          <CarouselNext className="relative translate-x-[75%] sm:translate-x-[150%] -translate-y-0" />
+          <CarouselNext className="relative translate-x-[75%] sm:translate-x-[150%] translate-y-0" />
         </div>
       </Carousel>
     </SectionShell>

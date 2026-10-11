@@ -39,7 +39,7 @@ export default function HomeSection() {
             </div>
             {personalData.workAuthorization && (
               <Badge variant="outline" className="gap-2 rounded-xl sm:rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground">
-                <BadgeCheck className="h-4 w-4 flex-shrink-0 text-primary" />
+                <BadgeCheck className="h-4 w-4 shrink-0 text-primary" />
                 <span className="flex flex-col sm:flex-row sm:gap-1.5">
                   <span>{personalData.workAuthorization.status}</span>
                   <span className="hidden sm:inline" aria-hidden="true">·</span>

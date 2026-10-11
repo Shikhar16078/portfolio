@@ -17,7 +17,7 @@ export default function ContactSection() {
       // Last section: leave room for the footer so it fits on the same screen.
       className="min-h-[calc(100dvh-3.5rem-8rem)] sm:min-h-[calc(100dvh-3.5rem-6.75rem)]"
     >
-      <div className="rounded-lg border bg-card text-card-foreground shadow-sm w-fit sm:w-full max-w-lg mx-auto">
+      <div className="rounded-lg border bg-card text-card-foreground shadow-xs w-fit sm:w-full max-w-lg mx-auto">
         <div className="flex flex-col sm:flex-row items-center justify-center p-6 sm:p-8 gap-6 sm:gap-8">
           <Button asChild size="lg">
             <a href={`mailto:${personalData.email}`}>

@@ -80,20 +80,20 @@ export function TimelineEntry({
     <li className="relative sm:pl-16 pb-6 last:pb-0">
       {/* Logo and rail offsets centre the logo on the title + subtitle block of the card header. */}
       {!isLast && (
-        <span aria-hidden="true" className="absolute left-[22px] top-[69px] -bottom-[25px] hidden w-px bg-border sm:block" />
+        <span aria-hidden="true" className="absolute left-[22px] top-[69px] bottom-[-25px] hidden w-px bg-border sm:block" />
       )}
       <TimelineLogo {...logo} highlight={highlight} className="absolute left-0 top-[25px] hidden h-11 w-11 sm:flex" />
 
       <Card className="p-5">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <div className="flex items-center gap-3">
-            <TimelineLogo {...logo} highlight={highlight} className="h-10 w-10 flex-shrink-0 sm:hidden" />
+            <TimelineLogo {...logo} highlight={highlight} className="h-10 w-10 shrink-0 sm:hidden" />
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold leading-tight">{title}</h3>
+              <h3 className="text-lg sm:text-xl font-semibold leading-tight sm:leading-7">{title}</h3>
               <p className="text-muted-foreground">{subtitle}</p>
             </div>
           </div>
-          <div className="flex flex-shrink-0 flex-wrap gap-2 sm:flex-col sm:items-end">{meta}</div>
+          <div className="flex shrink-0 flex-wrap gap-2 sm:flex-col sm:items-end">{meta}</div>
         </div>
 
         {children}

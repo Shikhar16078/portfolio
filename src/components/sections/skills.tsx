@@ -63,7 +63,7 @@ export default function SkillsSection() {
                   <Badge
                     key={skill.name}
                     variant="secondary"
-                    className="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg shadow-sm hover:bg-primary/80 transition-colors"
+                    className="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg shadow-xs hover:bg-primary/80 transition-colors"
                   >
                     {skill.name}
                   </Badge>

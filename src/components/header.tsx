@@ -85,7 +85,8 @@ function ScrollProgress() {
   );
 }
 
-export default function Header({ activeSection, resume }: { activeSection: string; resume?: string }) {
+// `linkPrefix` is "/" on pages other than the homepage, so the section links lead back to it.
+export default function Header({ activeSection, resume, linkPrefix = '' }: { activeSection: string; resume?: string; linkPrefix?: string }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   // The sheet's scroll lock cancels in-flight scrolling, so scroll only after it has closed.
   const pendingTarget = useRef<string | null>(null);
@@ -129,7 +130,7 @@ export default function Header({ activeSection, resume }: { activeSection: strin
                       'text-primary-foreground': (link.href === `#${activeSection}`),
                     })}
                   >
-                    <Link href={link.href} prefetch={false}>
+                    <Link href={`${linkPrefix}${link.href}`} prefetch={false}>
                       {link.href === `#${activeSection}` && (
                         <m.span layoutId="nav-active" transition={springSnappy} className="absolute inset-0 rounded-md bg-primary" />
                       )}
@@ -190,8 +191,9 @@ export default function Header({ activeSection, resume }: { activeSection: strin
                 {navLinks.map((link) => (
                   <m.div key={link.href} variants={slideInRight}>
                     <Link
-                      href={link.href}
+                      href={`${linkPrefix}${link.href}`}
                       onClick={(e) => {
+                        if (linkPrefix) return; // an ordinary link to the homepage
                         e.preventDefault();
                         pendingTarget.current = link.href;
                         setMobileNavOpen(false);

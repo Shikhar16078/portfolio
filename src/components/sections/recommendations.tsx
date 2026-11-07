@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import type { Recommendation } from "@/lib/site-config";
+import { linkedinRecommendationsUrl } from "@/lib/utils";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPagination, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
@@ -102,7 +103,7 @@ export default function RecommendationsSection({ recommendations = [], linkedin 
       {linkedin && (
         <Reveal className="flex justify-center mt-5">
           <Button asChild>
-            <Link href={`${linkedin.replace(/\/$/, "")}/details/recommendations/?detailScreenTabIndex=0`} target="_blank" rel="noopener noreferrer">
+            <Link href={linkedinRecommendationsUrl(linkedin)} target="_blank" rel="noopener noreferrer">
               <Linkedin className="mr-2 h-4 w-4" />
               View on LinkedIn
             </Link>

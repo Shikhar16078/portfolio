@@ -1,6 +1,6 @@
 // data.ts
 
-import { Github, Linkedin } from '@/components/icons';
+import type { LucideIcon } from 'lucide-react';
 
 export const personalData = {
   name: 'Shikhar Kumar',
@@ -14,8 +14,6 @@ export const personalData = {
     status: 'Authorized to work in the US on F-1 OPT',
     note: 'Eligible for 24-month STEM extension',
   },
-  email: 'skuma154@ucr.edu',
-  linkedinRecommendationsUrl: 'https://www.linkedin.com/in/shikhar1999/details/recommendations/?detailScreenTabIndex=0',
 };
 
 export const summaryData = {
@@ -25,10 +23,9 @@ export const summaryData = {
   closing: 'I enjoy building reliable, scalable systems and applying AI to real-world problems.',
 };
 
-export const socialLinks = [
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/shikhar1999/', icon: Linkedin },
-  { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github },
-];
+// An icon link in the hero and footer. The links come from the Global Config store (see
+// src/components/portfolio.tsx).
+export type SocialLink = { name: string; url: string; icon: LucideIcon };
 
 export const projectsData = [
   {
@@ -78,7 +75,7 @@ export const projectsData = [
       'Configured GitHub Pages for deployment and automated the hosting process.',
     ],
     technologies: ['React.js', 'Next.js', 'Tailwind CSS', 'Github'],
-    alsoUsed: ['HTML', 'CSS', 'Bootstrap'],
+    alsoUsed: ['TypeScript', 'HTML', 'CSS', 'Bootstrap'],
     icon: '/assets/images/website.png',
     type: 'Personal',
     github: 'https://github.com/Shikhar16078/portfolio',
@@ -342,24 +339,3 @@ export const skillsData = {
     { name: 'MITM Proxy' },
   ],
 };
-
-export const recommendationsData = [
-  {
-    quote: "I highly recommend Shikhar for any technical role due to his strong technical, collaborative, and communication skills. His dedication is evident as he frequently works outside regular hours to enhance his knowledge and apply it effectively during work hours. Shikhar is an excellent team player.",
-    author: "Meenal Goyal",
-    title: "Technology Lead, Nagarro",
-    profile: "https://www.linkedin.com/in/meenal-goyal-32271147/",
-  },
-  {
-    quote: "I highly recommend Shikhar for any development role. He possesses extensive project knowledge and was instrumental in helping QAs understand the actual testing requirements. Shikhar is very approachable and open to any sort of discussion, a testament to his excellent teamwork skills.",
-    author: "Jagjeet Singh",
-    title: "QA Principal Engineer, Nagarro",
-    profile: "https://www.linkedin.com/in/jagjeet-singh-72292a6b/",
-  },
-  {
-    quote: "One standout quality I observed in Shikhar is his relentless drive for improvement and his openness to constructive feedback—an invaluable trait in software engineering. He consistently introduced new ideas and strategies that enhanced our team's performance. Shikhar went above and beyond to support his teammates.",
-    author: "Aman Singh Parihar",
-    title: "Staff Engineer, Nagarro",
-    profile: "https://www.linkedin.com/in/aman-singh-parihar-0b1630107/",
-  }
-];

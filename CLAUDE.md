@@ -19,13 +19,15 @@ This is a Next.js 16 (React 19) App Router single-page portfolio. Next 16 has br
 
 ### Data layer (`src/lib/data.ts`)
 
-Exports typed objects/arrays for each section: `personalData`, `summaryData`, `socialLinks`, `projectsData`, `experienceData`, `educationData`, `skillsData`, `awardsData`, `recommendationsData`.
+Exports typed objects/arrays for each section: `personalData`, `summaryData`, `projectsData`, `experienceData`, `educationData`, `skillsData`, `awardsData`.
 
 This is the single source of truth for all displayed content, except the few live values in the Global Config store below.
 
 ### Live config (`src/lib/site-config.ts`)
 
-A few values live only in the Vercel Global Config store (formerly Edge Config) connected to the project, so they can change without a deploy: `status` (the hero photo's "Open to work" dot), `location` (the pin line under the hero title) and `resume` (the Resume buttons in the hero and the Summary dialog; https links only). `getSiteConfig()` reads them on the server through the `GLOBAL_CONFIG` connection string. There is deliberately no fallback in `data.ts`: if a key is missing or empty, or the store can't be reached, whatever it feeds is not rendered. For local development, `npx vercel env pull .env.local` provides `GLOBAL_CONFIG`. To add a live value, add it to `SiteConfig` and `KEYS` there and pass it down from the `config` prop.
+A few values live only in the Vercel Global Config store (formerly Edge Config) connected to the project, so they can change without a deploy: `status` (the hero photo's "Open to work" dot), `location` (the pin line under the hero title), `resume` (the Resume buttons in the hero and the Summary dialog; https links only), `email` (the "Email Me" button in Contact), `linkedin` (the LinkedIn icon in the hero and footer, the "Message Me" button in Contact and the "View on LinkedIn" button in Recommendations; https links only), `github` (the GitHub icon in the hero and footer; https links only) and `recommendations` (a list of `{ id, author, title, quote, profile, photo }` for the Recommendations carousel, sorted by `id`; `author` and `quote` are required, `profile` and `photo` are https links only, and a photo that fails to load is removed). `getSiteConfig()` reads them on the server through the `GLOBAL_CONFIG` connection string. There is deliberately no fallback in `data.ts`: if a key is missing or empty, or the store can't be reached, whatever it feeds is not rendered. For local development, `npx vercel env pull .env.local` provides `GLOBAL_CONFIG`. To add a live text value, add it to `SiteConfig` and `TEXT_KEYS` there and pass it down from the `config` prop.
+
+Short links are route handlers: `/resume`, `/linkedin` and `/github` send a temporary redirect to the store's value, or a 404 if it's missing. They use `force-dynamic` and `getSiteConfig({ fresh: true })`, because a route handler that redirects gets frozen at build time even with `revalidate`. Shorter aliases (`/cv`, `/li`, `/git`, `/gh`) are rewrites in `next.config.js`.
 
 ### Page composition (`src/app/page.tsx`, `src/components/portfolio.tsx`)
 

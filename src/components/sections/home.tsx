@@ -1,7 +1,7 @@
 import { Fragment, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { personalData, socialLinks } from '@/lib/data';
+import { personalData, type SocialLink } from '@/lib/data';
 import { Download, Mail, MapPin } from 'lucide-react';
 import HeroSpotlight from '@/components/hero-spotlight';
 import HeroPhoto from '@/components/hero-photo';
@@ -29,7 +29,7 @@ function BioText({ text, highlights }: { text: string; highlights: string[] }) {
   );
 }
 
-export default function HomeSection({ config }: { config: SiteConfig }) {
+export default function HomeSection({ config, social }: { config: SiteConfig; social: SocialLink[] }) {
   return (
     <section id="home" className="relative isolate overflow-hidden w-full min-h-[calc(100svh-3.5rem)] flex items-center justify-center bg-hero text-hero-foreground py-8 [@media(max-height:700px)]:py-4">
       <div aria-hidden="true" className="hero-backdrop">
@@ -88,7 +88,7 @@ export default function HomeSection({ config }: { config: SiteConfig }) {
               )}
             </div>
             <div data-hero-fg="children" className="hero-in flex items-center justify-center space-x-4 pt-2" style={seq(6)}>
-                {socialLinks.map((link) => (
+                {social.map((link) => (
                   <Link
                     key={link.name}
                     href={link.url}

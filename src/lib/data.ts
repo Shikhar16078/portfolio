@@ -343,24 +343,3 @@ export const skillsData = {
     { name: 'MITM Proxy' },
   ],
 };
-
-export const recommendationsData = [
-  {
-    quote: "I highly recommend Shikhar for any technical role due to his strong technical, collaborative, and communication skills. His dedication is evident as he frequently works outside regular hours to enhance his knowledge and apply it effectively during work hours. Shikhar is an excellent team player.",
-    author: "Meenal Goyal",
-    title: "Technology Lead, Nagarro",
-    profile: "https://www.linkedin.com/in/meenal-goyal-32271147/",
-  },
-  {
-    quote: "I highly recommend Shikhar for any development role. He possesses extensive project knowledge and was instrumental in helping QAs understand the actual testing requirements. Shikhar is very approachable and open to any sort of discussion, a testament to his excellent teamwork skills.",
-    author: "Jagjeet Singh",
-    title: "QA Principal Engineer, Nagarro",
-    profile: "https://www.linkedin.com/in/jagjeet-singh-72292a6b/",
-  },
-  {
-    quote: "One standout quality I observed in Shikhar is his relentless drive for improvement and his openness to constructive feedback—an invaluable trait in software engineering. He consistently introduced new ideas and strategies that enhanced our team's performance. Shikhar went above and beyond to support his teammates.",
-    author: "Aman Singh Parihar",
-    title: "Staff Engineer, Nagarro",
-    profile: "https://www.linkedin.com/in/aman-singh-parihar-0b1630107/",
-  }
-];

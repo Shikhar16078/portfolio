@@ -12,9 +12,14 @@ export type SiteConfig = {
   resume?: string; // Resume buttons in the hero and the Summary dialog (https only)
   email?: string; // "Email Me" button in the Contact section
   linkedin?: string; // LinkedIn icon in the hero and footer, "Message Me" button in Contact (https only)
+  recommendations?: Recommendation[]; // Recommendations carousel, in `id` order
 };
 
-const KEYS = ['status', 'location', 'resume', 'email', 'linkedin'] as const satisfies readonly (keyof SiteConfig)[];
+// `profile` ("View Profile" button) and `photo` are https only. An optional field that's missing just
+// isn't shown.
+export type Recommendation = { author: string; quote: string; title?: string; profile?: string; photo?: string };
+
+const TEXT_KEYS = ['status', 'location', 'resume', 'email', 'linkedin'] as const satisfies readonly (keyof SiteConfig)[];
 
 const isEmail = (value: string) => /^[^\s@?&]+@[^\s@?&]+$/.test(value);
 
@@ -27,15 +32,42 @@ const isHttpsUrl = (value: string) => {
   }
 };
 
+const isObject = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;
+
+const readHttpsUrl = (value: unknown) => {
+  const url = typeof value === 'string' ? value.trim() : '';
+  return isHttpsUrl(url) ? url : undefined;
+};
+
+const readText = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
+
+// The `recommendations` list sorted by `id` (entries without one go last). An entry needs at least
+// an author and a quote; anything else is dropped.
+function readRecommendations(value: unknown): Recommendation[] {
+  if (!Array.isArray(value)) return [];
+  const order = (entry: Record<string, unknown>) => (typeof entry.id === 'number' ? entry.id : Number.MAX_VALUE);
+  return value
+    .filter(isObject)
+    .filter((entry) => readText(entry.author) && readText(entry.quote))
+    .sort((a, b) => order(a) - order(b))
+    .map((entry) => ({
+      author: readText(entry.author),
+      quote: readText(entry.quote),
+      title: readText(entry.title) || undefined,
+      profile: readHttpsUrl(entry.profile),
+      photo: readHttpsUrl(entry.photo),
+    }));
+}
+
 export async function getSiteConfig(): Promise<SiteConfig> {
   if (!process.env.GLOBAL_CONFIG) return {};
   try {
     // force-cache lets the page stay static; it's refreshed on the page's revalidate interval.
     const store = createClient(process.env.GLOBAL_CONFIG, { cache: 'force-cache' });
-    const items = await store.getAll<Record<string, unknown>>([...KEYS]);
-    const config: SiteConfig = {};
-    for (const key of KEYS) {
-      const value = typeof items[key] === 'string' ? items[key].trim() : '';
+    const items = await store.getAll<Record<string, unknown>>([...TEXT_KEYS, 'recommendations']);
+    const config: SiteConfig = { recommendations: readRecommendations(items.recommendations) };
+    for (const key of TEXT_KEYS) {
+      const value = readText(items[key]);
       if (value) config[key] = value;
     }
     if (config.resume && !isHttpsUrl(config.resume)) delete config.resume;

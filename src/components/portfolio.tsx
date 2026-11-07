@@ -66,7 +66,7 @@ export default function Portfolio({ config }: { config: SiteConfig }) {
         <EducationSection />
         <SkillsSection />
         <AwardsSection />
-        <RecommendationsSection />
+        <RecommendationsSection recommendations={config.recommendations} />
         <ContactSection email={config.email} linkedin={config.linkedin} />
       </main>
       <Footer social={social} />

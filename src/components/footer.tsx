@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { personalData, socialLinks } from "@/lib/data";
+import { personalData, type SocialLink } from "@/lib/data";
 import { Reveal } from "./reveal";
 import { REVEAL_MARGIN_PAGE_END } from "@/lib/motion";
 
-export default function Footer() {
+export default function Footer({ social }: { social: SocialLink[] }) {
   return (
     <footer className="w-full py-6 bg-chrome text-chrome-foreground">
       <Reveal margin={REVEAL_MARGIN_PAGE_END} className="container mx-auto flex flex-col items-center justify-center gap-4 px-4 text-center max-w-7xl">
         <div className="flex items-center space-x-4">
-          {socialLinks.map((link) => (
+          {social.map((link) => (
             <Link
               key={link.name}
               href={link.url}

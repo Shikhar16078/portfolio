@@ -10,11 +10,15 @@ export type SiteConfig = {
   status?: string; // "Open to work" dot on the hero photo
   location?: string; // map pin line under the hero title
   resume?: string; // Resume buttons in the hero and the Summary dialog (https only)
+  email?: string; // "Email Me" button in the Contact section
+  linkedin?: string; // LinkedIn icon in the hero and footer, "Message Me" button in Contact (https only)
 };
 
-const KEYS = ['status', 'location', 'resume'] as const satisfies readonly (keyof SiteConfig)[];
+const KEYS = ['status', 'location', 'resume', 'email', 'linkedin'] as const satisfies readonly (keyof SiteConfig)[];
 
-// Only the resume key is a link; anything other than an https URL is ignored rather than rendered.
+const isEmail = (value: string) => /^[^\s@?&]+@[^\s@?&]+$/.test(value);
+
+// Links that aren't https URLs are ignored rather than rendered.
 const isHttpsUrl = (value: string) => {
   try {
     return new URL(value).protocol === 'https:';
@@ -35,6 +39,8 @@ export async function getSiteConfig(): Promise<SiteConfig> {
       if (value) config[key] = value;
     }
     if (config.resume && !isHttpsUrl(config.resume)) delete config.resume;
+    if (config.linkedin && !isHttpsUrl(config.linkedin)) delete config.linkedin;
+    if (config.email && !isEmail(config.email)) delete config.email;
     return config;
   } catch (error) {
     console.error('Global Config could not be read; its items are hidden', error);

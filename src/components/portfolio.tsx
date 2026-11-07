@@ -11,17 +11,17 @@ import ContactSection from '@/components/sections/contact';
 import Footer from '@/components/footer';
 import { useEffect, useState } from 'react';
 import RecommendationsSection from '@/components/sections/recommendations';
-import { Linkedin } from '@/components/icons';
-import { socialLinks, type SocialLink } from '@/lib/data';
+import { Github, Linkedin } from '@/components/icons';
+import type { SocialLink } from '@/lib/data';
 import type { SiteConfig } from '@/lib/site-config';
 
 // The whole single-page portfolio. `config` holds the values editable without a deploy (see
 // src/lib/site-config.ts).
 export default function Portfolio({ config }: { config: SiteConfig }) {
   const [activeSection, setActiveSection] = useState('home');
-  const social: SocialLink[] = config.linkedin
-    ? [{ name: 'LinkedIn', url: config.linkedin, icon: Linkedin }, ...socialLinks]
-    : socialLinks;
+  const social: SocialLink[] = [];
+  if (config.linkedin) social.push({ name: 'LinkedIn', url: config.linkedin, icon: Linkedin });
+  if (config.github) social.push({ name: 'GitHub', url: config.github, icon: Github });
 
   useEffect(() => {
     const sections = [
@@ -66,7 +66,7 @@ export default function Portfolio({ config }: { config: SiteConfig }) {
         <EducationSection />
         <SkillsSection />
         <AwardsSection />
-        <RecommendationsSection recommendations={config.recommendations} />
+        <RecommendationsSection recommendations={config.recommendations} linkedin={config.linkedin} />
         <ContactSection email={config.email} linkedin={config.linkedin} />
       </main>
       <Footer social={social} />

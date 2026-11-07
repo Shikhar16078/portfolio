@@ -2,7 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import { personalData } from "@/lib/data";
 import type { Recommendation } from "@/lib/site-config";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPagination, CarouselPrevious } from "@/components/ui/carousel";
@@ -39,9 +38,10 @@ function RecommenderPhoto({ src }: { src: string }) {
   );
 }
 
-// `recommendations` comes from the Global Config store, already in order (see src/lib/site-config.ts).
-// With none, the section keeps its heading and LinkedIn button, because the header links to it.
-export default function RecommendationsSection({ recommendations = [] }: { recommendations?: Recommendation[] }) {
+// `recommendations` and `linkedin` (the profile link) come from the Global Config store, the list
+// already in order (see src/lib/site-config.ts). With no recommendations, the section stays, because
+// the header links to it.
+export default function RecommendationsSection({ recommendations = [], linkedin }: { recommendations?: Recommendation[]; linkedin?: string }) {
   return (
     <SectionShell
       id="recommendations"
@@ -99,14 +99,16 @@ export default function RecommendationsSection({ recommendations = [] }: { recom
           </Carousel>
         </RevealGroup>
       )}
-      <Reveal className="flex justify-center mt-5">
-        <Button asChild>
-          <Link href={personalData.linkedinRecommendationsUrl} target="_blank" rel="noopener noreferrer">
-            <Linkedin className="mr-2 h-4 w-4" />
-            View on LinkedIn
-          </Link>
-        </Button>
-      </Reveal>
+      {linkedin && (
+        <Reveal className="flex justify-center mt-5">
+          <Button asChild>
+            <Link href={`${linkedin.replace(/\/$/, "")}/details/recommendations/?detailScreenTabIndex=0`} target="_blank" rel="noopener noreferrer">
+              <Linkedin className="mr-2 h-4 w-4" />
+              View on LinkedIn
+            </Link>
+          </Button>
+        </Reveal>
+      )}
     </SectionShell>
   );
 }

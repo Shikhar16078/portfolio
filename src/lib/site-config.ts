@@ -12,6 +12,7 @@ export type SiteConfig = {
   resume?: string; // Resume buttons in the hero and the Summary dialog (https only)
   email?: string; // "Email Me" button in the Contact section
   linkedin?: string; // LinkedIn icon in the hero and footer, "Message Me" button in Contact (https only)
+  github?: string; // GitHub icon in the hero and footer (https only)
   recommendations?: Recommendation[]; // Recommendations carousel, in `id` order
 };
 
@@ -19,7 +20,7 @@ export type SiteConfig = {
 // isn't shown.
 export type Recommendation = { author: string; quote: string; title?: string; profile?: string; photo?: string };
 
-const TEXT_KEYS = ['status', 'location', 'resume', 'email', 'linkedin'] as const satisfies readonly (keyof SiteConfig)[];
+const TEXT_KEYS = ['status', 'location', 'resume', 'email', 'linkedin', 'github'] as const satisfies readonly (keyof SiteConfig)[];
 
 const isEmail = (value: string) => /^[^\s@?&]+@[^\s@?&]+$/.test(value);
 
@@ -72,6 +73,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
     }
     if (config.resume && !isHttpsUrl(config.resume)) delete config.resume;
     if (config.linkedin && !isHttpsUrl(config.linkedin)) delete config.linkedin;
+    if (config.github && !isHttpsUrl(config.github)) delete config.github;
     if (config.email && !isEmail(config.email)) delete config.email;
     return config;
   } catch (error) {

@@ -1,6 +1,6 @@
 // data.ts
 
-import { Github } from '@/components/icons';
+import type { LucideIcon } from 'lucide-react';
 
 export const personalData = {
   name: 'Shikhar Kumar',
@@ -14,7 +14,6 @@ export const personalData = {
     status: 'Authorized to work in the US on F-1 OPT',
     note: 'Eligible for 24-month STEM extension',
   },
-  linkedinRecommendationsUrl: 'https://www.linkedin.com/in/shikhar1999/details/recommendations/?detailScreenTabIndex=0',
 };
 
 export const summaryData = {
@@ -24,12 +23,9 @@ export const summaryData = {
   closing: 'I enjoy building reliable, scalable systems and applying AI to real-world problems.',
 };
 
-// LinkedIn joins these from the Global Config store (see src/components/portfolio.tsx).
-export const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com/Shikhar16078', icon: Github },
-];
-
-export type SocialLink = (typeof socialLinks)[number];
+// An icon link in the hero and footer. The links come from the Global Config store (see
+// src/components/portfolio.tsx).
+export type SocialLink = { name: string; url: string; icon: LucideIcon };
 
 export const projectsData = [
   {

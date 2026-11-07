@@ -60,11 +60,13 @@ function readRecommendations(value: unknown): Recommendation[] {
     }));
 }
 
-export async function getSiteConfig(): Promise<SiteConfig> {
+// `fresh` reads the store on every call, for the redirect routes (src/app/resume, linkedin, github):
+// a route handler that redirects gets frozen at build time, so it can't use `revalidate` like the page.
+export async function getSiteConfig({ fresh = false } = {}): Promise<SiteConfig> {
   if (!process.env.GLOBAL_CONFIG) return {};
   try {
     // force-cache lets the page stay static; it's refreshed on the page's revalidate interval.
-    const store = createClient(process.env.GLOBAL_CONFIG, { cache: 'force-cache' });
+    const store = createClient(process.env.GLOBAL_CONFIG, { cache: fresh ? 'no-store' : 'force-cache' });
     const items = await store.getAll<Record<string, unknown>>([...TEXT_KEYS, 'recommendations']);
     const config: SiteConfig = { recommendations: readRecommendations(items.recommendations) };
     for (const key of TEXT_KEYS) {
